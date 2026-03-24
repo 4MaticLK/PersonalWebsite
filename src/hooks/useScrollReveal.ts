@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const DEFAULT_OPTIONS: IntersectionObserverInit = {
   root: null,
@@ -7,27 +7,34 @@ const DEFAULT_OPTIONS: IntersectionObserverInit = {
 };
 
 /**
- * Returns a ref and whether the element is currently in the viewport.
+ * Returns a ref callback and whether the element is currently in the viewport.
  * Visibility tracks intersection so the fade-in runs every time you scroll to the section (up or down).
  */
 export function useScrollReveal(options?: Partial<IntersectionObserverInit>) {
-  const ref = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+  const ref = useCallback(
+    (el: HTMLElement | null) => {
+      if (!el) {
+        setIsVisible(false);
+        return;
+      }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      { ...DEFAULT_OPTIONS, ...options }
-    );
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsVisible(entry.isIntersecting);
+        },
+        { ...DEFAULT_OPTIONS, ...options }
+      );
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []); // options intentionally omitted to keep observer stable
+      observer.observe(el);
 
-  return { ref, isVisible };
+      return () => {
+        observer.disconnect();
+      };
+    },
+    [options]
+  );
+
+  return { revealRef: ref, isVisible };
 }

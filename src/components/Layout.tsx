@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useActiveSection } from '../hooks/useActiveSection';
+import { SITE_DEFAULT_TITLE } from '../constants/site';
 import { BusinessCard } from './BusinessCard';
 import { ExperienceSection } from './ExperienceSection';
 
@@ -15,8 +16,12 @@ const NAV_LINKS: { href: string; label: string }[] = [
 
 export function Layout() {
   const location = useLocation();
-  const { ref: cardRef, isVisible: cardVisible } = useScrollReveal();
+  const { revealRef: cardRevealRef, isVisible: cardVisible } = useScrollReveal();
   const activeSection = useActiveSection();
+
+  useEffect(() => {
+    document.title = SITE_DEFAULT_TITLE;
+  }, []);
 
   // When navigating to a section via hash (nav link or Back to Academic Projects), scroll so section top (and header) is in view
   useEffect(() => {
@@ -42,12 +47,19 @@ export function Layout() {
           <a
             key={href}
             href={href}
-            className={activeSection === href.slice(1) ? 'site-nav__link site-nav__link--active' : 'site-nav__link'}
+            className={
+              activeSection === href.slice(1)
+                ? 'site-nav__link site-nav__link--active'
+                : 'site-nav__link'
+            }
             aria-current={activeSection === href.slice(1) ? 'true' : undefined}
             onClick={() => {
               const id = href.startsWith('#') ? href.slice(1) : '';
               if (id) {
-                document.getElementById(id)?.querySelector<HTMLElement>('.page-section__scroll')?.scrollTo(0, 0);
+                document
+                  .getElementById(id)
+                  ?.querySelector<HTMLElement>('.page-section__scroll')
+                  ?.scrollTo(0, 0);
               }
             }}
           >
@@ -58,7 +70,7 @@ export function Layout() {
       <main>
         <section
           id="card"
-          ref={cardRef}
+          ref={cardRevealRef}
           className={`page-section page-section--fullscreen page-section--card scroll-reveal ${cardVisible ? 'scroll-reveal--visible' : ''}`}
         >
           <div className="page-section__scroll">

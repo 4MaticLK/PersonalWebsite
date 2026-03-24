@@ -19,13 +19,13 @@ Avoid 6+ on one page; it gets noisy. You can always add a “More charts” or �
 
 Pick **3 or 4** from this list, in an order that tells the story: **data → relationship to market → risk/return → (optional) detail**.
 
-| # | Chart | Why it fits | Data needed (CSV) |
-|---|--------|-------------|--------------------|
-| 1 | **SPY vs stock price movement** | Shows how MCD & NOC moved vs the market; sets context. | Date, SPY price, MCD price, NOC price (or normalized index). |
-| 2 | **Stock regression (MCD vs market, NOC vs market)** | Shows beta/sensitivity to market; explains risk. | Market return (X), stock return (Y), optional fitted line. One series per stock or two small charts. |
-| 3 | **Monthly (or periodic) returns over time** | Shows volatility and timing; supports “why diversification” narrative. | Date, MCD return, NOC return (and optionally SPY, Bonds). |
-| 4 | **Correlation matrix (heatmap)** | Quick view of diversification; pairs well with the frontier. | 2×2 or 3×3 (MCD, NOC, optionally Bonds/SPY). |
-| 5 | **Portfolio weight sliders + live stats** | Interactivity: change weights, see μ, σ, Sharpe update. | Expected returns + covariance (or raw returns to compute them). |
+| #   | Chart                                               | Why it fits                                                            | Data needed (CSV)                                                                                    |
+| --- | --------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| 1   | **SPY vs stock price movement**                     | Shows how MCD & NOC moved vs the market; sets context.                 | Date, SPY price, MCD price, NOC price (or normalized index).                                         |
+| 2   | **Stock regression (MCD vs market, NOC vs market)** | Shows beta/sensitivity to market; explains risk.                       | Market return (X), stock return (Y), optional fitted line. One series per stock or two small charts. |
+| 3   | **Monthly (or periodic) returns over time**         | Shows volatility and timing; supports “why diversification” narrative. | Date, MCD return, NOC return (and optionally SPY, Bonds).                                            |
+| 4   | **Correlation matrix (heatmap)**                    | Quick view of diversification; pairs well with the frontier.           | 2×2 or 3×3 (MCD, NOC, optionally Bonds/SPY).                                                         |
+| 5   | **Portfolio weight sliders + live stats**           | Interactivity: change weights, see μ, σ, Sharpe update.                | Expected returns + covariance (or raw returns to compute them).                                      |
 
 **Suggested minimum set:** 1 + 2 + (3 or 4).  
 **Ideal set:** 1, 2, 3, 4 (all four above), and optionally 5 later.
@@ -60,12 +60,14 @@ Pick **3 or 4** from this list, in an order that tells the story: **data → rel
 
 ## Implementation approach
 
-**1. Data: CSV per chart (same as frontier)**  
+**1. Data: CSV per chart (same as frontier)**
+
 - Export each chart’s data from Excel to a CSV (e.g. `Sheet 1.csv` = frontier, `Sheet 2.csv` = prices, `Sheet 3.csv` = regression, etc.).
 - Put CSVs in `public/pdfs/` (or a dedicated `public/data/` if you prefer).
 - Each chart component **fetches its own CSV** and parses it (like `EfficientFrontierChart` + `parseFrontierCsv.ts`). No backend.
 
-**2. One component per chart type**  
+**2. One component per chart type**
+
 - `EfficientFrontierChart.tsx` — already done.
 - `PriceMovementChart.tsx` — line chart, date vs price (or index).
 - `RegressionChart.tsx` — scatter (market return vs stock return), optional trend line.
@@ -73,11 +75,13 @@ Pick **3 or 4** from this list, in an order that tells the story: **data → rel
 - `CorrelationHeatmapChart.tsx` — 2×2 or 3×3 grid of cells, color = correlation.
 - Reuse **Recharts** for line/scatter/bar; heatmap can be Recharts or a simple CSS grid.
 
-**3. Shared styling**  
+**3. Shared styling**
+
 - Reuse existing classes: `.frontier-chart` (or a generic `.portfolio-chart`) for the card, `.portfolio-chart__title`, `__caption`, `__container`.
 - Same axis colors, grid stroke, and margin pattern so every chart looks like the frontier’s “sibling.”
 
-**4. Responsive grid**  
+**4. Responsive grid**
+
 - In `ProjectPage.tsx`, inside the portfolio block, render something like:
   - `<section className="portfolio-charts">`
   - `<h2>Portfolio analysis</h2>`
@@ -87,10 +91,12 @@ Pick **3 or 4** from this list, in an order that tells the story: **data → rel
   - `</div></section>`
 - CSS: `.portfolio-charts__grid { display: grid; grid-template-columns: 1fr; gap: var(--space-2xl); }` and `@media (min-width: 768px) { grid-template-columns: repeat(2, 1fr); }`. Optionally make the first child `grid-column: 1 / -1` so the frontier spans both columns.
 
-**5. Loading and errors**  
+**5. Loading and errors**
+
 - Each chart already handles “loading” and “error” (like the frontier). Keep that pattern so a missing CSV doesn’t break the page.
 
-**6. Implementation order**  
+**6. Implementation order**
+
 1. Add the **grid layout** and a second chart (e.g. **SPY vs prices**) so you see 2 charts side-by-side and can tune spacing.
 2. Add **regression** and **returns over time** (or correlation) one at a time, reusing the same card and axis style.
 3. Optionally add **weight sliders** and wire them to the same stats/portfolio math.
@@ -101,9 +107,9 @@ Pick **3 or 4** from this list, in an order that tells the story: **data → rel
 
 For each chart you add, we need:
 
-1. **CSV (or sheet/range)**  
+1. **CSV (or sheet/range)**
    - Columns and their meaning (e.g. “A = date, B = SPY, C = MCD, D = NOC”).
-2. **Any special rules**  
+2. **Any special rules**
    - e.g. “Skip first row,” “Use column B as X,” “Fitted line is column E.”
 
 Once you have the CSVs (or confirm the other sheet names), we can define the URLs and parsers and drop in each chart component in order.
@@ -112,11 +118,11 @@ Once you have the CSVs (or confirm the other sheet names), we can define the URL
 
 ## Summary
 
-| Decision | Recommendation |
-|----------|----------------|
-| **How many** | 4–5 total (frontier + 3–4 more). |
-| **Which** | SPY vs prices, Regression (MCD/NOC vs market), Returns over time, Correlation heatmap; optionally weight sliders. |
-| **Layout** | One “Charts” section; responsive 2-column grid (1 column on small screens); same card style as frontier. |
-| **Implementation** | One component per chart; each fetches its CSV; shared CSS and axis styling; add charts one by one. |
+| Decision           | Recommendation                                                                                                    |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| **How many**       | 4–5 total (frontier + 3–4 more).                                                                                  |
+| **Which**          | SPY vs prices, Regression (MCD/NOC vs market), Returns over time, Correlation heatmap; optionally weight sliders. |
+| **Layout**         | One “Charts” section; responsive 2-column grid (1 column on small screens); same card style as frontier.          |
+| **Implementation** | One component per chart; each fetches its CSV; shared CSS and axis styling; add charts one by one.                |
 
 Next step: choose which 3–4 charts you want (from the table above), export their data to CSVs (or tell me the sheet names if you prefer to keep one Excel and we read by sheet), and we can implement the grid and the first new chart (e.g. SPY vs stock price movement).

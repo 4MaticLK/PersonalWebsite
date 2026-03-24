@@ -36,6 +36,9 @@ coverage
 # OS files
 .DS_Store
 Thumbs.db
+
+# Excel lock files (never commit)
+**/~$*
 *.suo
 *.ntvs*
 *.njsproj

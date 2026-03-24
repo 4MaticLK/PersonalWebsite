@@ -35,7 +35,6 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
     fetch(CSV_URL)
       .then((res) => {
         if (!res.ok) throw new Error('CSV not found');
@@ -59,12 +58,25 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
 
   if (status === 'loading') {
     const content = <p>Loading returns data…</p>;
-    return embedded ? <div className="portfolio-chart__embedded portfolio-chart--loading">{content}</div> : <div className="portfolio-chart portfolio-chart--loading">{content}</div>;
+    return embedded ? (
+      <div className="portfolio-chart__embedded portfolio-chart--loading">{content}</div>
+    ) : (
+      <div className="portfolio-chart portfolio-chart--loading">{content}</div>
+    );
   }
 
   if (status === 'error') {
-    const content = <p>Could not load <strong>Sheet 2.csv</strong>. Ensure the file is in <strong>public/pdfs/</strong>.</p>;
-    return embedded ? <div className="portfolio-chart__embedded portfolio-chart--error">{content}</div> : <div className="portfolio-chart portfolio-chart--error">{content}</div>;
+    const content = (
+      <p>
+        Could not load <strong>Sheet 2.csv</strong>. Ensure the file is in{' '}
+        <strong>public/pdfs/</strong>.
+      </p>
+    );
+    return embedded ? (
+      <div className="portfolio-chart__embedded portfolio-chart--error">{content}</div>
+    ) : (
+      <div className="portfolio-chart portfolio-chart--error">{content}</div>
+    );
   }
 
   const chartData = data.map((row) => ({
@@ -115,7 +127,10 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
         <p className="returns-stats__heading">Return range (sample period)</p>
         <div className="returns-stats__grid">
           {returnStats.map((s) => (
-            <div key={s.name} className={`returns-stats__card returns-stats__card--${s.name.toLowerCase()}`}>
+            <div
+              key={s.name}
+              className={`returns-stats__card returns-stats__card--${s.name.toLowerCase()}`}
+            >
               <span className="returns-stats__name">{s.name}</span>
               {s.min != null && s.max != null ? (
                 <>
@@ -135,11 +150,13 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
       </div>
       <div className="portfolio-chart__container">
         <ResponsiveContainer width="100%" height={360}>
-          <LineChart
-            data={chartData}
-            margin={{ top: 20, right: 24, left: 20, bottom: 28 }}
-          >
-            <CartesianGrid strokeDasharray="0" stroke="rgba(248,250,252,0.1)" vertical={false} horizontal />
+          <LineChart data={chartData} margin={{ top: 20, right: 24, left: 20, bottom: 28 }}>
+            <CartesianGrid
+              strokeDasharray="0"
+              stroke="rgba(248,250,252,0.1)"
+              vertical={false}
+              horizontal
+            />
             <XAxis
               dataKey="date"
               type="category"
@@ -148,7 +165,13 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               tick={{ fill: '#94a3b8', fontSize: 11 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
-              label={{ value: 'Date', position: 'insideBottom', offset: -10, fill: '#94a3b8', fontSize: 12 }}
+              label={{
+                value: 'Date',
+                position: 'insideBottom',
+                offset: -10,
+                fill: '#94a3b8',
+                fontSize: 12,
+              }}
             />
             <YAxis
               type="number"
@@ -158,7 +181,13 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               tick={{ fill: '#94a3b8', fontSize: 11 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
-              label={{ value: 'Return (%)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12 }}
+              label={{
+                value: 'Return (%)',
+                angle: -90,
+                position: 'insideLeft',
+                fill: '#94a3b8',
+                fontSize: 12,
+              }}
               tickFormatter={(v) => `${Number(v).toFixed(1)}%`}
             />
             <Tooltip
@@ -179,14 +208,39 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               iconSize={10}
               formatter={(value) => <span className="portfolio-chart__legend-text">{value}</span>}
             />
-            <Line type="monotone" dataKey="SPY" name="SPY" stroke="#94a3b8" strokeWidth={1.5} dot={false} />
-            <Line type="monotone" dataKey="NOC" name="NOC" stroke="#38bdf8" strokeWidth={1.5} dot={false} />
-            <Line type="monotone" dataKey="MCD" name="MCD" stroke="var(--color-accent)" strokeWidth={1.5} dot={false} />
+            <Line
+              type="monotone"
+              dataKey="SPY"
+              name="SPY"
+              stroke="#94a3b8"
+              strokeWidth={1.5}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="NOC"
+              name="NOC"
+              stroke="#38bdf8"
+              strokeWidth={1.5}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="MCD"
+              name="MCD"
+              stroke="var(--color-accent)"
+              strokeWidth={1.5}
+              dot={false}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     </>
   );
 
-  return embedded ? <div className="portfolio-chart__embedded">{inner}</div> : <div className="portfolio-chart">{inner}</div>;
+  return embedded ? (
+    <div className="portfolio-chart__embedded">{inner}</div>
+  ) : (
+    <div className="portfolio-chart">{inner}</div>
+  );
 }

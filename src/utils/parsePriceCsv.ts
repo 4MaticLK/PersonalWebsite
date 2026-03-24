@@ -22,7 +22,7 @@ function parseDate(s: string): string | null {
   if (!trimmed) return null;
   const parts = trimmed.split('/');
   if (parts.length !== 3) return null;
-  let month = parseInt(parts[0], 10);
+  const month = parseInt(parts[0], 10);
   const day = parseInt(parts[1], 10);
   let year = parseInt(parts[2], 10);
   if (!Number.isFinite(month) || !Number.isFinite(day) || !Number.isFinite(year)) return null;

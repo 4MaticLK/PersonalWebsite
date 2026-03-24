@@ -29,7 +29,6 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
     fetch(CSV_URL)
       .then((res) => {
         if (!res.ok) throw new Error('CSV not found');
@@ -58,12 +57,25 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
         <div className="skeleton chart-skeleton__body" />
       </div>
     );
-    return embedded ? <div className="portfolio-chart__embedded">{skeleton}</div> : <div className="portfolio-chart">{skeleton}</div>;
+    return embedded ? (
+      <div className="portfolio-chart__embedded">{skeleton}</div>
+    ) : (
+      <div className="portfolio-chart">{skeleton}</div>
+    );
   }
 
   if (status === 'error') {
-    const content = <p>Could not load <strong>Sheet 2.csv</strong>. Ensure the file is in <strong>public/pdfs/</strong>.</p>;
-    return embedded ? <div className="portfolio-chart__embedded portfolio-chart--error">{content}</div> : <div className="portfolio-chart portfolio-chart--error">{content}</div>;
+    const content = (
+      <p>
+        Could not load <strong>Sheet 2.csv</strong>. Ensure the file is in{' '}
+        <strong>public/pdfs/</strong>.
+      </p>
+    );
+    return embedded ? (
+      <div className="portfolio-chart__embedded portfolio-chart--error">{content}</div>
+    ) : (
+      <div className="portfolio-chart portfolio-chart--error">{content}</div>
+    );
   }
 
   const chartData = data.map((row) => ({
@@ -107,7 +119,10 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
         <p className="price-stats__heading">Price range (sample period)</p>
         <div className="price-stats__grid">
           {stats.map((s) => (
-            <div key={s.name} className={`price-stats__card price-stats__card--${s.name.toLowerCase()}`}>
+            <div
+              key={s.name}
+              className={`price-stats__card price-stats__card--${s.name.toLowerCase()}`}
+            >
               <span className="price-stats__name">{s.name}</span>
               {s.min != null && s.max != null ? (
                 <>
@@ -127,11 +142,13 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
       </div>
       <div className="portfolio-chart__container">
         <ResponsiveContainer width="100%" height={360}>
-          <LineChart
-            data={chartData}
-            margin={{ top: 16, right: 20, left: 12, bottom: 24 }}
-          >
-            <CartesianGrid strokeDasharray="0" stroke="rgba(248,250,252,0.12)" vertical horizontal />
+          <LineChart data={chartData} margin={{ top: 16, right: 20, left: 12, bottom: 24 }}>
+            <CartesianGrid
+              strokeDasharray="0"
+              stroke="rgba(248,250,252,0.12)"
+              vertical
+              horizontal
+            />
             <XAxis
               dataKey="date"
               type="category"
@@ -139,14 +156,26 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
               tick={{ fill: '#94a3b8', fontSize: 10 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
-              label={{ value: 'Date', position: 'insideBottom', offset: -8, fill: '#94a3b8', fontSize: 12 }}
+              label={{
+                value: 'Date',
+                position: 'insideBottom',
+                offset: -8,
+                fill: '#94a3b8',
+                fontSize: 12,
+              }}
             />
             <YAxis
               type="number"
               tick={{ fill: '#94a3b8', fontSize: 10 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
-              label={{ value: 'Price ($)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12 }}
+              label={{
+                value: 'Price ($)',
+                angle: -90,
+                position: 'insideLeft',
+                fill: '#94a3b8',
+                fontSize: 12,
+              }}
               tickFormatter={(v) => `$${Number(v).toFixed(0)}`}
             />
             <Tooltip
@@ -167,14 +196,39 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
               iconSize={10}
               formatter={(value) => <span className="portfolio-chart__legend-text">{value}</span>}
             />
-            <Line type="monotone" dataKey="SPY" name="SPY" stroke="#94a3b8" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="NOC" name="NOC" stroke="#38bdf8" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="MCD" name="MCD" stroke="var(--color-accent)" strokeWidth={2} dot={false} />
+            <Line
+              type="monotone"
+              dataKey="SPY"
+              name="SPY"
+              stroke="#94a3b8"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="NOC"
+              name="NOC"
+              stroke="#38bdf8"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              type="monotone"
+              dataKey="MCD"
+              name="MCD"
+              stroke="var(--color-accent)"
+              strokeWidth={2}
+              dot={false}
+            />
           </LineChart>
         </ResponsiveContainer>
       </div>
     </>
   );
 
-  return embedded ? <div className="portfolio-chart__embedded">{inner}</div> : <div className="portfolio-chart">{inner}</div>;
+  return embedded ? (
+    <div className="portfolio-chart__embedded">{inner}</div>
+  ) : (
+    <div className="portfolio-chart">{inner}</div>
+  );
 }

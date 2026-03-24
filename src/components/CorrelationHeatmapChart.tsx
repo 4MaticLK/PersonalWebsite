@@ -59,7 +59,6 @@ export function CorrelationHeatmapChart() {
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
     fetch(CSV_URL)
       .then((res) => {
         if (!res.ok) throw new Error('CSV not found');
@@ -91,7 +90,10 @@ export function CorrelationHeatmapChart() {
   if (status === 'error') {
     return (
       <div className="portfolio-chart portfolio-chart--error">
-        <p>Could not load <strong>Sheet 3.csv</strong>. Ensure the file is in <strong>public/pdfs/</strong>.</p>
+        <p>
+          Could not load <strong>Sheet 3.csv</strong>. Ensure the file is in{' '}
+          <strong>public/pdfs/</strong>.
+        </p>
       </div>
     );
   }
@@ -104,21 +106,32 @@ export function CorrelationHeatmapChart() {
         Return correlation matrix
       </h3>
       <p className="portfolio-chart__caption">
-        Sample correlation of monthly returns (SPY, NOC, MCD). Values from −1 to 1; lower correlation supports diversification.
+        Sample correlation of monthly returns (SPY, NOC, MCD). Values from −1 to 1; lower
+        correlation supports diversification.
       </p>
       <div className="correlation-heatmap">
         <div className="correlation-heatmap__grid" role="table" aria-label="Correlation matrix">
           <div className="correlation-heatmap__row correlation-heatmap__row--header">
-            <div className="correlation-heatmap__cell correlation-heatmap__cell--header" aria-hidden="true" />
+            <div
+              className="correlation-heatmap__cell correlation-heatmap__cell--header"
+              aria-hidden="true"
+            />
             {LABELS.map((label) => (
-              <div key={label} className="correlation-heatmap__cell correlation-heatmap__cell--header" role="columnheader">
+              <div
+                key={label}
+                className="correlation-heatmap__cell correlation-heatmap__cell--header"
+                role="columnheader"
+              >
                 {label}
               </div>
             ))}
           </div>
           {LABELS.map((rowLabel, i) => (
             <div key={rowLabel} className="correlation-heatmap__row" role="row">
-              <div className="correlation-heatmap__cell correlation-heatmap__cell--header" role="rowheader">
+              <div
+                className="correlation-heatmap__cell correlation-heatmap__cell--header"
+                role="rowheader"
+              >
                 {rowLabel}
               </div>
               {LABELS.map((colLabel, j) => {
@@ -129,7 +142,11 @@ export function CorrelationHeatmapChart() {
                     key={colLabel}
                     className="correlation-heatmap__cell"
                     role="cell"
-                    style={{ backgroundColor: isDiagonal ? 'rgba(248,250,252,0.06)' : correlationColor(value) }}
+                    style={{
+                      backgroundColor: isDiagonal
+                        ? 'rgba(248,250,252,0.06)'
+                        : correlationColor(value),
+                    }}
                     title={`${rowLabel}–${colLabel}: ${value.toFixed(3)}`}
                   >
                     {value.toFixed(2)}

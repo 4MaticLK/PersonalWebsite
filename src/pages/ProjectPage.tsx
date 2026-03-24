@@ -8,21 +8,87 @@ import { PriceMovementChart } from '../components/PriceMovementChart';
 import { RegressionChart } from '../components/RegressionChart';
 import { ReturnsOverTimeChart } from '../components/ReturnsOverTimeChart';
 import { CorrelationHeatmapChart } from '../components/CorrelationHeatmapChart';
+import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
+
+const MCD_LOGO_PATH = '/logos/mcdonalds-png-logo-simple-m-1.png';
+const NOC_LOGO_PATH = '/logos/northrop_grumman-logo_brandlogos.net_mqy0p.png';
+const AB_LOGO_PATH = '/logos/anheuser-busch-4-logo-png-transparent.png';
+const GOODYEAR_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/2/2e/Goodyear_logo.svg';
+const MCD_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg';
+const NOC_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/9/9e/Northrop_Grumman_logo.svg';
+const AB_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/a/ab/Anheuser-Busch_InBev_logo.svg';
+
+const goodyearScenarios = {
+  base: {
+    priceTarget: '$11.48',
+    upside: '~4.3%',
+    wacc: '6.66%',
+    terminalGrowth: '2%',
+    recommendation: 'Buy',
+    recommendationSub: 'stock trading below intrinsic value',
+  },
+  bull: {
+    priceTarget: '$30.96',
+    upside: '~181%',
+    wacc: '6%',
+    terminalGrowth: '3%',
+    recommendation: 'Buy',
+    recommendationSub: 'terminal growth 3%, WACC 6%',
+  },
+  bear: {
+    priceTarget: '$0.85',
+    upside: '~−92%',
+    wacc: '8%',
+    terminalGrowth: '1.5%',
+    recommendation: 'Sell',
+    recommendationSub: 'terminal growth 1.5%, WACC 8%',
+  },
+} as const;
 
 export function ProjectPage() {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
 
+  const [goodyearLogoSrc, setGoodyearLogoSrc] = useState<string | null>(
+    '/logos/GY_Wordmark_Logo_With_Wingfoot_Gold_RGB.png'
+  );
+  const [goodyearLogoUseText, setGoodyearLogoUseText] = useState(false);
+  const [mcdLogoSrc, setMcdLogoSrc] = useState<string | null>(MCD_LOGO_PATH);
+  const [mcdLogoUseText, setMcdLogoUseText] = useState(false);
+  const [nocLogoSrc, setNocLogoSrc] = useState<string | null>(NOC_LOGO_PATH);
+  const [nocLogoUseText, setNocLogoUseText] = useState(false);
+  const [abLogoSrc, setAbLogoSrc] = useState<string | null>(AB_LOGO_PATH);
+  const [abLogoUseText, setAbLogoUseText] = useState(false);
+  const [goodyearScenario, setGoodyearScenario] = useState<'base' | 'bull' | 'bear'>('base');
+  const [goodyearExpandedAssumption, setGoodyearExpandedAssumption] = useState<string | null>(null);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    if (!project) {
+      document.title = `Project not found | ${SITE_NAME}`;
+    } else {
+      document.title = `${project.name} | ${SITE_NAME}`;
+    }
+    return () => {
+      document.title = SITE_DEFAULT_TITLE;
+    };
+  }, [project, slug]);
 
   if (!project) {
     return (
       <div className="project-page">
         <nav className="project-page__nav" aria-label="Project navigation">
           <Link to="/#academic-projects" className="project-page__nav-back">
-            <span className="project-page__nav-back-arrow" aria-hidden="true">←</span>
+            <span className="project-page__nav-back-arrow" aria-hidden="true">
+              ←
+            </span>
             Academic Projects
           </Link>
         </nav>
@@ -43,39 +109,20 @@ export function ProjectPage() {
     !isPortfolioProject &&
     !isMergersAcquisitions;
 
-  const [goodyearLogoSrc, setGoodyearLogoSrc] = useState<string | null>('/logos/GY_Wordmark_Logo_With_Wingfoot_Gold_RGB.png');
-  const [goodyearLogoUseText, setGoodyearLogoUseText] = useState(false);
-  const MCD_LOGO_PATH = '/logos/mcdonalds-png-logo-simple-m-1.png';
-  const NOC_LOGO_PATH = '/logos/northrop_grumman-logo_brandlogos.net_mqy0p.png';
-  const [mcdLogoSrc, setMcdLogoSrc] = useState<string | null>(MCD_LOGO_PATH);
-  const [mcdLogoUseText, setMcdLogoUseText] = useState(false);
-  const [nocLogoSrc, setNocLogoSrc] = useState<string | null>(NOC_LOGO_PATH);
-  const [nocLogoUseText, setNocLogoUseText] = useState(false);
-  const AB_LOGO_PATH = '/logos/anheuser-busch-4-logo-png-transparent.png';
-  const [abLogoSrc, setAbLogoSrc] = useState<string | null>(AB_LOGO_PATH);
-  const [abLogoUseText, setAbLogoUseText] = useState(false);
-  const [goodyearScenario, setGoodyearScenario] = useState<'base' | 'bull' | 'bear'>('base');
-  const [goodyearExpandedAssumption, setGoodyearExpandedAssumption] = useState<string | null>(null);
-  const GOODYEAR_LOGO_REMOTE = 'https://upload.wikimedia.org/wikipedia/commons/2/2e/Goodyear_logo.svg';
-  const MCD_LOGO_REMOTE = 'https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg';
-  const NOC_LOGO_REMOTE = 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Northrop_Grumman_logo.svg';
-  const AB_LOGO_REMOTE = 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Anheuser-Busch_InBev_logo.svg';
-
-  const goodyearScenarios = {
-    base: { priceTarget: '$11.48', upside: '~4.3%', wacc: '6.66%', terminalGrowth: '2%', recommendation: 'Buy', recommendationSub: 'stock trading below intrinsic value' },
-    bull: { priceTarget: '$30.96', upside: '~181%', wacc: '6%', terminalGrowth: '3%', recommendation: 'Buy', recommendationSub: 'terminal growth 3%, WACC 6%' },
-    bear: { priceTarget: '$0.85', upside: '~−92%', wacc: '8%', terminalGrowth: '1.5%', recommendation: 'Sell', recommendationSub: 'terminal growth 1.5%, WACC 8%' },
-  } as const;
   const goodyearScenarioData = goodyearScenarios[goodyearScenario];
 
   return (
     <div className="project-page">
       <nav className="project-page__nav" aria-label="Project navigation">
         <Link to="/#academic-projects" className="project-page__nav-back">
-          <span className="project-page__nav-back-arrow" aria-hidden="true">←</span>
+          <span className="project-page__nav-back-arrow" aria-hidden="true">
+            ←
+          </span>
           Academic Projects
         </Link>
-        <span className="project-page__nav-sep" aria-hidden="true">/</span>
+        <span className="project-page__nav-sep" aria-hidden="true">
+          /
+        </span>
         <span className="project-page__nav-current">{project.name}</span>
       </nav>
       <main className="project-page__main">
@@ -163,7 +210,9 @@ export function ProjectPage() {
         <p className="project-page__desc">{project.shortDescription}</p>
         {(project.projectDate != null || project.dataAsOf != null || project.paperDate != null) && (
           <p className="project-page__meta">
-            {[project.projectDate ?? project.paperDate, project.dataAsOf].filter(Boolean).join(' · ')}
+            {[project.projectDate ?? project.paperDate, project.dataAsOf]
+              .filter(Boolean)
+              .join(' · ')}
           </p>
         )}
 
@@ -194,7 +243,9 @@ export function ProjectPage() {
                 <h2 className="project-page__paper-topics-title">Key topics</h2>
                 <ul className="project-page__paper-topics-list">
                   {project.paperTopics.map((topic, i) => (
-                    <li key={i} className="project-page__paper-topics-item">{topic}</li>
+                    <li key={i} className="project-page__paper-topics-item">
+                      {topic}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -202,7 +253,9 @@ export function ProjectPage() {
             {project.body && (
               <div className="project-page__body project-page__body--paper">
                 {project.body.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="project-page__body-p">{para}</p>
+                  <p key={i} className="project-page__body-p">
+                    {para}
+                  </p>
                 ))}
               </div>
             )}
@@ -223,7 +276,9 @@ export function ProjectPage() {
         {isMergersAcquisitions && project.description != null && project.description.length > 0 && (
           <div className="project-page__body">
             {project.description.split(/\n\n+/).map((para, i) => (
-              <p key={i} className="project-page__body-p">{para}</p>
+              <p key={i} className="project-page__body-p">
+                {para}
+              </p>
             ))}
           </div>
         )}
@@ -235,41 +290,73 @@ export function ProjectPage() {
         )}
         {!isMergersAcquisitions && !isPaper && (
           <>
-            {isPortfolioProject && project.description != null && project.description.length > 0 && (
-              <div className="project-page__body project-page__body--report-first">
-                {project.description.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="project-page__body-p">{para}</p>
-                ))}
-              </div>
-            )}
+            {isPortfolioProject &&
+              project.description != null &&
+              project.description.length > 0 && (
+                <div className="project-page__body project-page__body--report-first">
+                  {project.description.split(/\n\n+/).map((para, i) => (
+                    <p key={i} className="project-page__body-p">
+                      {para}
+                    </p>
+                  ))}
+                </div>
+              )}
             {isPortfolioProject && (
-              <section className="project-page__section project-page__section--charts" aria-labelledby="portfolio-charts-heading">
-                <h2 id="portfolio-charts-heading" className="project-page__charts-title">Portfolio analysis</h2>
+              <section
+                className="project-page__section project-page__section--charts"
+                aria-labelledby="portfolio-charts-heading"
+              >
+                <h2 id="portfolio-charts-heading" className="project-page__charts-title">
+                  Portfolio analysis
+                </h2>
 
-                <div className="portfolio-charts__block" aria-labelledby="portfolio-risk-return-heading">
-                  <h3 id="portfolio-risk-return-heading" className="portfolio-charts__block-title">Risk & return</h3>
+                <div
+                  className="portfolio-charts__block"
+                  aria-labelledby="portfolio-risk-return-heading"
+                >
+                  <h3 id="portfolio-risk-return-heading" className="portfolio-charts__block-title">
+                    Risk & return
+                  </h3>
                   <div className="portfolio-charts__grid">
                     <EfficientFrontierChart riskFreeRateOverride={4.23} />
                   </div>
                 </div>
 
-                <div className="portfolio-charts__block" aria-labelledby="portfolio-data-context-heading">
-                  <h3 id="portfolio-data-context-heading" className="portfolio-charts__block-title">Data & context</h3>
+                <div
+                  className="portfolio-charts__block"
+                  aria-labelledby="portfolio-data-context-heading"
+                >
+                  <h3 id="portfolio-data-context-heading" className="portfolio-charts__block-title">
+                    Data & context
+                  </h3>
                   <div className="portfolio-chart">
                     <PriceMovementChart embedded />
                     <ReturnsOverTimeChart embedded />
                   </div>
                 </div>
 
-                <div className="portfolio-charts__block" aria-labelledby="portfolio-relationship-heading">
-                  <h3 id="portfolio-relationship-heading" className="portfolio-charts__block-title">Relationship to market</h3>
+                <div
+                  className="portfolio-charts__block"
+                  aria-labelledby="portfolio-relationship-heading"
+                >
+                  <h3 id="portfolio-relationship-heading" className="portfolio-charts__block-title">
+                    Relationship to market
+                  </h3>
                   <div className="portfolio-charts__grid">
                     <RegressionChart />
                   </div>
                 </div>
 
-                <div className="portfolio-charts__block" aria-labelledby="portfolio-diversification-heading">
-                  <h3 id="portfolio-diversification-heading" className="portfolio-charts__block-title">Diversification</h3>
+                <div
+                  className="portfolio-charts__block"
+                  aria-labelledby="portfolio-diversification-heading"
+                >
+                  <h3
+                    id="portfolio-diversification-heading"
+                    className="portfolio-charts__block-title"
+                  >
+                    Diversification
+                  </h3>
                   <div className="portfolio-charts__grid">
                     <CorrelationHeatmapChart />
                   </div>
@@ -298,7 +385,11 @@ export function ProjectPage() {
                   <div className="project-page__key-metrics" aria-label="Key valuation metrics">
                     <div className="project-page__key-metrics-header">
                       <h2 className="project-page__key-metrics-heading">Key metrics</h2>
-                      <div className="project-page__scenario-toggles" role="group" aria-label="Valuation scenario">
+                      <div
+                        className="project-page__scenario-toggles"
+                        role="group"
+                        aria-label="Valuation scenario"
+                      >
                         {(['base', 'bull', 'bear'] as const).map((s) => (
                           <button
                             key={s}
@@ -317,35 +408,57 @@ export function ProjectPage() {
                         title="Recommendation from DCF valuation and qualitative factors; varies by scenario."
                       >
                         <span className="project-page__key-metrics-label">Recommendation</span>
-                        <span className="project-page__key-metrics-value">{goodyearScenarioData.recommendation}</span>
-                        <span className="project-page__key-metrics-sub">{goodyearScenarioData.recommendationSub}</span>
+                        <span className="project-page__key-metrics-value">
+                          {goodyearScenarioData.recommendation}
+                        </span>
+                        <span className="project-page__key-metrics-sub">
+                          {goodyearScenarioData.recommendationSub}
+                        </span>
                       </div>
                       <div
                         className="project-page__key-metrics-card"
                         title="Fair value per share from DCF model; scenario determines key driver assumptions."
                       >
                         <span className="project-page__key-metrics-label">Price target</span>
-                        <span className="project-page__key-metrics-value">{goodyearScenarioData.priceTarget}</span>
-                        <span className="project-page__key-metrics-sub">per share ({goodyearScenario} case DCF)</span>
+                        <span className="project-page__key-metrics-value">
+                          {goodyearScenarioData.priceTarget}
+                        </span>
+                        <span className="project-page__key-metrics-sub">
+                          per share ({goodyearScenario} case DCF)
+                        </span>
                       </div>
                       <div
                         className="project-page__key-metrics-card"
                         title="Implied return vs May 2, 2025 closing price ($11.01)."
                       >
                         <span className="project-page__key-metrics-label">Upside</span>
-                        <span className="project-page__key-metrics-value">{goodyearScenarioData.upside}</span>
-                        <span className="project-page__key-metrics-sub">vs May 2, 2025 close ($11.01)</span>
+                        <span className="project-page__key-metrics-value">
+                          {goodyearScenarioData.upside}
+                        </span>
+                        <span className="project-page__key-metrics-sub">
+                          vs May 2, 2025 close ($11.01)
+                        </span>
                       </div>
                       <div
                         className="project-page__key-metrics-card project-page__key-metrics-card--double"
                         title="WACC and terminal growth rate used in the DCF; both vary by scenario."
                       >
-                        <span className="project-page__key-metrics-label">WACC · Terminal growth</span>
+                        <span className="project-page__key-metrics-label">
+                          WACC · Terminal growth
+                        </span>
                         <div className="project-page__key-metrics-value-row">
-                          <span className="project-page__key-metrics-value"><span className="project-page__key-metrics-value-inline">WACC</span> {goodyearScenarioData.wacc}</span>
-                          <span className="project-page__key-metrics-value"><span className="project-page__key-metrics-value-inline">Term.</span> {goodyearScenarioData.terminalGrowth}</span>
+                          <span className="project-page__key-metrics-value">
+                            <span className="project-page__key-metrics-value-inline">WACC</span>{' '}
+                            {goodyearScenarioData.wacc}
+                          </span>
+                          <span className="project-page__key-metrics-value">
+                            <span className="project-page__key-metrics-value-inline">Term.</span>{' '}
+                            {goodyearScenarioData.terminalGrowth}
+                          </span>
                         </div>
-                        <span className="project-page__key-metrics-sub">discount rate & perpetuity growth ({goodyearScenario} case)</span>
+                        <span className="project-page__key-metrics-sub">
+                          discount rate & perpetuity growth ({goodyearScenario} case)
+                        </span>
                       </div>
                       <div
                         className="project-page__key-metrics-card"
@@ -360,20 +473,52 @@ export function ProjectPage() {
                 )}
                 {project.slug === 'goodyear-equity-research-valuation' && (
                   <div className="project-page__assumptions">
-                    <h2 className="project-page__assumptions-heading">Valuation assumptions & key ratios</h2>
+                    <h2 className="project-page__assumptions-heading">
+                      Valuation assumptions & key ratios
+                    </h2>
                     <div className="project-page__tables-wrap">
                       <div className="project-page__table-block">
                         <h3 className="project-page__table-title">DCF assumptions</h3>
                         <div className="project-page__assumption-cards">
                           {[
-                            { id: 'wacc', label: 'WACC', value: '6.66%', rationaleJsx: true, rationale: (
-                              <>
-                                <span className="project-page__formula">w<sub>E</sub>R<sub>E</sub> + w<sub>D</sub>R<sub>D</sub>(1 − T)</span>. R<sub>E</sub> from CAPM: 4.58% r<sub>f</sub>, 4.33% ERP, β = 1.51 (Goodyear vs S&P 500 monthly returns, May 2020–Dec 2024). R<sub>D</sub> = interest expense ÷ avg 2023–24 interest-bearing debt. Weights: valuation-date equity and 2024 debt; T = 25%.
-                              </>
-                            ) },
-                            { id: 'terminal', label: 'Terminal growth rate', value: '2.0%', rationale: 'I use a 2.0% terminal growth rate to reflect long-run inflation-like growth for a mature industrial business, keeping the terminal value conservative. It is also set below WACC as a basic DCF consistency check.' },
-                            { id: 'tax', label: 'Effective tax rate', value: '25%', rationale: 'I assume a 25% tax rate as a normalized long-run effective rate to convert EBIT into after-tax operating profit and to apply the debt tax shield in WACC. This avoids letting any single-year tax noise distort the valuation.' },
-                            { id: 'ebit', label: 'EBIT (2023 → 2029)', value: '~$653M → ~$963M', rationale: 'Revenue growth and margin improvement from volume recovery, mix, and cost initiatives. Ranges reflect base-case operating leverage; bull/bear scenarios adjust growth and margins.' },
+                            {
+                              id: 'wacc',
+                              label: 'WACC',
+                              value: '6.66%',
+                              rationaleJsx: true,
+                              rationale: (
+                                <>
+                                  <span className="project-page__formula">
+                                    w<sub>E</sub>R<sub>E</sub> + w<sub>D</sub>R<sub>D</sub>(1 − T)
+                                  </span>
+                                  . R<sub>E</sub> from CAPM: 4.58% r<sub>f</sub>, 4.33% ERP, β =
+                                  1.51 (Goodyear vs S&P 500 monthly returns, May 2020–Dec 2024). R
+                                  <sub>D</sub> = interest expense ÷ avg 2023–24 interest-bearing
+                                  debt. Weights: valuation-date equity and 2024 debt; T = 25%.
+                                </>
+                              ),
+                            },
+                            {
+                              id: 'terminal',
+                              label: 'Terminal growth rate',
+                              value: '2.0%',
+                              rationale:
+                                'I use a 2.0% terminal growth rate to reflect long-run inflation-like growth for a mature industrial business, keeping the terminal value conservative. It is also set below WACC as a basic DCF consistency check.',
+                            },
+                            {
+                              id: 'tax',
+                              label: 'Effective tax rate',
+                              value: '25%',
+                              rationale:
+                                'I assume a 25% tax rate as a normalized long-run effective rate to convert EBIT into after-tax operating profit and to apply the debt tax shield in WACC. This avoids letting any single-year tax noise distort the valuation.',
+                            },
+                            {
+                              id: 'ebit',
+                              label: 'EBIT (2023 → 2029)',
+                              value: '~$653M → ~$963M',
+                              rationale:
+                                'Revenue growth and margin improvement from volume recovery, mix, and cost initiatives. Ranges reflect base-case operating leverage; bull/bear scenarios adjust growth and margins.',
+                            },
                           ].map(({ id, label, value, rationale, rationaleJsx }) => (
                             <div
                               key={id}
@@ -382,19 +527,30 @@ export function ProjectPage() {
                               <button
                                 type="button"
                                 className="project-page__assumption-card-head"
-                                onClick={() => setGoodyearExpandedAssumption((prev) => (prev === id ? null : id))}
+                                onClick={() =>
+                                  setGoodyearExpandedAssumption((prev) => (prev === id ? null : id))
+                                }
                                 aria-expanded={goodyearExpandedAssumption === id}
                               >
                                 <span className="project-page__assumption-card-label">{label}</span>
                                 <span className="project-page__assumption-card-value">{value}</span>
-                                <span className="project-page__assumption-card-chevron" aria-hidden="true">{goodyearExpandedAssumption === id ? '▼' : '▶'}</span>
+                                <span
+                                  className="project-page__assumption-card-chevron"
+                                  aria-hidden="true"
+                                >
+                                  {goodyearExpandedAssumption === id ? '▼' : '▶'}
+                                </span>
                               </button>
                               {goodyearExpandedAssumption === id && (
                                 <div className="project-page__assumption-card-body">
                                   {rationaleJsx ? (
-                                    <div className="project-page__assumption-card-rationale">{rationale}</div>
+                                    <div className="project-page__assumption-card-rationale">
+                                      {rationale}
+                                    </div>
                                   ) : (
-                                    <p className="project-page__assumption-card-rationale">{rationale}</p>
+                                    <p className="project-page__assumption-card-rationale">
+                                      {rationale}
+                                    </p>
                                   )}
                                 </div>
                               )}
@@ -406,14 +562,38 @@ export function ProjectPage() {
                         <h3 className="project-page__table-title">Key ratios (Dec 2024)</h3>
                         <table className="project-page__table">
                           <tbody>
-                            <tr><td>Current ratio</td><td>1.04</td></tr>
-                            <tr><td>Quick ratio</td><td>0.55</td></tr>
-                            <tr><td>Debt ratio</td><td>0.77</td></tr>
-                            <tr><td>Earnings per share</td><td>$0.24</td></tr>
-                            <tr><td>Return on assets</td><td>0.33%</td></tr>
-                            <tr><td>Return on equity</td><td>1.49%</td></tr>
-                            <tr><td>Revenue growth (YoY)</td><td>−5.92%</td></tr>
-                            <tr><td>Profit margin</td><td>0.37%</td></tr>
+                            <tr>
+                              <td>Current ratio</td>
+                              <td>1.04</td>
+                            </tr>
+                            <tr>
+                              <td>Quick ratio</td>
+                              <td>0.55</td>
+                            </tr>
+                            <tr>
+                              <td>Debt ratio</td>
+                              <td>0.77</td>
+                            </tr>
+                            <tr>
+                              <td>Earnings per share</td>
+                              <td>$0.24</td>
+                            </tr>
+                            <tr>
+                              <td>Return on assets</td>
+                              <td>0.33%</td>
+                            </tr>
+                            <tr>
+                              <td>Return on equity</td>
+                              <td>1.49%</td>
+                            </tr>
+                            <tr>
+                              <td>Revenue growth (YoY)</td>
+                              <td>−5.92%</td>
+                            </tr>
+                            <tr>
+                              <td>Profit margin</td>
+                              <td>0.37%</td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -443,7 +623,7 @@ export function ProjectPage() {
                     </a>
                   )}
                 </div>
-                </>
+              </>
             )}
             {!isReportFirst && project.excelFile && (
               <a
@@ -459,16 +639,16 @@ export function ProjectPage() {
             {!isReportFirst && !isPortfolioProject && project.description ? (
               <div className="project-page__body">
                 {project.description.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="project-page__body-p">{para}</p>
+                  <p key={i} className="project-page__body-p">
+                    {para}
+                  </p>
                 ))}
               </div>
-            ) : (
-              !isReportFirst && !project.excelFile ? (
-                <p className="project-page__placeholder">
-                  Interactive content and full project details will be added in Phase 5.
-                </p>
-              ) : null
-            )}
+            ) : !isReportFirst && !project.excelFile ? (
+              <p className="project-page__placeholder">
+                Interactive content and full project details will be added in Phase 5.
+              </p>
+            ) : null}
             {project.chartImages && project.chartImages.length > 0 && (
               <div className="project-page__charts">
                 <h2 className="project-page__charts-heading">Charts & results</h2>
@@ -484,7 +664,9 @@ export function ProjectPage() {
                         className="project-page__chart-img"
                       />
                       {item.caption && (
-                        <figcaption className="project-page__chart-caption">{item.caption}</figcaption>
+                        <figcaption className="project-page__chart-caption">
+                          {item.caption}
+                        </figcaption>
                       )}
                     </figure>
                   ))}
@@ -497,7 +679,8 @@ export function ProjectPage() {
                   {isReportFirst ? 'Explore the Excel model' : 'View spreadsheet in browser'}
                 </h2>
                 <p className="project-page__viewer-note">
-                  Read-only preview. Switch sheets and toggle formulas below. Use <strong>Download Excel model</strong> above to open in Excel.
+                  Read-only preview. Switch sheets and toggle formulas below. Use{' '}
+                  <strong>Download Excel model</strong> above to open in Excel.
                 </p>
                 <ExcelViewer url={`/pdfs/${encodeURIComponent(project.excelFile)}`} />
               </div>

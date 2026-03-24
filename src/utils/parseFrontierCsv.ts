@@ -38,7 +38,10 @@ function parseRowCal(row: string): DataPoint | null {
 }
 
 export function parseFrontierCsv(csvText: string): FrontierData {
-  const lines = csvText.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const lines = csvText
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
   const frontier: DataPoint[] = [];
   const cal: DataPoint[] = [];
   let phase: 'frontier' | 'skip' | 'cal' = 'frontier';
@@ -108,13 +111,22 @@ export function computePortfolioStats(
   const riskFreeRate = options?.riskFreeRateOverride ?? rfPoint.return;
 
   // Min volatility: frontier point with lowest stdDev
-  const minVol = data.frontier.reduce((best, p) => (p.stdDev < best.stdDev ? p : best), data.frontier[0]);
+  const minVol = data.frontier.reduce(
+    (best, p) => (p.stdDev < best.stdDev ? p : best),
+    data.frontier[0]
+  );
 
   // Max return: frontier point with highest return
-  const maxRet = data.frontier.reduce((best, p) => (p.return > best.return ? p : best), data.frontier[0]);
+  const maxRet = data.frontier.reduce(
+    (best, p) => (p.return > best.return ? p : best),
+    data.frontier[0]
+  );
 
   // CAL slope = (E[R] - R_f) / σ for any point on the CAL. Use the CAL point with largest stdDev to avoid division by zero.
-  const calRiskyPoint = data.cal.reduce((best, p) => (p.stdDev > best.stdDev ? p : best), data.cal[0]);
+  const calRiskyPoint = data.cal.reduce(
+    (best, p) => (p.stdDev > best.stdDev ? p : best),
+    data.cal[0]
+  );
   const calSlope =
     calRiskyPoint.stdDev > NEAR_ZERO
       ? (calRiskyPoint.return - riskFreeRate) / calRiskyPoint.stdDev

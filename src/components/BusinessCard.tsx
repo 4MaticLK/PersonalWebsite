@@ -2,12 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 
 const CARD_INFO = {
   name: 'Levan Kvinikadze',
-  email: 'levank30@brandeis.edu',
+  email: 'lkvinikadze30@gmail.com',
   linkedInUrl: 'https://www.linkedin.com/in/levan-kvinikadze',
   /** Photo: place LK.jpg in public/ */
   photoUrl: '/LK.jpg',
-  /** Resume: place file in public/pdfs/ and set URL/filename here */
-  resumeUrl: '/pdfs/resume.pdf.pdf',
+  /** Resume: file in public/pdfs/ */
+  resumeUrl: '/pdfs/Levan_Kvinikadze_Resume.pdf',
   resumeFilename: 'Levan_Kvinikadze_Resume.pdf',
 } as const;
 
@@ -30,7 +30,8 @@ const EDUCATION = [
   {
     logoUrl: '/logos/Bentley.png',
     name: 'Bentley University',
-    degree: 'Bachelor of Science in Corporate Finance and Accounting, Minor in Computer Information Systems',
+    degree:
+      'Bachelor of Science in Corporate Finance and Accounting, Minor in Computer Information Systems',
     dates: '09/2021 – 05/2025',
   },
 ] as const;
@@ -124,10 +125,15 @@ export function BusinessCard() {
         <div className="business-card__main">
           <h1 className="business-card__name">{CARD_INFO.name}</h1>
           <p className="business-card__title">Investments · Private Markets · Portfolio</p>
-          <p className="business-card__focus">Valuation-driven finance across public and private investing, with clear, decision-ready analysis.</p>
+          <p className="business-card__focus">
+            Valuation-driven finance across public and private investing, with clear, decision-ready
+            analysis.
+          </p>
           <div className="business-card__chips">
             {FOCUS_CHIPS.map((label) => (
-              <span key={label} className="business-card__chip">{label}</span>
+              <span key={label} className="business-card__chip">
+                {label}
+              </span>
             ))}
           </div>
           <p className="business-card__get-in-touch">Get in touch</p>
@@ -186,7 +192,9 @@ export function BusinessCard() {
             }}
           >
             <span className="business-card__cta-label">Scroll to explore</span>
-            <span className="business-card__cta-arrow" aria-hidden="true">↓</span>
+            <span className="business-card__cta-arrow" aria-hidden="true">
+              ↓
+            </span>
           </a>
         </div>
         <div className="business-card__education">
@@ -216,7 +224,17 @@ export function BusinessCard() {
 
 function EmailIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <rect width="20" height="16" x="2" y="4" rx="2" />
       <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
     </svg>
@@ -225,7 +243,17 @@ function EmailIcon() {
 
 function CopyIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
       <path d="M4 16V4a2 2 0 0 1 2-2h12" />
     </svg>
@@ -242,7 +270,17 @@ function LinkedInIcon() {
 
 function DownloadIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
       <polyline points="14 2 14 8 20 8" />
       <line x1="16" x2="8" y1="13" y2="13" />

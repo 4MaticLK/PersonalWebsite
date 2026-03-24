@@ -24,21 +24,25 @@ interface MergersAcquisitionsModelProps {
   downloadFilename: string;
 }
 
-export function MergersAcquisitionsModel({ downloadUrl, downloadFilename }: MergersAcquisitionsModelProps) {
+export function MergersAcquisitionsModel({
+  downloadUrl,
+  downloadFilename,
+}: MergersAcquisitionsModelProps) {
   const [waccPct, setWaccPct] = useState(8.4);
   const [terminalGrowthPct, setTerminalGrowthPct] = useState(2.5);
 
   const impliedPrice = useMemo(
     () => computeImpliedPricePerShare(waccPct, terminalGrowthPct),
-    [waccPct, terminalGrowthPct],
+    [waccPct, terminalGrowthPct]
   );
 
   return (
     <div className="ma-model">
       <h2 className="ma-model__heading">Interactive DCF (simplified)</h2>
       <p className="ma-model__intro">
-        Adjust WACC and terminal growth to see how the implied offer price per share changes.
-        The full model (including synergy scenario and full sensitivity) is in the downloadable Excel file.
+        Adjust WACC and terminal growth to see how the implied offer price per share changes. The
+        full model (including synergy scenario and full sensitivity) is in the downloadable Excel
+        file.
       </p>
       <div className="ma-model__inputs">
         <label className="ma-model__label">
@@ -91,9 +95,9 @@ export function MergersAcquisitionsModel({ downloadUrl, downloadFilename }: Merg
       <details className="ma-model__methodology">
         <summary>Methodology</summary>
         <p>
-          Single-stage FCFF perpetuity: EV = FCFF₁ / (WACC − g). Equity value = EV − net debt;
-          per share = equity / shares. This is a simplified version; the Excel model includes
-          explicit forecast years, synergy scenario (€3B at 6% growth), and full sensitivity.
+          Single-stage FCFF perpetuity: EV = FCFF₁ / (WACC − g). Equity value = EV − net debt; per
+          share = equity / shares. This is a simplified version; the Excel model includes explicit
+          forecast years, synergy scenario (€3B at 6% growth), and full sensitivity.
         </p>
       </details>
       <a
@@ -107,8 +111,8 @@ export function MergersAcquisitionsModel({ downloadUrl, downloadFilename }: Merg
       </a>
       <h2 className="ma-model__heading ma-model__heading--viewer">Spreadsheet</h2>
       <p className="ma-model__viewer-note">
-        Read-only preview below (works on localhost and when deployed). Use <strong>Download full Excel model</strong> above
-        to open in Excel and see or edit formulas.
+        Read-only preview below (works on localhost and when deployed). Use{' '}
+        <strong>Download full Excel model</strong> above to open in Excel and see or edit formulas.
       </p>
       <ExcelViewer url={downloadUrl} />
     </div>

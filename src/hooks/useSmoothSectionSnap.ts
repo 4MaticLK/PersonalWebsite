@@ -1,6 +1,12 @@
 import { useEffect, useRef } from 'react';
 
-const SECTION_IDS = ['card', 'summary', 'work-experience', 'academic-projects', 'skills-and-activities'] as const;
+const SECTION_IDS = [
+  'card',
+  'summary',
+  'work-experience',
+  'academic-projects',
+  'skills-and-activities',
+] as const;
 const SCROLL_PADDING_TOP = 52; // match --nav-height (3.25rem)
 const DEBOUNCE_MS = 120;
 

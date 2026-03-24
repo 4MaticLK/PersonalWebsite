@@ -35,7 +35,8 @@ function sheetToCellGrid(sheet: XLSX.WorkSheet): CellData[][] {
       const cell = sheet[addr];
       const raw = cell?.v;
       const v = raw != null ? String(raw) : '';
-      const z = typeof (cell as { z?: string })?.z === 'string' ? (cell as { z: string }).z : undefined;
+      const z =
+        typeof (cell as { z?: string })?.z === 'string' ? (cell as { z: string }).z : undefined;
       const f = typeof cell?.f === 'string' ? cell.f : undefined;
       row.push({ raw, v, z, f });
     }
@@ -53,24 +54,27 @@ export function ExcelViewer({ url }: ExcelViewerProps) {
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error('File not found');
-        return res.arrayBuffer();
-      })
-      .then((ab) => {
-        if (cancelled) return;
-        const wb = XLSX.read(ab, { type: 'array', cellFormula: true, cellNF: true });
-        const names = wb.SheetNames;
-        const allRows = names.map((name) => sheetToCellGrid(wb.Sheets[name]));
-        setSheetNames(names);
-        setTables(allRows);
-        setStatus('ok');
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('error');
-      });
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setStatus('loading');
+      fetch(url)
+        .then((res) => {
+          if (!res.ok) throw new Error('File not found');
+          return res.arrayBuffer();
+        })
+        .then((ab) => {
+          if (cancelled) return;
+          const wb = XLSX.read(ab, { type: 'array', cellFormula: true, cellNF: true });
+          const names = wb.SheetNames;
+          const allRows = names.map((name) => sheetToCellGrid(wb.Sheets[name]));
+          setSheetNames(names);
+          setTables(allRows);
+          setStatus('ok');
+        })
+        .catch(() => {
+          if (!cancelled) setStatus('error');
+        });
+    });
     return () => {
       cancelled = true;
     };
@@ -88,9 +92,9 @@ export function ExcelViewer({ url }: ExcelViewerProps) {
     return (
       <div className="excel-viewer excel-viewer--error">
         <p>
-          Excel file not found. Add <strong>PBMA_copy.xlsx</strong> to the <strong>public/pdfs/</strong> folder
-          in your project to display it here. You can still use the interactive model above and the Download
-          button once the file is in place.
+          Excel file not found. Add <strong>PBMA_copy.xlsx</strong> to the{' '}
+          <strong>public/pdfs/</strong> folder in your project to display it here. You can still use
+          the interactive model above and the Download button once the file is in place.
         </p>
       </div>
     );
@@ -137,7 +141,8 @@ export function ExcelViewer({ url }: ExcelViewerProps) {
               <tr key={ri}>
                 {row.slice(0, maxCols).map((cell, ci) => {
                   const display = formatCellDisplay(cell, showFormulas);
-                  const title = !showFormulas && cell.f != null && cell.f !== '' ? cell.f : undefined;
+                  const title =
+                    !showFormulas && cell.f != null && cell.f !== '' ? cell.f : undefined;
                   return (
                     <td
                       key={ci}

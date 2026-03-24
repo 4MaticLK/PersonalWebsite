@@ -10,7 +10,12 @@ import {
   ResponsiveContainer,
   ReferenceDot,
 } from 'recharts';
-import { parseFrontierCsv, computePortfolioStats, type FrontierData, type PortfolioStats } from '../utils/parseFrontierCsv';
+import {
+  parseFrontierCsv,
+  computePortfolioStats,
+  type FrontierData,
+  type PortfolioStats,
+} from '../utils/parseFrontierCsv';
 
 export interface EfficientFrontierChartProps {
   /** Override risk-free rate in % (e.g. 4.23 for 4.23%). Used for RFR card and tangency/CAL slope. */
@@ -25,7 +30,9 @@ const X_TICKS = [15, 16, 17, 18, 19, 20, 21];
 const Y_TICKS = [14, 14.2, 14.4, 14.6, 14.8, 15, 15.2, 15.4];
 
 /** Build chart data: frontier in original CSV order (so the curve draws correctly), then CAL in ascending Risk order (so the line touches the Y-axis). Do not sort together or the yellow frontier line connects points in the wrong order. */
-function mergeForChart(data: FrontierData): { stdDev: number; frontier: number | null; cal: number | null }[] {
+function mergeForChart(
+  data: FrontierData
+): { stdDev: number; frontier: number | null; cal: number | null }[] {
   const rows: { stdDev: number; frontier: number | null; cal: number | null }[] = [];
   data.frontier.forEach((p) => rows.push({ stdDev: p.stdDev, frontier: p.return, cal: null }));
   const calSorted = [...data.cal].sort((a, b) => a.stdDev - b.stdDev);
@@ -42,7 +49,12 @@ function StatCard({
   value,
   sub,
   accent,
-}: { label: string; value: string; sub?: string; accent?: boolean }) {
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  accent?: boolean;
+}) {
   return (
     <div className={`frontier-stats__card ${accent ? 'frontier-stats__card--accent' : ''}`}>
       <span className="frontier-stats__label">{label}</span>
@@ -54,30 +66,39 @@ function StatCard({
 
 export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFrontierChartProps = {}) {
   const [status, setStatus] = useState<'loading' | 'ok' | 'error'>('loading');
-  const [chartData, setChartData] = useState<{ stdDev: number; frontier: number | null; cal: number | null }[]>([]);
+  const [chartData, setChartData] = useState<
+    { stdDev: number; frontier: number | null; cal: number | null }[]
+  >([]);
   const [stats, setStats] = useState<PortfolioStats | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
-    fetch(CSV_URL)
-      .then((res) => {
-        if (!res.ok) throw new Error('CSV not found');
-        return res.text();
-      })
-      .then((text) => {
-        if (cancelled) return;
-        const data = parseFrontierCsv(text);
-        if (data.frontier.length === 0 && data.cal.length === 0) throw new Error('No data parsed');
-        setChartData(mergeForChart(data));
-        setStats(
-          computePortfolioStats(data, riskFreeRateOverride != null ? { riskFreeRateOverride } : undefined)
-        );
-        setStatus('ok');
-      })
-      .catch(() => {
-        if (!cancelled) setStatus('error');
-      });
+    queueMicrotask(() => {
+      if (cancelled) return;
+      setStatus('loading');
+      fetch(CSV_URL)
+        .then((res) => {
+          if (!res.ok) throw new Error('CSV not found');
+          return res.text();
+        })
+        .then((text) => {
+          if (cancelled) return;
+          const data = parseFrontierCsv(text);
+          if (data.frontier.length === 0 && data.cal.length === 0)
+            throw new Error('No data parsed');
+          setChartData(mergeForChart(data));
+          setStats(
+            computePortfolioStats(
+              data,
+              riskFreeRateOverride != null ? { riskFreeRateOverride } : undefined
+            )
+          );
+          setStatus('ok');
+        })
+        .catch(() => {
+          if (!cancelled) setStatus('error');
+        });
+    });
     return () => {
       cancelled = true;
     };
@@ -98,7 +119,10 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
   if (status === 'error') {
     return (
       <div className="frontier-chart frontier-chart--error">
-        <p>Could not load <strong>Sheet 1.csv</strong>. Ensure the file is in <strong>public/pdfs/</strong>.</p>
+        <p>
+          Could not load <strong>Sheet 1.csv</strong>. Ensure the file is in{' '}
+          <strong>public/pdfs/</strong>.
+        </p>
       </div>
     );
   }
@@ -110,7 +134,8 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
           2 Stock Frontier
         </h3>
         <p className="frontier-chart__caption">
-          Risk vs. return. Efficient frontier and capital allocation line (tangent at optimal risky portfolio).
+          Risk vs. return. Efficient frontier and capital allocation line (tangent at optimal risky
+          portfolio).
         </p>
       </header>
 
@@ -148,10 +173,7 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
       <div className="frontier-chart__chart-wrap">
         <div className="frontier-chart__container">
           <ResponsiveContainer width="100%" height={420}>
-            <LineChart
-              data={chartData}
-              margin={{ top: 16, right: 20, left: 56, bottom: 40 }}
-            >
+            <LineChart data={chartData} margin={{ top: 16, right: 20, left: 56, bottom: 40 }}>
               <CartesianGrid
                 strokeDasharray="0"
                 stroke="rgba(248,250,252,0.12)"
@@ -167,7 +189,13 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
                 tick={{ fill: '#94a3b8', fontSize: 11 }}
                 axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
                 tickLine={{ stroke: 'rgba(248,250,252,0.25)', width: 1 }}
-                label={{ value: 'Risk', position: 'insideBottom', offset: -10, fill: '#94a3b8', fontSize: 12 }}
+                label={{
+                  value: 'Risk',
+                  position: 'insideBottom',
+                  offset: -10,
+                  fill: '#94a3b8',
+                  fontSize: 12,
+                }}
               />
               <YAxis
                 type="number"
@@ -177,7 +205,13 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
                 tick={{ fill: '#94a3b8', fontSize: 11 }}
                 axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
                 tickLine={{ stroke: 'rgba(248,250,252,0.25)', width: 1 }}
-                label={{ value: 'Return', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 12 }}
+                label={{
+                  value: 'Return',
+                  angle: -90,
+                  position: 'insideLeft',
+                  fill: '#94a3b8',
+                  fontSize: 12,
+                }}
               />
               <Tooltip
                 formatter={(value: number) => [formatPct(value), '']}

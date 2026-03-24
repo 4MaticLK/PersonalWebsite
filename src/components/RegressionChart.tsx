@@ -48,7 +48,6 @@ export function RegressionChart() {
 
   useEffect(() => {
     let cancelled = false;
-    setStatus('loading');
     fetch(CSV_URL)
       .then((res) => {
         if (!res.ok) throw new Error('CSV not found');
@@ -80,7 +79,10 @@ export function RegressionChart() {
   if (status === 'error') {
     return (
       <div className="portfolio-chart portfolio-chart--error">
-        <p>Could not load <strong>Sheet 3.csv</strong>. Ensure the file is in <strong>public/pdfs/</strong>.</p>
+        <p>
+          Could not load <strong>Sheet 3.csv</strong>. Ensure the file is in{' '}
+          <strong>public/pdfs/</strong>.
+        </p>
       </div>
     );
   }
@@ -135,7 +137,8 @@ export function RegressionChart() {
         Stock vs market (SPY) regression
       </h3>
       <p className="portfolio-chart__caption">
-        Monthly returns: each point is (market return %, stock return %). Dashed line is OLS fit (beta = sensitivity to market).
+        Monthly returns: each point is (market return %, stock return %). Dashed line is OLS fit
+        (beta = sensitivity to market).
       </p>
       <div className="regression-chart__split">
         <div className="regression-chart__panel">
@@ -143,20 +146,37 @@ export function RegressionChart() {
           <div className="portfolio-chart__container">
             <ResponsiveContainer width="100%" height={320}>
               <ComposedChart data={nocData} margin={{ top: 12, right: 16, left: 8, bottom: 20 }}>
-                <CartesianGrid strokeDasharray="0" stroke="rgba(248,250,252,0.12)" vertical horizontal />
+                <CartesianGrid
+                  strokeDasharray="0"
+                  stroke="rgba(248,250,252,0.12)"
+                  vertical
+                  horizontal
+                />
                 <XAxis
                   type="number"
                   dataKey="x"
                   domain={[xMin - xPadding, xMax + xPadding]}
                   {...sharedAxisStyle}
-                  label={{ value: 'Market (SPY %)', position: 'insideBottom', offset: -6, fill: '#94a3b8', fontSize: 11 }}
+                  label={{
+                    value: 'Market (SPY %)',
+                    position: 'insideBottom',
+                    offset: -6,
+                    fill: '#94a3b8',
+                    fontSize: 11,
+                  }}
                 />
                 <YAxis
                   type="number"
                   dataKey="y"
                   domain={[yMinNoc - yPadNoc, yMaxNoc + yPadNoc]}
                   {...sharedAxisStyle}
-                  label={{ value: 'NOC return (%)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 11 }}
+                  label={{
+                    value: 'NOC return (%)',
+                    angle: -90,
+                    position: 'insideLeft',
+                    fill: '#94a3b8',
+                    fontSize: 11,
+                  }}
                 />
                 <Tooltip
                   formatter={(value: number) => [`${Number(value).toFixed(2)}%`, '']}
@@ -165,7 +185,14 @@ export function RegressionChart() {
                   labelStyle={{ color: 'var(--color-text)', fontWeight: 600 }}
                 />
                 <Scatter dataKey="y" name="NOC" fill="#38bdf8" fillOpacity={0.85} />
-                <Line type="monotone" dataKey="fit" stroke="#38bdf8" strokeWidth={2} dot={false} strokeDasharray="4 4" />
+                <Line
+                  type="monotone"
+                  dataKey="fit"
+                  stroke="#38bdf8"
+                  strokeWidth={2}
+                  dot={false}
+                  strokeDasharray="4 4"
+                />
               </ComposedChart>
             </ResponsiveContainer>
           </div>
@@ -198,20 +225,37 @@ export function RegressionChart() {
           <div className="portfolio-chart__container">
             <ResponsiveContainer width="100%" height={320}>
               <ComposedChart data={mcdData} margin={{ top: 12, right: 16, left: 8, bottom: 20 }}>
-                <CartesianGrid strokeDasharray="0" stroke="rgba(248,250,252,0.12)" vertical horizontal />
+                <CartesianGrid
+                  strokeDasharray="0"
+                  stroke="rgba(248,250,252,0.12)"
+                  vertical
+                  horizontal
+                />
                 <XAxis
                   type="number"
                   dataKey="x"
                   domain={[xMin - xPadding, xMax + xPadding]}
                   {...sharedAxisStyle}
-                  label={{ value: 'Market (SPY %)', position: 'insideBottom', offset: -6, fill: '#94a3b8', fontSize: 11 }}
+                  label={{
+                    value: 'Market (SPY %)',
+                    position: 'insideBottom',
+                    offset: -6,
+                    fill: '#94a3b8',
+                    fontSize: 11,
+                  }}
                 />
                 <YAxis
                   type="number"
                   dataKey="y"
                   domain={[yMinMcd - yPadMcd, yMaxMcd + yPadMcd]}
                   {...sharedAxisStyle}
-                  label={{ value: 'MCD return (%)', angle: -90, position: 'insideLeft', fill: '#94a3b8', fontSize: 11 }}
+                  label={{
+                    value: 'MCD return (%)',
+                    angle: -90,
+                    position: 'insideLeft',
+                    fill: '#94a3b8',
+                    fontSize: 11,
+                  }}
                 />
                 <Tooltip
                   formatter={(value: number) => [`${Number(value).toFixed(2)}%`, '']}
@@ -220,7 +264,14 @@ export function RegressionChart() {
                   labelStyle={{ color: 'var(--color-text)', fontWeight: 600 }}
                 />
                 <Scatter dataKey="y" name="MCD" fill="var(--color-accent)" fillOpacity={0.85} />
-                <Line type="monotone" dataKey="fit" stroke="var(--color-accent)" strokeWidth={2} dot={false} strokeDasharray="4 4" />
+                <Line
+                  type="monotone"
+                  dataKey="fit"
+                  stroke="var(--color-accent)"
+                  strokeWidth={2}
+                  dot={false}
+                  strokeDasharray="4 4"
+                />
               </ComposedChart>
             </ResponsiveContainer>
           </div>

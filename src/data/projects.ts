@@ -63,8 +63,7 @@ export const PROJECTS: Project[] = [
     dataAsOf: 'Financials as of Dec 31, 2024',
     pdfFile: 'Goodyear_Writing_Word2.pdf',
     excelFile: 'GoodYear_Valuation_Final.xlsx',
-    description:
-      `Goodyear (GT) is not a simple "cheap vs expensive" stock. It is a balance-sheet and cash-flow story, where operating stability, cost discipline, and leverage determine whether equity value compounds or gets squeezed.
+    description: `Goodyear (GT) is not a simple "cheap vs expensive" stock. It is a balance-sheet and cash-flow story, where operating stability, cost discipline, and leverage determine whether equity value compounds or gets squeezed.
 
 This report walks through the business from the ground up, starting with industry structure and Goodyear's positioning, then moving into debt and liquidity, ratio trends, and working-capital efficiency (cash conversion cycle). I tie those operating and credit factors into an unlevered DCF that is fully traceable, so a reader can follow each assumption from source data to valuation output.
 
@@ -79,8 +78,7 @@ Below you’ll find key metrics and scenario toggles (base / bull / bear), expan
     type: 'project',
     dataAsOf: 'Historical data as of March 2025',
     excelFile: '306 Portfolio Project (version 1).xlsx',
-    description:
-      `This report documents a $100 million portfolio mandate: select two equities and a U.S. government bond position, then recommend an allocation that targets a strong 24-month return while keeping risk disciplined and measurable. The goal is not just to pick "good stocks," but to build a portfolio where the mix is doing real work through diversification and controlled market exposure.
+    description: `This report documents a $100 million portfolio mandate: select two equities and a U.S. government bond position, then recommend an allocation that targets a strong 24-month return while keeping risk disciplined and measurable. The goal is not just to pick "good stocks," but to build a portfolio where the mix is doing real work through diversification and controlled market exposure.
 
 I sourced the two equities from a pre-screened universe and started with six candidates (NOC, MCD, LMT, KO, KR, RTX). I narrowed to Northrop Grumman (NOC) and McDonald's (MCD) because, together, they offered a cleaner balance of defensiveness and return potential, plus diversification benefits versus holding either name alone. I use SPY as the market benchmark and add a 10-year U.S. Treasury sleeve as the risk-free component.
 
@@ -100,19 +98,20 @@ Recommendation: invest $36M in NOC (36%), $54M in MCD (54%), and $10M in 10-year
     type: 'project',
     projectDate: '2025',
     excelFile: 'PBMA_copy.xlsx',
-    description:
-      `This project is based on a Harvard Business School case. I can't share case details or the full narrative, but here's what you're looking at: a valuation exercise in a mergers & acquisitions setting. The goal is to estimate a fair value for the target using a DCF (discounted cash flow) model, and to explore how key assumptions—like the cost of capital (WACC) and long-term growth—affect the implied offer price.
+    description: `This project is based on a Harvard Business School case. I can't share case details or the full narrative, but here's what you're looking at: a valuation exercise in a mergers & acquisitions setting. The goal is to estimate a fair value for the target using a DCF (discounted cash flow) model, and to explore how key assumptions—like the cost of capital (WACC) and long-term growth—affect the implied offer price.
 
 Below you'll find a simplified interactive DCF you can use in the browser, plus a read-only preview of the spreadsheet. To see my formulas, assumptions, and full sensitivity analysis, use the "Download full Excel model" button and open the file in Excel.`,
   },
   {
     name: 'International Finance: Argentine Economy',
     slug: 'research-paper',
-    shortDescription: 'Research on Argentina’s economy in an International Finance context — macro drivers, FX and sovereign risk, and implications.',
+    shortDescription:
+      'Research on Argentina’s economy in an International Finance context — macro drivers, FX and sovereign risk, and implications.',
     type: 'paper',
     projectDate: '2025',
     paperDate: '2025',
-    abstract: 'This paper analyzes Argentina’s economy from an international finance perspective. It reviews the country’s macroeconomic context—including growth, inflation, and fiscal and monetary policy—and examines foreign exchange dynamics, capital flows, and sovereign debt and default history. The discussion covers how these factors interact with global financial conditions and policy choices (including IMF programs) and what they imply for external financing, currency stability, and investment and credit risk. The paper aims to give a structured view of the main drivers and challenges facing Argentina in the international financial system.',
+    abstract:
+      'This paper analyzes Argentina’s economy from an international finance perspective. It reviews the country’s macroeconomic context—including growth, inflation, and fiscal and monetary policy—and examines foreign exchange dynamics, capital flows, and sovereign debt and default history. The discussion covers how these factors interact with global financial conditions and policy choices (including IMF programs) and what they imply for external financing, currency stability, and investment and credit risk. The paper aims to give a structured view of the main drivers and challenges facing Argentina in the international financial system.',
     body: 'Research conducted for an International Finance course. The full paper develops the analysis in the abstract and is available as a PDF below.',
     pdfFile: 'Argentina fixed.pdf',
     paperImages: [
