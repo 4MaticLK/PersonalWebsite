@@ -7,8 +7,8 @@ const DEFAULT_OPTIONS: IntersectionObserverInit = {
 };
 
 /**
- * Returns a ref and whether the element has been revealed (entered viewport).
- * Add ref to the element and class "scroll-reveal scroll-reveal--visible" when isVisible.
+ * Returns a ref and whether the element is currently in the viewport.
+ * Visibility tracks intersection so the fade-in runs every time you scroll to the section (up or down).
  */
 export function useScrollReveal(options?: Partial<IntersectionObserverInit>) {
   const ref = useRef<HTMLElement>(null);
@@ -20,7 +20,7 @@ export function useScrollReveal(options?: Partial<IntersectionObserverInit>) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
+        setIsVisible(entry.isIntersecting);
       },
       { ...DEFAULT_OPTIONS, ...options }
     );

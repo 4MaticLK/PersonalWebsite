@@ -6,8 +6,8 @@ const CARD_INFO = {
   linkedInUrl: 'https://www.linkedin.com/in/levan-kvinikadze',
   /** Photo: place LK.jpg in public/ */
   photoUrl: '/LK.jpg',
-  /** Add your resume to public/pdfs/ and set filename here */
-  resumeUrl: '/pdfs/resume.pdf',
+  /** Resume: place file in public/pdfs/ and set URL/filename here */
+  resumeUrl: '/pdfs/resume.pdf.pdf',
   resumeFilename: 'Levan_Kvinikadze_Resume.pdf',
 } as const;
 
