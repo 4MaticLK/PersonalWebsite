@@ -8,6 +8,9 @@ import { PriceMovementChart } from '../components/PriceMovementChart';
 import { RegressionChart } from '../components/RegressionChart';
 import { ReturnsOverTimeChart } from '../components/ReturnsOverTimeChart';
 import { CorrelationHeatmapChart } from '../components/CorrelationHeatmapChart';
+import { RiskParityProjectContent } from '../components/RiskParityProjectContent';
+import { RiskParitySubnav } from '../components/RiskParitySubnav';
+import { ProjectChartFigure } from '../components/ProjectChartFigure';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
 
 const MCD_LOGO_PATH = '/logos/mcdonalds-png-logo-simple-m-1.png';
@@ -101,18 +104,20 @@ export function ProjectPage() {
 
   const isMergersAcquisitions = project.slug === 'mergers-and-acquisitions' && project.excelFile;
   const isPortfolioProject = project.slug === 'financial-markets-and-investments';
+  const isRiskParity = project.slug === 'risk-parity-etf-fin285a';
   const isPaper = project.type === 'paper';
   const isReportFirst =
     !isPaper &&
     project.type === 'project' &&
     project.pdfFile != null &&
     !isPortfolioProject &&
-    !isMergersAcquisitions;
+    !isMergersAcquisitions &&
+    !isRiskParity;
 
   const goodyearScenarioData = goodyearScenarios[goodyearScenario];
 
   return (
-    <div className="project-page">
+    <div className={`project-page${isRiskParity ? ' project-page--risk-parity' : ''}`}>
       <nav className="project-page__nav" aria-label="Project navigation">
         <Link to="/#academic-projects" className="project-page__nav-back">
           <span className="project-page__nav-back-arrow" aria-hidden="true">
@@ -216,6 +221,8 @@ export function ProjectPage() {
           </p>
         )}
 
+        {isRiskParity && <RiskParitySubnav />}
+
         {isPaper && (
           <>
             {project.abstract && (
@@ -290,6 +297,10 @@ export function ProjectPage() {
         )}
         {!isMergersAcquisitions && !isPaper && (
           <>
+            {isRiskParity ? (
+              <RiskParityProjectContent project={project} />
+            ) : (
+              <>
             {isPortfolioProject &&
               project.description != null &&
               project.description.length > 0 && (
@@ -656,19 +667,8 @@ export function ProjectPage() {
                   Key charts from the model. Export from Excel as image to add more.
                 </p>
                 <div className="project-page__charts-grid">
-                  {project.chartImages.map((item, i) => (
-                    <figure key={i} className="project-page__chart-fig">
-                      <img
-                        src={`/images/${encodeURIComponent(item.file)}`}
-                        alt={item.caption ?? `Chart ${i + 1}`}
-                        className="project-page__chart-img"
-                      />
-                      {item.caption && (
-                        <figcaption className="project-page__chart-caption">
-                          {item.caption}
-                        </figcaption>
-                      )}
-                    </figure>
+                  {project.chartImages.map((item) => (
+                    <ProjectChartFigure key={item.file} item={item} />
                   ))}
                 </div>
               </div>
@@ -684,6 +684,8 @@ export function ProjectPage() {
                 </p>
                 <ExcelViewer url={`/pdfs/${encodeURIComponent(project.excelFile)}`} />
               </div>
+            )}
+              </>
             )}
           </>
         )}

@@ -2,8 +2,10 @@
 export interface ProjectChartImage {
   /** Filename in public/images/ (e.g. "mcd-returns.png") */
   file: string;
-  /** Optional caption shown under the image */
+  /** Short title shown under the image */
   caption?: string;
+  /** Longer explanation of what the chart shows and how to read it */
+  description?: string;
 }
 
 /**
@@ -20,6 +22,14 @@ export interface ProjectInteractiveChart {
   chartType: 'line' | 'bar';
   title?: string;
   seriesNames?: string[];
+}
+
+/** Notebook or support file for replicating a project (under public/) */
+export interface ProjectCodeFile {
+  /** Path relative to site root, e.g. code/fin285a/Part1.ipynb */
+  path: string;
+  label: string;
+  description?: string;
 }
 
 export interface Project {
@@ -51,6 +61,8 @@ export interface Project {
   chartImages?: ProjectChartImage[];
   /** Project-only: interactive charts (data read from excelFile; specify sheet + range) */
   interactiveCharts?: ProjectInteractiveChart[];
+  /** Project-only: notebooks, requirements, README for replication */
+  codeFiles?: ProjectCodeFile[];
 }
 
 export const PROJECTS: Project[] = [
@@ -70,6 +82,89 @@ This report walks through the business from the ground up, starting with industr
 In my base case, the model implies **$11.48 per share** versus the **$11.01** close on **May 2, 2025**, which is a modest headline upside but a useful way to frame the debate. The more important takeaway is *what drives the spread*: margin recovery, cash generation, and the cost of capital. I also include sensitivity analysis to show where the equity is resilient and where leverage meaningfully changes the outcome.
 
 Below you’ll find key metrics and scenario toggles (base / bull / bear), expandable assumption rationales, and ratio tables. For the full write-up and model, use the links above to open the report (PDF) or download the Excel file.`,
+  },
+  {
+    name: 'Risk Parity ETF Design & Tracking Error Optimization',
+    slug: 'risk-parity-etf-fin285a',
+    shortDescription:
+      '200% leveraged risk-parity ETF on four sleeves, then 20-ETF tracking-error replication with out-of-sample validation.',
+    type: 'project',
+    projectDate: 'Spring 2026',
+    dataAsOf: 'Prices 2014–2025 · Train 2014–2018 / Test 2019–2025',
+    pdfFile: 'FIN285A_Risk_Parity_ETF.pdf',
+    excelFile: 'AssetPrices_Part2.xlsx',
+    description: `FIN 285A (Computer Simulations & Risk Assessment): design and backtest a Bridgewater-style “All Weather” portfolio using liquid ETFs—first with dynamic risk parity on four broad sleeves, then with a 20-fund universe that minimizes tracking error against the same benchmark.
+
+Part 1 builds a **200% leveraged** risk-parity strategy on AGG (nominal bonds), ACWI (global equities), GSG (commodities), and TIP (inflation-linked bonds), using an EWMA covariance model (λ = 0.97), an 18-month rolling window, monthly rebalancing, and a static ALLW-style benchmark for comparison. Part 2 disaggregates each sleeve into granular ETFs (equity, bonds, TIPS, commodities) and solves for weights that minimize tracking error, with train/test validation (2014–2018 in-sample, 2019–2025 out-of-sample) and MA vs EWMA covariance models.
+
+A central finding is the **2022 bond–equity correlation regime shift**: when stocks and bonds moved together during the inflation shock, the traditional hedging assumption behind risk parity and 60/40 portfolios broke down—highlighting why TIPS and real assets matter as diversifiers. Out of sample, a **7-year training window with a moving-average covariance model** produced the smallest gap between forecast and realized tracking error (~12 bps).
+
+Charts below summarize performance, weights, tracking error, and correlations. Open the presentation (PDF) for the full methodology, or download the daily price panel (Excel) used in Part 2.`,
+    chartImages: [
+      {
+        file: 'fin285a-cumulative-returns.png',
+        caption: 'Part 1 — Cumulative return vs benchmark',
+        description:
+          'Monthly rebalanced risk parity (EWMA λ = 0.97, 18-month covariance window) compared with a static ALLW-style mix rescaled to 200% leverage on AGG, ACWI, GSG, and TIP. The lines separate when volatility regimes change: risk parity typically runs at lower volatility but can trail the static benchmark in extended risk-on periods.',
+      },
+      {
+        file: 'fin285a-part1-weights.png',
+        caption: 'Part 1 — Dynamic weights over time',
+        description:
+          'Optimized weights after the five-year burn-in. Nominal bonds (AGG) begin near the top of the range and decline as equity volatility rises; TIPS and commodities tend to hold closer to the 10% floor. Rebalancing is visible around 2020 (COVID) and 2022 (inflation shock), when the model shifts risk across sleeves.',
+      },
+      {
+        file: 'fin285a-bond-equity-correlation.png',
+        caption: 'Rolling bond–equity correlation',
+        description:
+          'Rolling correlation between the bond proxy (AGG) and equity proxy (ACWI). Negative or near-zero readings before 2022 supported the classic “bonds hedge stocks” narrative; the sustained positive readings after 2022 show why risk parity and 60/40 portfolios faced a structurally harder environment.',
+      },
+      {
+        file: 'fin285a-part2-cumulative.png',
+        caption: 'Part 2 — Optimized 20-ETF vs benchmark (test period)',
+        description:
+          'Out-of-sample cumulative returns (2019–2025) for the tracking-error-minimized portfolio versus the Part 1 benchmark, using weights fixed after training on 2014–2018. The paths stay close, indicating that a 20-ETF implementation can replicate the broad four-asset ALLW-style exposure without a large return gap in the test window.',
+      },
+      {
+        file: 'fin285a-tracking-error.png',
+        caption: 'Part 2 — Rolling tracking error',
+        description:
+          'Rolling tracking error between the optimized fund portfolio and the benchmark. Spikes align with macro stress (notably 2020 and 2022), when realized TE exceeded in-sample forecasts; in calmer periods TE compresses. This pattern motivated comparing MA vs EWMA models and longer training windows in the sensitivity analysis.',
+      },
+      {
+        file: 'fin285a-correlation-matrix.png',
+        caption: 'Part 2 — Correlation matrix (20 ETFs)',
+        description:
+          'Pairwise correlations for the full Part 2 universe. Equities correlate strongly with each other, as do bonds and commodities within their sleeves, while cross-sleeve correlations are lower—supporting diversification and the choice to split ACWI and GSG into granular funds rather than rely on a single broad ETF per sleeve.',
+      },
+    ],
+    codeFiles: [
+      {
+        path: 'code/fin285a/README.md',
+        label: 'README.md',
+        description: 'Setup, run order, and replication notes',
+      },
+      {
+        path: 'code/fin285a/requirements.txt',
+        label: 'requirements.txt',
+        description: 'Python dependencies (NumPy, pandas, SciPy, matplotlib, yfinance, openpyxl)',
+      },
+      {
+        path: 'code/fin285a/Part1.ipynb',
+        label: 'Part1.ipynb',
+        description: 'Risk parity on four ETFs vs static ALLW-style benchmark',
+      },
+      {
+        path: 'code/fin285a/Part2.ipynb',
+        label: 'Part2.ipynb',
+        description: '20-ETF tracking-error optimization, validation, and charts',
+      },
+      {
+        path: 'code/fin285a/AssetPrices_Part2.xlsx',
+        label: 'AssetPrices_Part2.xlsx',
+        description: 'Daily prices for Part 2 (place next to Part2.ipynb)',
+      },
+    ],
   },
   {
     name: '2-Stock Portfolio Analysis: MCD & NOC',
