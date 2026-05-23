@@ -92,7 +92,7 @@ export function ExcelViewer({ url }: ExcelViewerProps) {
     return (
       <div className="excel-viewer excel-viewer--error">
         <p>
-          Excel file not found. Add <strong>PBMA_copy.xlsx</strong> to the{' '}
+          Excel file not found. Add the workbook to the{' '}
           <strong>public/pdfs/</strong> folder in your project to display it here. You can still use
           the interactive model above and the Download button once the file is in place.
         </p>

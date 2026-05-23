@@ -6,7 +6,7 @@ const PROJECT_TAGS: Record<string, string[]> = {
   'goodyear-equity-research-valuation': ['Equity Research', 'DCF Valuation', 'PDF Report'],
   'risk-parity-etf-fin285a': ['Risk Parity', 'Tracking Error', 'Python', 'Backtesting'],
   'financial-markets-and-investments': ['Portfolio Analysis', 'Quantitative', 'Interactive Charts'],
-  'mergers-and-acquisitions': ['M&A', 'DCF', 'Excel Model'],
+  'mergers-and-acquisitions': ['M&A', 'Valuation', 'Accretion/Dilution', 'Excel Model'],
   'research-paper': ['International Finance', 'Macro Research', 'PDF'],
 };
 

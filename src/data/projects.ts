@@ -187,15 +187,20 @@ Recommendation: invest $36M in NOC (36%), $54M in MCD (54%), and $10M in 10-year
     // ],
   },
   {
-    name: 'Mergers and Acquisitions',
+    name: 'Salesforce–HubSpot Acquisition Analysis',
     slug: 'mergers-and-acquisitions',
-    shortDescription: 'DCF valuation of Anheuser-Busch, synergy scenario and sensitivity analysis',
+    shortDescription:
+      'Full M&A advisory analysis: DCF, comps, precedent transactions, and accretion/dilution for a $17B proposed acquisition',
     type: 'project',
-    projectDate: '2025',
-    excelFile: 'PBMA_copy.xlsx',
-    description: `This project is based on a Harvard Business School case. I can't share case details or the full narrative, but here's what you're looking at: a valuation exercise in a mergers & acquisitions setting. The goal is to estimate a fair value for the target using a DCF (discounted cash flow) model, and to explore how key assumptions—like the cost of capital (WACC) and long-term growth—affect the implied offer price.
+    projectDate: 'April 2026',
+    dataAsOf: 'Market data as of Mar 2026',
+    pdfFile: 'CRM_HUBS_MA_Report.pdf',
+    excelFile: 'CRM_HUBS_MA_Model.xlsx',
+    description: `This FIN 232a final project analyzes a **proposed acquisition of HubSpot (HUBS) by Salesforce (CRM)** for **$17.0 billion** (100% cash). The memorandum covers strategic rationale, standalone DCFs for both companies, trading comparables, precedent SaaS transactions, and full merger-consequence modeling across three financing structures.
 
-Below you'll find a simplified interactive DCF you can use in the browser, plus a read-only preview of the spreadsheet. To see my formulas, assumptions, and full sensitivity analysis, use the "Download full Excel model" button and open the file in Excel.`,
+The recommended bid implies **4.6× EV/NTM revenue**—above current trading comps but below recent SaaS precedent deals. **Option A (100% cash)** is dilutive to GAAP EPS in year one (−10.8%) but turns **accretive by 2028** (+1.0%) and reaches **+3.3% by 2030**, supported by $450M run-rate synergies and rapid acquisition debt paydown from combined free cash flow.
+
+Use the interactive tools below to explore HubSpot's DCF sensitivity, the valuation football field, and how financing structure affects accretion/dilution. The full advisory memorandum and linked Excel model (16 sheets) are available for download.`,
   },
   {
     name: 'International Finance: Argentine Economy',

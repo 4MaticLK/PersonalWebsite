@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getProjectBySlug } from '../data/projects';
-import { MergersAcquisitionsModel } from '../components/MergersAcquisitionsModel';
+import { MergersAcquisitionsProjectContent } from '../components/MergersAcquisitionsProjectContent';
 import { ExcelViewer } from '../components/ExcelViewer';
 import { EfficientFrontierChart } from '../components/EfficientFrontierChart';
 import { PriceMovementChart } from '../components/PriceMovementChart';
@@ -15,15 +15,16 @@ import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
 
 const MCD_LOGO_PATH = '/logos/mcdonalds-png-logo-simple-m-1.png';
 const NOC_LOGO_PATH = '/logos/northrop_grumman-logo_brandlogos.net_mqy0p.png';
-const AB_LOGO_PATH = '/logos/anheuser-busch-4-logo-png-transparent.png';
+const CRM_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg';
+const HUBS_LOGO_REMOTE =
+  'https://upload.wikimedia.org/wikipedia/commons/3/3f/HubSpot_Logo.svg';
 const GOODYEAR_LOGO_REMOTE =
   'https://upload.wikimedia.org/wikipedia/commons/2/2e/Goodyear_logo.svg';
 const MCD_LOGO_REMOTE =
   'https://upload.wikimedia.org/wikipedia/commons/3/36/McDonald%27s_Golden_Arches.svg';
 const NOC_LOGO_REMOTE =
   'https://upload.wikimedia.org/wikipedia/commons/9/9e/Northrop_Grumman_logo.svg';
-const AB_LOGO_REMOTE =
-  'https://upload.wikimedia.org/wikipedia/commons/a/ab/Anheuser-Busch_InBev_logo.svg';
 
 const goodyearScenarios = {
   base: {
@@ -64,8 +65,8 @@ export function ProjectPage() {
   const [mcdLogoUseText, setMcdLogoUseText] = useState(false);
   const [nocLogoSrc, setNocLogoSrc] = useState<string | null>(NOC_LOGO_PATH);
   const [nocLogoUseText, setNocLogoUseText] = useState(false);
-  const [abLogoSrc, setAbLogoSrc] = useState<string | null>(AB_LOGO_PATH);
-  const [abLogoUseText, setAbLogoUseText] = useState(false);
+  const [crmLogoUseText, setCrmLogoUseText] = useState(false);
+  const [hubsLogoUseText, setHubsLogoUseText] = useState(false);
   const [goodyearScenario, setGoodyearScenario] = useState<'base' | 'bull' | 'bear'>('base');
   const [goodyearExpandedAssumption, setGoodyearExpandedAssumption] = useState<string | null>(null);
 
@@ -102,7 +103,7 @@ export function ProjectPage() {
     );
   }
 
-  const isMergersAcquisitions = project.slug === 'mergers-and-acquisitions' && project.excelFile;
+  const isMergersAcquisitions = project.slug === 'mergers-and-acquisitions';
   const isPortfolioProject = project.slug === 'financial-markets-and-investments';
   const isRiskParity = project.slug === 'risk-parity-etf-fin285a';
   const isPaper = project.type === 'paper';
@@ -117,7 +118,7 @@ export function ProjectPage() {
   const goodyearScenarioData = goodyearScenarios[goodyearScenario];
 
   return (
-    <div className={`project-page${isRiskParity ? ' project-page--risk-parity' : ''}`}>
+    <div className={`project-page${isRiskParity ? ' project-page--risk-parity' : ''}${isMergersAcquisitions ? ' project-page--ma' : ''}`}>
       <nav className="project-page__nav" aria-label="Project navigation">
         <Link to="/#academic-projects" className="project-page__nav-back">
           <span className="project-page__nav-back-arrow" aria-hidden="true">
@@ -192,23 +193,31 @@ export function ProjectPage() {
           </div>
         )}
         {project.slug === 'mergers-and-acquisitions' && (
-          <div className="project-page__company-hero project-page__company-hero--ab">
-            {abLogoUseText ? (
-              <span className="project-page__company-name-fallback">Anheuser-Busch</span>
-            ) : abLogoSrc ? (
-              <img
-                src={abLogoSrc}
-                alt="Anheuser-Busch"
-                className="project-page__company-logo"
-                onError={() => {
-                  if (abLogoSrc === AB_LOGO_PATH) {
-                    setAbLogoSrc(AB_LOGO_REMOTE);
-                  } else {
-                    setAbLogoUseText(true);
-                  }
-                }}
-              />
-            ) : null}
+          <div className="project-page__portfolio-hero">
+            <div className="project-page__portfolio-hero-item">
+              {crmLogoUseText ? (
+                <span className="project-page__company-name-fallback">Salesforce</span>
+              ) : (
+                <img
+                  src={CRM_LOGO_REMOTE}
+                  alt="Salesforce"
+                  className="project-page__company-logo"
+                  onError={() => setCrmLogoUseText(true)}
+                />
+              )}
+            </div>
+            <div className="project-page__portfolio-hero-item project-page__portfolio-hero-item--hubs">
+              {hubsLogoUseText ? (
+                <span className="project-page__company-name-fallback">HubSpot</span>
+              ) : (
+                <img
+                  src={HUBS_LOGO_REMOTE}
+                  alt="HubSpot"
+                  className="project-page__company-logo"
+                  onError={() => setHubsLogoUseText(true)}
+                />
+              )}
+            </div>
           </div>
         )}
         <h1 className="project-page__title">{project.name}</h1>
@@ -280,20 +289,8 @@ export function ProjectPage() {
           </>
         )}
 
-        {isMergersAcquisitions && project.description != null && project.description.length > 0 && (
-          <div className="project-page__body">
-            {project.description.split(/\n\n+/).map((para, i) => (
-              <p key={i} className="project-page__body-p">
-                {para}
-              </p>
-            ))}
-          </div>
-        )}
-        {isMergersAcquisitions && project.excelFile && !isPaper && (
-          <MergersAcquisitionsModel
-            downloadUrl={`/pdfs/${project.excelFile}`}
-            downloadFilename={project.excelFile}
-          />
+        {isMergersAcquisitions && !isPaper && (
+          <MergersAcquisitionsProjectContent project={project} />
         )}
         {!isMergersAcquisitions && !isPaper && (
           <>
