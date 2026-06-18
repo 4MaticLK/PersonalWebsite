@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { PERSONAL_PORTFOLIO } from '../data/personalPortfolio';
 import { WorkSection } from './WorkSection';
+import { PersonalPortfolioSection } from './PersonalPortfolioSection';
 
 const LETTER_PDF_PATHS = {
   rsm: '/pdfs/RSM%20Georgia.pdf',
@@ -311,8 +313,8 @@ export function ExperienceSection() {
                 </ul>
               </div>
             </div>
-            <a href="#academic-projects" className="experience-section__cta">
-              See my projects
+            <a href="#investment-portfolio" className="experience-section__cta">
+              {PERSONAL_PORTFOLIO.experienceCta}
               <span className="experience-section__cta-arrow" aria-hidden>
                 →
               </span>
@@ -320,6 +322,8 @@ export function ExperienceSection() {
           </div>
         </div>
       </section>
+
+      <PersonalPortfolioSection />
 
       <WorkSection />
 

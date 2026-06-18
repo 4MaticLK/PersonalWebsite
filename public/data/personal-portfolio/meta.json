@@ -1,0 +1,13 @@
+{
+  "asOf": "2026-06-08",
+  "asOfDisplay": "June 8, 2026",
+  "syncedAt": "2026-06-18T14:15:34.857Z",
+  "verifiedAt": "2026-06-18T14:15:34.857Z",
+  "verifyPassed": false,
+  "verifyWarnings": [
+    "deposits_incomplete"
+  ],
+  "transactionCount": 96,
+  "holdingCount": 11,
+  "methodologyVersion": 1
+}

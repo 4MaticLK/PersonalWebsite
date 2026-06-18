@@ -9,12 +9,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "verify:portfolio": "npx tsx scripts/verifyPortfolio.mts",
+    "audit:current-book": "npx tsx scripts/auditCurrentBook.mts",
+    "sync:portfolio": "npx tsx scripts/syncPortfolioFromRobinhood.mts",
+    "refresh:portfolio-prices": "npx tsx scripts/refreshPortfolioPrices.mts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/blob": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",

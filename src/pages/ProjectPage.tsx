@@ -12,6 +12,8 @@ import { RiskParityProjectContent } from '../components/RiskParityProjectContent
 import { RiskParitySubnav } from '../components/RiskParitySubnav';
 import { ProjectChartFigure } from '../components/ProjectChartFigure';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
+import { suggestionBoxSlugForProject } from '../data/suggestionBoxes';
+import { SuggestionsSection } from '../components/SuggestionsSection';
 
 const MCD_LOGO_PATH = '/logos/mcdonalds-png-logo-simple-m-1.png';
 const NOC_LOGO_PATH = '/logos/northrop_grumman-logo_brandlogos.net_mqy0p.png';
@@ -687,6 +689,10 @@ export function ProjectPage() {
           </>
         )}
       </main>
+      <SuggestionsSection
+        boxSlug={suggestionBoxSlugForProject(project.slug)}
+        className="site-suggestions--project"
+      />
     </div>
   );
 }

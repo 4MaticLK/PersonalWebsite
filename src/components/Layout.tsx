@@ -5,11 +5,13 @@ import { useActiveSection } from '../hooks/useActiveSection';
 import { SITE_DEFAULT_TITLE } from '../constants/site';
 import { BusinessCard } from './BusinessCard';
 import { ExperienceSection } from './ExperienceSection';
+import { SuggestionsSection } from './SuggestionsSection';
 
 const NAV_LINKS: { href: string; label: string }[] = [
   { href: '#card', label: 'Contact' },
   { href: '#summary', label: 'Summary' },
   { href: '#work-experience', label: 'Work Experience' },
+  { href: '#investment-portfolio', label: 'Live Tracker' },
   { href: '#academic-projects', label: 'Academic Projects' },
   { href: '#skills-and-activities', label: 'Skills & Activities' },
 ];
@@ -78,6 +80,7 @@ export function Layout() {
           </div>
         </section>
         <ExperienceSection />
+        <SuggestionsSection boxSlug="home" className="site-suggestions--home" />
       </main>
     </>
   );

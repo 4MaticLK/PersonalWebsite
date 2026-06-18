@@ -4,6 +4,7 @@ const SECTION_IDS = [
   'card',
   'summary',
   'work-experience',
+  'investment-portfolio',
   'academic-projects',
   'skills-and-activities',
 ] as const;

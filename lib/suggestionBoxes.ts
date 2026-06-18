@@ -1,0 +1,83 @@
+export interface SuggestionBoxDefinition {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  sortOrder: number;
+}
+
+export const CANONICAL_SUGGESTION_BOXES: SuggestionBoxDefinition[] = [
+  {
+    id: 'box-home',
+    slug: 'home',
+    name: 'Home page',
+    description:
+      'Feedback on my summary, experience, skills, site navigation, or how this page presents me.',
+    sortOrder: 0,
+  },
+  {
+    id: 'box-portfolio',
+    slug: 'portfolio',
+    name: 'Live portfolio tracker',
+    description:
+      'Stock ideas, portfolio changes, investment strategy, or UX feedback on this analytics dashboard.',
+    sortOrder: 1,
+  },
+  {
+    id: 'box-project-goodyear-equity-research-valuation',
+    slug: 'project-goodyear-equity-research-valuation',
+    name: 'Goodyear equity research',
+    description:
+      'Pushback on valuation assumptions, DCF logic, ratio analysis, or how this case study is presented.',
+    sortOrder: 10,
+  },
+  {
+    id: 'box-project-risk-parity-etf-fin285a',
+    slug: 'project-risk-parity-etf-fin285a',
+    name: 'Risk parity ETF project',
+    description:
+      'Comments on sleeve design, covariance models, tracking-error optimization, charts, or methodology.',
+    sortOrder: 11,
+  },
+  {
+    id: 'box-project-financial-markets-and-investments',
+    slug: 'project-financial-markets-and-investments',
+    name: 'MCD & NOC portfolio project',
+    description:
+      'Thoughts on the two-stock selection, allocation, efficient frontier, beta/alpha, or portfolio charts.',
+    sortOrder: 12,
+  },
+  {
+    id: 'box-project-mergers-and-acquisitions',
+    slug: 'project-mergers-and-acquisitions',
+    name: 'Salesforce–HubSpot M&A',
+    description:
+      'Feedback on deal rationale, valuation ranges, financing/accretion analysis, or how the case is laid out.',
+    sortOrder: 13,
+  },
+  {
+    id: 'box-project-research-paper',
+    slug: 'project-research-paper',
+    name: 'Argentina research paper',
+    description:
+      'Notes on the macro argument, sovereign/FX analysis, sources, clarity, or areas to expand.',
+    sortOrder: 14,
+  },
+];
+
+/** @deprecated Legacy portfolio box slug — migrated to `portfolio`. */
+export const LEGACY_PORTFOLIO_BOX_SLUG = 'suggestions';
+
+export function getSuggestionBoxDefinition(slug: string): SuggestionBoxDefinition | undefined {
+  return CANONICAL_SUGGESTION_BOXES.find((box) => box.slug === slug);
+}
+
+export function suggestionBoxSlugForProject(projectSlug: string): string {
+  return `project-${projectSlug}`;
+}
+
+export function getSuggestionBoxForProject(
+  projectSlug: string
+): SuggestionBoxDefinition | undefined {
+  return getSuggestionBoxDefinition(suggestionBoxSlugForProject(projectSlug));
+}
