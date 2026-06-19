@@ -1,1 +1,1 @@
-export * from '../api/lib/suggestionBoxes';
+export * from '../packages/server-lib/suggestionBoxes.ts';

@@ -5,11 +5,11 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { PROJECTS } from './src/data/projects';
 import { SITE_ORIGIN } from './src/constants/site';
-import { fetchYahooQuotes, fetchYahooChartHistory } from './lib/yahooQuotes';
+import { fetchYahooQuotes, fetchYahooChartHistory } from './packages/server-lib/yahooQuotes.ts';
 import {
   handleSuggestionsGet,
   handleSuggestionsPost,
-} from './lib/portfolioSuggestionsStore';
+} from './packages/server-lib/portfolioSuggestionsStore.ts';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
