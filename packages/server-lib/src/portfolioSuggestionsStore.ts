@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { list, put } from '@vercel/blob';
+import { get, put } from '@vercel/blob';
 import {
   CANONICAL_SUGGESTION_BOXES,
   LEGACY_PORTFOLIO_BOX_SLUG,
@@ -208,20 +208,12 @@ function writeLocalStore(store: SuggestionsStore): void {
 async function readBlobStore(): Promise<SuggestionsStore> {
   if (!shouldUseBlobStorage()) return readLocalStore();
 
-  const token = blobToken();
-  const { blobs } = await list(
-    token
-      ? { prefix: 'portfolio-suggestions/', token }
-      : { prefix: 'portfolio-suggestions/' }
-  );
-  const blob = blobs.find((b) => b.pathname === BLOB_PATHNAME) ?? blobs[0];
-  if (!blob?.url) return emptyStore();
-
-  const res = await fetch(blob.url);
-  if (!res.ok) return emptyStore();
-
   try {
-    return normalizeStore(await res.json());
+    const result = await get(BLOB_PATHNAME, { access: 'private' });
+    if (!result || result.statusCode !== 200 || !result.stream) return emptyStore();
+
+    const text = await new Response(result.stream).text();
+    return normalizeStore(JSON.parse(text) as unknown);
   } catch {
     return emptyStore();
   }
@@ -237,24 +229,14 @@ async function writeStore(store: SuggestionsStore): Promise<void> {
   }
 
   const token = blobToken();
-  await put(
-    BLOB_PATHNAME,
-    body,
-    token
-      ? {
-          access: 'public',
-          addRandomSuffix: false,
-          allowOverwrite: true,
-          contentType: 'application/json',
-          token,
-        }
-      : {
-          access: 'public',
-          addRandomSuffix: false,
-          allowOverwrite: true,
-          contentType: 'application/json',
-        }
-  );
+  const putOptions = {
+    access: 'private' as const,
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: 'application/json',
+    ...(token ? { token } : {}),
+  };
+  await put(BLOB_PATHNAME, body, putOptions);
 }
 
 async function loadStore(): Promise<SuggestionsStore> {
