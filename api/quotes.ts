@@ -1,4 +1,4 @@
-import { fetchYahooQuotes } from '../lib/yahooQuotes';
+import { fetchYahooQuotes } from './lib/yahooQuotes';
 
 type VercelRequest = {
   method?: string;

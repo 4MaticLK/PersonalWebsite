@@ -2,5 +2,10 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ]
+  ],
+  "functions": {
+    "api/portfolio-suggestions.ts": {
+      "includeFiles": "data/portfolio-suggestions.json"
+    }
+  }
 }

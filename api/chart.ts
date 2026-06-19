@@ -1,4 +1,4 @@
-import { fetchYahooChartHistory } from '../lib/yahooQuotes';
+import { fetchYahooChartHistory } from './lib/yahooQuotes';
 
 type VercelRequest = {
   method?: string;
