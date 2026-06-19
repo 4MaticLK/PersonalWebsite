@@ -1,1 +1,1 @@
-export * from '../packages/server-lib/portfolioSuggestionsStore.ts';
+export * from '../api/_portfolioSuggestionsStore.ts';
