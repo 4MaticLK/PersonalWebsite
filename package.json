@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run build:server-lib && tsc -b && vite build",
+    "build:server-lib": "tsc -p packages/server-lib",
     "verify:portfolio": "npx tsx scripts/verifyPortfolio.mts",
     "audit:current-book": "npx tsx scripts/auditCurrentBook.mts",
     "sync:portfolio": "npx tsx scripts/syncPortfolioFromRobinhood.mts",
@@ -19,6 +20,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@personal-website/server-lib": "file:packages/server-lib",
     "@vercel/blob": "^2.4.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -1,7 +1,7 @@
 import {
   handleSuggestionsGet,
   handleSuggestionsPost,
-} from './_portfolioSuggestionsStore';
+} from '@personal-website/server-lib/portfolioSuggestionsStore';
 
 type VercelRequest = {
   method?: string;

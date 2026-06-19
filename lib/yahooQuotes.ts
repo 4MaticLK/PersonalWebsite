@@ -1,1 +1,1 @@
-export * from '../api/_yahooQuotes.ts';
+export * from '../packages/server-lib/src/yahooQuotes.ts';

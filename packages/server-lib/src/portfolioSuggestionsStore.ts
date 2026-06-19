@@ -5,7 +5,7 @@ import {
   CANONICAL_SUGGESTION_BOXES,
   LEGACY_PORTFOLIO_BOX_SLUG,
   getSuggestionBoxDefinition,
-} from './_suggestionBoxes';
+} from './suggestionBoxes.js';
 
 export interface SuggestionBox {
   id: string;
