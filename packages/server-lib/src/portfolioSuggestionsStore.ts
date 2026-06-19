@@ -209,7 +209,7 @@ async function readBlobStore(): Promise<SuggestionsStore> {
   if (!shouldUseBlobStorage()) return readLocalStore();
 
   try {
-    const result = await get(BLOB_PATHNAME, { access: 'private' });
+    const result = await get(BLOB_PATHNAME, { access: 'private', useCache: false });
     if (!result || result.statusCode !== 200 || !result.stream) return emptyStore();
 
     const text = await new Response(result.stream).text();
@@ -291,8 +291,7 @@ export async function listTopicsInBox(boxSlug: string): Promise<{
   return { box, topics };
 }
 
-export async function getTopicDetail(topicId: string): Promise<TopicDetail> {
-  const store = await loadStore();
+function topicDetailFromStore(store: SuggestionsStore, topicId: string): TopicDetail {
   const topic = store.topics.find((t) => t.id === topicId);
   if (!topic) throw new Error('Topic not found.');
 
@@ -315,6 +314,11 @@ export async function getTopicDetail(topicId: string): Promise<TopicDetail> {
     lastActivityAt: topic.lastActivityAt,
     replies,
   };
+}
+
+export async function getTopicDetail(topicId: string): Promise<TopicDetail> {
+  const store = await loadStore();
+  return topicDetailFromStore(store, topicId);
 }
 
 export async function createSuggestionTopic(input: {
@@ -347,7 +351,7 @@ export async function createSuggestionTopic(input: {
 
   store.topics.push(topic);
   await writeStore(store);
-  return getTopicDetail(topic.id);
+  return topicDetailFromStore(store, topic.id);
 }
 
 export async function addSuggestionReply(input: {
@@ -375,7 +379,7 @@ export async function addSuggestionReply(input: {
   store.replies.push(reply);
   topic.lastActivityAt = now;
   await writeStore(store);
-  return getTopicDetail(topic.id);
+  return topicDetailFromStore(store, topic.id);
 }
 
 function assertAdmin(adminToken: string | null | undefined): void {
@@ -445,7 +449,7 @@ export async function deleteSuggestionReply(
   store.replies = store.replies.filter((r) => r.id !== replyId);
   refreshTopicActivity(store, topic);
   await writeStore(store);
-  return getTopicDetail(topic.id);
+  return topicDetailFromStore(store, topic.id);
 }
 
 export async function handleSuggestionsGet(query: Record<string, string | undefined>) {
