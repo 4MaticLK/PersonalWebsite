@@ -75,6 +75,37 @@ export const DEFAULT_SUGGESTION_BOX: SuggestionBox = { ...PORTFOLIO_BOX_DEF };
 const LOCAL_PATH = join(process.cwd(), 'data', 'portfolio-suggestions.json');
 const BLOB_PATHNAME = 'portfolio-suggestions/data.json';
 
+function isVercelRuntime(): boolean {
+  return Boolean(process.env.VERCEL);
+}
+
+function readEnv(name: string): string | undefined {
+  const value = process.env[name];
+  return typeof value === 'string' && value.trim() !== '' ? value.trim() : undefined;
+}
+
+function blobToken(): string | undefined {
+  return readEnv('BLOB_READ_WRITE_TOKEN');
+}
+
+function blobStoreId(): string | undefined {
+  return readEnv('BLOB_STORE_ID');
+}
+
+/** True when Vercel Blob should be used (explicit token or OIDC + store id on Vercel). */
+function shouldUseBlobStorage(): boolean {
+  if (blobToken()) return true;
+  return isVercelRuntime() && Boolean(blobStoreId());
+}
+
+function requireBlobForWrite(): void {
+  if (!shouldUseBlobStorage() && isVercelRuntime()) {
+    throw new Error(
+      'Suggestions storage is not configured on Vercel. Connect a Blob store to this project (Storage → Blob), ensure BLOB_STORE_ID is set, redeploy, then try again.'
+    );
+  }
+}
+
 interface LegacySuggestion {
   id: string;
   message: string;
@@ -175,10 +206,14 @@ function writeLocalStore(store: SuggestionsStore): void {
 }
 
 async function readBlobStore(): Promise<SuggestionsStore> {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
-  if (!token) return readLocalStore();
+  if (!shouldUseBlobStorage()) return readLocalStore();
 
-  const { blobs } = await list({ prefix: 'portfolio-suggestions/', token });
+  const token = blobToken();
+  const { blobs } = await list(
+    token
+      ? { prefix: 'portfolio-suggestions/', token }
+      : { prefix: 'portfolio-suggestions/' }
+  );
   const blob = blobs.find((b) => b.pathname === BLOB_PATHNAME) ?? blobs[0];
   if (!blob?.url) return emptyStore();
 
@@ -193,25 +228,37 @@ async function readBlobStore(): Promise<SuggestionsStore> {
 }
 
 async function writeStore(store: SuggestionsStore): Promise<void> {
-  const token = process.env.BLOB_READ_WRITE_TOKEN;
   const body = JSON.stringify(store, null, 2);
 
-  if (!token) {
+  if (!shouldUseBlobStorage()) {
+    requireBlobForWrite();
     writeLocalStore(store);
     return;
   }
 
-  await put(BLOB_PATHNAME, body, {
-    access: 'public',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: 'application/json',
-    token,
-  });
+  const token = blobToken();
+  await put(
+    BLOB_PATHNAME,
+    body,
+    token
+      ? {
+          access: 'public',
+          addRandomSuffix: false,
+          allowOverwrite: true,
+          contentType: 'application/json',
+          token,
+        }
+      : {
+          access: 'public',
+          addRandomSuffix: false,
+          allowOverwrite: true,
+          contentType: 'application/json',
+        }
+  );
 }
 
 async function loadStore(): Promise<SuggestionsStore> {
-  return process.env.BLOB_READ_WRITE_TOKEN ? readBlobStore() : readLocalStore();
+  return shouldUseBlobStorage() ? readBlobStore() : readLocalStore();
 }
 
 function sanitizeName(name?: string | null): string | null {
