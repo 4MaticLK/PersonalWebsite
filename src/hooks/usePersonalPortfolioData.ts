@@ -22,6 +22,10 @@ import {
   enrichHoldingsWithCostBasis,
   type PortfolioAnalytics,
 } from '../utils/computePortfolioAnalytics';
+import {
+  computePortfolioModelAnalytics,
+  type PortfolioModelAnalytics,
+} from '../utils/computePortfolioModelAnalytics';
 import { chartRangeForInception } from '../utils/chartRange';
 import { quotableTickers, type QuoteMap } from '../utils/yahooSymbols';
 import {
@@ -40,6 +44,8 @@ export interface PersonalPortfolioData {
   transactions: TransactionRow[];
   summary: PortfolioSummary;
   analytics: PortfolioAnalytics;
+  /** Single-index model estimates from long-run asset assumptions. */
+  modelAnalytics: PortfolioModelAnalytics | null;
   liveQuotes: LiveQuotesMeta;
   /** Latest Yahoo prices keyed by symbol (includes sold tickers when live). */
   quotes: QuoteMap;
@@ -100,6 +106,7 @@ function buildPortfolioData(
     transactions: snapshot.transactions,
     summary: analyticsToSummary(analytics),
     analytics,
+    modelAnalytics: computePortfolioModelAnalytics(holdingsWithCost),
     liveQuotes,
     quotes,
     meta,

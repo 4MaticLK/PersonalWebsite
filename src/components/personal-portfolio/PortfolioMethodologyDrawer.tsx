@@ -9,29 +9,29 @@ interface PortfolioMethodologyDrawerProps {
 
 const SECTIONS = [
   {
-    title: 'Current holdings',
+    title: 'Holdings & prices',
     body:
-      'Open positions from the latest Robinhood export. Weights and returns use FIFO average cost from transaction history. Prices refresh from Yahoo Finance about every minute when a public quote exists; otherwise the CSV statement price is kept.',
+      'Current positions and weights for the full portfolio. Prices refresh from Yahoo Finance about every minute when a public quote exists; otherwise the CSV fallback price is kept.',
   },
   {
-    title: 'Lifetime returns',
+    title: 'Portfolio profile & risk',
     body:
-      'Net return and alpha vs SPY are money-weighted on capital deployed through recorded buys (including dividends in net return). SPY comparison invests the same cash on the same dates. If deposit rows are missing from the export, lifetime metrics still run on buy capital only — see Data notes when that applies.',
+      'Expected return, beta, volatility, Sharpe, risk contribution, and stress scenarios use a single-index model with long-run assumptions per holding. These describe the whole book, not legacy trade history.',
   },
   {
-    title: 'Holdings backtest chart',
+    title: 'Thematic concentrations',
     body:
-      'The performance chart does not replay your actual historical account balance. It simulates holding today’s share counts over time at historical prices, compared to SPY over the same window. The pulsing dot extends the series with today’s live move when quotes are available.',
+      'Cross-cutting themes (financials, AI/power, international, speculative) sum weights across defined ticker groups. Overlap across themes is intentional — the same name can appear in multiple themes.',
   },
   {
-    title: 'Risk metrics',
+    title: 'Rebalancing',
     body:
-      'Beta, volatility, Sharpe, and concentration use the same time-weighted return series as the backtest chart. Position-level metrics exclude tickers without enough price history.',
+      'Each holding has a target weight. Rebalance when current weight drifts more than 5 percentage points or 25% relative to target — trim winners or add to laggards back toward target.',
   },
   {
-    title: 'Verification',
+    title: 'Performance chart',
     body:
-      'After each CSV sync, run npm run verify:portfolio locally. That replays FIFO analytics, checks weights and data flags, and updates meta.json with a verification timestamp shown on this page.',
+      'Simulates holding today’s share counts over time at historical prices, compared to SPY over the same window. The pulsing dot extends the series with today’s live move when quotes are available.',
   },
 ] as const;
 

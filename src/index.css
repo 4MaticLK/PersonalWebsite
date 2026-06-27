@@ -6414,6 +6414,24 @@ a:hover {
   color: #64748b;
 }
 
+.personal-portfolio__rebalance-ok {
+  margin: 0 0 var(--space-md);
+  font-size: 0.875rem;
+  color: #22c55e;
+}
+
+.personal-portfolio__rebalance-alert {
+  margin: 0 0 var(--space-md);
+  font-size: 0.875rem;
+  color: #f59e0b;
+}
+
+.personal-portfolio__insight-sub--tickers {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
 .personal-portfolio__filter-bar {
   display: flex;
   align-items: center;

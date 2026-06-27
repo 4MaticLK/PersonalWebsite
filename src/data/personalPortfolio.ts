@@ -2,27 +2,26 @@
 
 export const PERSONAL_PORTFOLIO = {
   /** Fallback when meta.json is missing */
-  fallbackAsOfDisplay: 'June 16, 2026',
+  fallbackAsOfDisplay: 'June 26, 2026',
   benchmarkName: 'SPY',
 
   /** Home page section */
   sectionTitle: 'Live Portfolio Tracker',
   sectionIntro:
-    'A real Robinhood account connected to a custom analytics engine — live prices, allocation, benchmark comparison, and risk metrics.',
+    'My portfolio — live prices, allocation, benchmark comparison, and risk analytics.',
 
   /** Full /portfolio page */
   pageTitle: 'Live Portfolio Tracker',
   pageDescription:
-    'Personal brokerage account wired to live market data. Explore current holdings, benchmark-relative performance, and risk analytics computed from transaction history.',
-  pageMeta: 'Robinhood Individual · Built with React, Yahoo Finance, and FIFO cost-basis replay',
+    'My portfolio with live market data — holdings, allocation, thematic exposures, rebalancing bands, and risk analytics.',
+  pageMeta: 'Live prices · Yahoo Finance · 24 positions',
 
-  framingLead:
-    'This is a live dashboard on my own account — not a model portfolio or investment recommendation.',
+  framingLead: 'This is my portfolio — not investment advice.',
   framingBody:
-    'The emphasis is on the analytics: reconstructing returns from trades, comparing against SPY with the same timing, and measuring concentration and market sensitivity. Early trades included speculative names; the current book is concentrated in index ETFs, financials, and select growth positions.',
+    'Live prices, allocation, benchmark comparison, and risk metrics for the full book.',
 
   disclaimer:
-    'Personal account for education and demonstration. Past performance does not guarantee future results. Not investment advice.',
+    'For education and demonstration. Past performance does not guarantee future results. Not investment advice.',
 
   homeCta: 'Explore analytics dashboard',
   experienceCta: 'Explore live tracker',

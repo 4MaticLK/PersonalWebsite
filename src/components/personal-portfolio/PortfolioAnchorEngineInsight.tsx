@@ -69,7 +69,7 @@ export function PortfolioAnchorEngineInsight({ analytics }: PortfolioAnchorEngin
           label="Anchor"
           weightPct={insight.anchorWeightPct}
           todayPct={insight.anchorTodayPct}
-          sub="VOO, QQQ, VTIP"
+          sub="Broad ETFs, bonds & international"
         />
         <BucketCard
           label="Engine"

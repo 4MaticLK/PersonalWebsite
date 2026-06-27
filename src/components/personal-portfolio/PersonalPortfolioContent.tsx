@@ -1,17 +1,15 @@
 import { useCallback, useState } from 'react';
 import { PERSONAL_PORTFOLIO } from '../../data/personalPortfolio';
 import type { PersonalPortfolioData } from '../../hooks/usePersonalPortfolioData';
-import { formatPct } from '../../utils/parsePersonalPortfolioCsv';
 import type { PortfolioFilter } from '../../utils/portfolioFilter';
 import { PortfolioFraming } from './PortfolioFraming';
 import { PortfolioSummaryStats } from './PortfolioSummaryStats';
-import { PortfolioClosedTradeInsight } from './PortfolioClosedTradeInsight';
-import { PortfolioAnchorEngineInsight } from './PortfolioAnchorEngineInsight';
-import { PortfolioSoldTooEarlyInsight } from './PortfolioSoldTooEarlyInsight';
 import { PortfolioReturnsChart } from './PortfolioReturnsChart';
 import { PortfolioAllocationChart } from './PortfolioAllocationChart';
 import { PortfolioRiskFactors } from './PortfolioRiskFactors';
 import { PortfolioHoldingsTable } from './PortfolioHoldingsTable';
+import { PortfolioThematicConcentrations } from './PortfolioThematicConcentrations';
+import { PortfolioRebalancingPanel } from './PortfolioRebalancingPanel';
 
 interface PersonalPortfolioContentProps {
   data: PersonalPortfolioData;
@@ -20,10 +18,8 @@ interface PersonalPortfolioContentProps {
 }
 
 export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPortfolioContentProps) {
-  const { summary, holdings, analytics, liveQuotes, quotes } = data;
+  const { summary, holdings, analytics, modelAnalytics, liveQuotes } = data;
   const [filter, setFilter] = useState<PortfolioFilter | null>(null);
-
-  const isPartial = summary.holdingsCoveragePct < 99.5;
 
   const toggleTicker = useCallback((ticker: string) => {
     setFilter((prev) =>
@@ -38,13 +34,6 @@ export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPo
           <PortfolioFraming />
           <p className="personal-portfolio__disclaimer">{PERSONAL_PORTFOLIO.disclaimer}</p>
         </>
-      )}
-
-      {isPartial && (
-        <div className="personal-portfolio__coverage-notice" role="status">
-          Positions shown cover <strong>{formatPct(summary.holdingsCoveragePct, 2)}</strong> of the
-          account. Import remaining holdings to complete allocation.
-        </div>
       )}
 
       {filter && (
@@ -68,13 +57,12 @@ export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPo
           filter={filter}
           onSelectTicker={toggleTicker}
         />
-        <PortfolioAnchorEngineInsight analytics={analytics} />
       </div>
 
       <div id="portfolio-summary">
-        <PortfolioSummaryStats analytics={analytics} liveQuotes={liveQuotes} />
-        <PortfolioClosedTradeInsight analytics={analytics} />
-        <PortfolioSoldTooEarlyInsight analytics={analytics} quotes={quotes} />
+        <PortfolioSummaryStats modelAnalytics={modelAnalytics} />
+        <PortfolioThematicConcentrations holdings={holdings} />
+        <PortfolioRebalancingPanel holdings={holdings} />
       </div>
 
       <div id="portfolio-returns" className="personal-portfolio__charts-grid">
@@ -83,7 +71,7 @@ export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPo
       </div>
 
       <div id="portfolio-risk">
-        <PortfolioRiskFactors analytics={analytics} />
+        <PortfolioRiskFactors modelAnalytics={modelAnalytics} />
       </div>
     </>
   );

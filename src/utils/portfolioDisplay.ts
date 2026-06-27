@@ -20,7 +20,20 @@ export function transactionsForPublicDisplay(
 }
 
 /** Index + broad ETF tickers treated as portfolio anchor (ballast). */
-export const INDEX_ETF_TICKERS = new Set(['VOO', 'VTI', 'SPY', 'QQQ', 'VTIP', 'IVV']);
+export const INDEX_ETF_TICKERS = new Set([
+  'VOO',
+  'VTI',
+  'SPY',
+  'QQQ',
+  'VTIP',
+  'IVV',
+  'BND',
+  'GOVT',
+  'VEA',
+  'VWO',
+  'PHO',
+  'CGW',
+]);
 
 export function isAnchorTicker(ticker: string): boolean {
   return INDEX_ETF_TICKERS.has(ticker);

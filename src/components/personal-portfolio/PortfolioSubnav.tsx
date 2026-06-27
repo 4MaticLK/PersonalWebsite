@@ -1,6 +1,6 @@
 const SECTIONS = [
   { id: 'portfolio-holdings', label: 'Holdings' },
-  { id: 'portfolio-summary', label: 'Returns' },
+  { id: 'portfolio-summary', label: 'Profile' },
   { id: 'portfolio-returns', label: 'Charts' },
   { id: 'portfolio-risk', label: 'Risk' },
 ] as const;

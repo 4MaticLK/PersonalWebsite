@@ -166,11 +166,11 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
       <div className="personal-portfolio__chart-header">
         <div>
           <h3 id="portfolio-returns-heading" className="portfolio-chart__title">
-            Holdings backtest vs {benchmark}
+            Portfolio vs {benchmark}
           </h3>
           <p className="portfolio-chart__caption">
-            Simulates holding today&apos;s share counts over time vs {benchmark}. Click the chart to
-            pin a date.{excludeNote}
+            Current book simulated at historical prices vs {benchmark}. Click the chart to pin a
+            date.{excludeNote}
             {hasLivePoint && liveQuotes?.fetchedAt
               ? ` Live point updated ${formatUpdatedAt(liveQuotes.fetchedAt)}.`
               : ''}

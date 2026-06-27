@@ -51,6 +51,15 @@ Include **all deposits** and **crypto/stock buys** for accurate realized P/L. Th
 
 The sync script merges new rows into `transactions.csv`, rebuilds `holdings.csv` from open FIFO lots, and updates `meta.json`. Existing manual rows (e.g. older crypto buys) are kept unless duplicated.
 
+### Bulk portfolio update
+
+When holdings or target weights change in bulk, regenerate from `scripts/applyModelPortfolio.mts`:
+
+```bash
+npm run apply:model-portfolio
+npm run verify:portfolio
+```
+
 ### meta.json
 
 Written by `verify:portfolio` (and partially by `sync:portfolio --write`). The site reads this for **data as of**, verification status, and transaction/holding counts — no manual date edits in source code.

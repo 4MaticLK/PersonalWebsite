@@ -15,6 +15,19 @@ const DEFAULT_NAMES: Record<string, string> = {
   EOSE: 'Eos Energy Enterprises',
   OKLO: 'Oklo',
   RVI: 'Robinhood Ventures Fund I',
+  VEA: 'Vanguard FTSE Developed Markets ETF',
+  BND: 'Vanguard Total Bond Market ETF',
+  GOVT: 'iShares U.S. Treasury Bond ETF',
+  VWO: 'Vanguard FTSE Emerging Markets ETF',
+  UNH: 'UnitedHealth Group',
+  LLY: 'Eli Lilly',
+  NEE: 'NextEra Energy',
+  TSM: 'Taiwan Semiconductor',
+  PLD: 'Prologis',
+  PG: 'Procter & Gamble',
+  CEG: 'Constellation Energy',
+  PHO: 'Invesco Water Resources ETF',
+  CGW: 'Invesco S&P Global Water ETF',
 };
 
 const DEFAULT_SECTORS: Record<string, string> = {
@@ -29,6 +42,19 @@ const DEFAULT_SECTORS: Record<string, string> = {
   EOSE: 'Energy',
   OKLO: 'Energy',
   RVI: 'Private Markets',
+  VEA: 'International',
+  BND: 'Fixed Income',
+  GOVT: 'Fixed Income',
+  VWO: 'International',
+  UNH: 'Healthcare',
+  LLY: 'Healthcare',
+  NEE: 'Utilities',
+  TSM: 'International',
+  PLD: 'Real Estate',
+  PG: 'Consumer Staples',
+  CEG: 'Utilities',
+  PHO: 'Thematic',
+  CGW: 'Thematic',
 };
 
 function formatCsvNum(n: number, digits = 5): string {

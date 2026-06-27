@@ -13,6 +13,7 @@
     "verify:portfolio": "npx tsx scripts/verifyPortfolio.mts",
     "audit:current-book": "npx tsx scripts/auditCurrentBook.mts",
     "sync:portfolio": "npx tsx scripts/syncPortfolioFromRobinhood.mts",
+    "apply:model-portfolio": "npx tsx scripts/applyModelPortfolio.mts",
     "refresh:portfolio-prices": "npx tsx scripts/refreshPortfolioPrices.mts",
     "lint": "eslint .",
     "format": "prettier --write .",
