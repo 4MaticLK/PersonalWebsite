@@ -335,9 +335,6 @@ export function xTickInterval(length: number, targetTicks = 10): number {
   return Math.max(1, Math.floor(length / targetTicks));
 }
 
-type TooltipCoord = { x?: number; y?: number };
-type TooltipBox = { width?: number; height?: number };
-
 /** Top margin reserved for tooltips (keep in sync with chart `margin.top`). */
 export const FIN285A_CHART_MARGIN_TOP = 56;
 
@@ -351,10 +348,7 @@ export const FIN285A_TOOLTIP_OFFSET = 22;
  * Pin tooltip to the top margin (y only). Horizontal placement is left to Recharts
  * with `reverseDirection` so the box flips left near the right edge instead of clipping.
  */
-export function fin285aTooltipPosition(
-  _coordinate?: TooltipCoord,
-  _box?: TooltipBox
-): { y: number } {
+export function fin285aTooltipPosition(): { y: number } {
   return { y: FIN285A_TOOLTIP_TOP_Y };
 }
 

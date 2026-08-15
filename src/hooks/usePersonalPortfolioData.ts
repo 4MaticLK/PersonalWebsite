@@ -158,15 +158,8 @@ export function usePersonalPortfolioData(): {
           )
         );
       } catch {
-        if (cancelled) return;
-        setData(
-          buildPortfolioData(snapshot, snapshot.holdings, {
-            mode: 'csv',
-            fetchedAt: null,
-            source: 'Yahoo Finance',
-            staticTickers: [],
-          }, metaRef.current)
-        );
+        // Transient failure (network blip, rate limit): keep showing the last known-good
+        // live quotes instead of flickering back to stale CSV prices. Next poll retries.
       }
     }
 

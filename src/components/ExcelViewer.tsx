@@ -57,6 +57,8 @@ export function ExcelViewer({ url }: ExcelViewerProps) {
     queueMicrotask(() => {
       if (cancelled) return;
       setStatus('loading');
+      setActiveSheetIndex(0);
+      setShowFormulas(false);
       fetch(url)
         .then((res) => {
           if (!res.ok) throw new Error('File not found');

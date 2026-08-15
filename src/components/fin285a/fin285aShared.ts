@@ -1,3 +1,5 @@
+import { createElement } from 'react';
+
 export const TRAIN_TEST_SPLIT = '2019-01-02';
 export const REGIME_SPLIT = '2022-01-01';
 
@@ -5,9 +7,8 @@ export const CHART_LEGEND_PROPS = {
   wrapperStyle: { paddingTop: 8 },
   iconType: 'line' as const,
   iconSize: 10,
-  formatter: (value: string) => (
-    <span className="portfolio-chart__legend-text">{value}</span>
-  ),
+  formatter: (value: string) =>
+    createElement('span', { className: 'portfolio-chart__legend-text' }, value),
 };
 
 export const PART1_LEVERAGE = 2;

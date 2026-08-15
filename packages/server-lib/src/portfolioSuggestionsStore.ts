@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { timingSafeEqual } from 'node:crypto';
 import { get, put } from '@vercel/blob';
 import {
   CANONICAL_SUGGESTION_BOXES,
@@ -382,10 +383,19 @@ export async function addSuggestionReply(input: {
   return topicDetailFromStore(store, topic.id);
 }
 
+/** Constant-time string comparison to avoid leaking token length/prefix via response timing. */
+function safeEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return timingSafeEqual(bufA, bufB);
+}
+
 function assertAdmin(adminToken: string | null | undefined): void {
   const expected = process.env.PORTFOLIO_SUGGESTIONS_ADMIN_TOKEN?.trim();
   if (!expected) throw new Error('Moderation is not configured on the server.');
-  if (!adminToken?.trim() || adminToken.trim() !== expected) {
+  const provided = adminToken?.trim();
+  if (!provided || !safeEqual(provided, expected)) {
     throw new Error('Not authorized to moderate suggestions.');
   }
 }

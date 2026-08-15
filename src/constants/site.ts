@@ -9,4 +9,4 @@ export const SITE_DEFAULT_TITLE = `${SITE_NAME} - Investments, Valuation & Portf
  * Used at build time for canonical URL, Open Graph / Twitter image URLs, sitemap, and robots.txt.
  * Replace the placeholder before deploying; local dev uses http://localhost:5173 for those tags instead.
  */
-export const SITE_ORIGIN = 'https://example.com';
+export const SITE_ORIGIN = 'https://www.levankvinikadze.com';
