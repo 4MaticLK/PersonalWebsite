@@ -13,6 +13,7 @@ import {
   computePortfolioAnalytics,
   backtestSymbols,
 } from '../src/utils/computePortfolioAnalytics.ts';
+import { chartRangeForInception } from '../src/utils/chartRange.ts';
 import { fetchYahooChartHistory } from '../lib/yahooQuotes.ts';
 import type { PortfolioVerifyWarning } from '../src/utils/portfolioMeta.ts';
 import {
@@ -27,14 +28,16 @@ const holdings = normalizeHoldingsWeights(
 const tx = parseTransactionsCsv(readFileSync(resolve(base, 'transactions.csv'), 'utf8'));
 
 const sortedTx = [...tx].sort((a, b) => a.date.localeCompare(b.date));
-const inception = sortedTx[0]?.date ?? 'unknown';
-const range = inception.startsWith('2023') || inception < '2024-06-01' ? 'max' : '2y';
+const inception = sortedTx[0]?.date ?? new Date().toISOString().slice(0, 10);
+// Same range the live site requests (src/hooks/usePersonalPortfolioData.ts) — verifying
+// against a different history window than what's actually rendered defeats the point.
+const range = chartRangeForInception(inception);
 
-const spy = await fetchYahooChartHistory('SPY', range as '2y' | 'max');
+const spy = await fetchYahooChartHistory('SPY', range);
 const historyByTicker = new Map<string, { date: string; close: number }[]>();
 for (const { ticker, symbol } of backtestSymbols(tx)) {
   try {
-    historyByTicker.set(ticker, await fetchYahooChartHistory(symbol, range as '2y' | 'max'));
+    historyByTicker.set(ticker, await fetchYahooChartHistory(symbol, range));
   } catch {
     console.warn(`  skip history: ${ticker}`);
   }
