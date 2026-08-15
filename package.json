@@ -24,6 +24,7 @@
   "dependencies": {
     "@personal-website/server-lib": "file:packages/server-lib",
     "@vercel/blob": "^2.4.1",
+    "pdfjs-dist": "^6.2.108",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",

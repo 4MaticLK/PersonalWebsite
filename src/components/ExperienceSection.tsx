@@ -3,6 +3,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PERSONAL_PORTFOLIO } from '../data/personalPortfolio';
 import { WorkSection } from './WorkSection';
 import { PersonalPortfolioSection } from './PersonalPortfolioSection';
+import { CertificatesSection } from './CertificatesSection';
 
 const LETTER_PDF_PATHS = {
   rsm: '/pdfs/RSM%20Georgia.pdf',
@@ -52,11 +53,6 @@ const SKILLS_ITEMS = [
     title: 'Activities',
     text: 'Economics, Accounting, and Finance Tutor at Bentley (September 2023 – May 2025)',
   },
-  {
-    key: 'certifications',
-    title: 'Certifications',
-    text: 'Bloomberg Market Concepts (BMC), Essential Financial Modeling (Gridlines)',
-  },
   { key: 'volunteer', title: 'Volunteer', text: 'Service-Learning Program (2+2=5)' },
   {
     key: 'languages',
@@ -99,22 +95,6 @@ const SKILLS_ICONS = {
       <circle cx="9" cy="7" r="4" />
       <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
       <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-    </svg>
-  ),
-  certifications: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <circle cx="12" cy="8" r="7" />
-      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
     </svg>
   ),
   volunteer: (
@@ -326,6 +306,8 @@ export function ExperienceSection() {
       <PersonalPortfolioSection />
 
       <WorkSection />
+
+      <CertificatesSection />
 
       <section id="skills-and-activities" ref={revealSkills} className={sectionCls(skillsVisible)}>
         <div className="page-section__scroll">

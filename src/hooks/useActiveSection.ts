@@ -6,6 +6,7 @@ const SECTION_IDS = [
   'work-experience',
   'investment-portfolio',
   'academic-projects',
+  'certificates',
   'skills-and-activities',
 ] as const;
 export type SectionId = (typeof SECTION_IDS)[number];

@@ -1990,6 +1990,14 @@ a:hover {
   transition-delay: 0.4s;
 }
 
+.work-section__card--button {
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
 .work-section__card:hover {
   transform: translateY(-6px);
   box-shadow:
@@ -6159,6 +6167,103 @@ a:hover {
   font-size: 0.875rem;
   color: var(--color-text-muted);
   line-height: 1.55;
+}
+
+.certificate-viewer {
+  padding: 0;
+  border: none;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+}
+
+.certificate-viewer::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.certificate-viewer__panel {
+  width: min(1000px, calc(100vw - 2rem));
+  height: min(92vh, 1200px);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 143, 46, 0.25);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.certificate-viewer__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid rgba(138, 138, 138, 0.12);
+  flex-shrink: 0;
+}
+
+.certificate-viewer__title {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.certificate-viewer__meta {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.certificate-viewer__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.certificate-viewer__open-link {
+  font-size: 0.8125rem;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.certificate-viewer__close {
+  font-family: inherit;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.certificate-viewer__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--color-base);
+}
+
+.certificate-viewer__pages {
+  width: 100%;
+}
+
+.certificate-viewer__page {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.certificate-viewer__status {
+  margin: 0;
+  padding: var(--space-xl);
+  font-size: 0.875rem;
+  color: #444441;
+}
+
+.certificate-viewer__status a {
+  color: var(--color-accent);
 }
 
 .personal-portfolio__table--holdings th:nth-child(2),

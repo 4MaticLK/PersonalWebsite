@@ -13,6 +13,7 @@ const NAV_LINKS: { href: string; label: string }[] = [
   { href: '#work-experience', label: 'Work Experience' },
   { href: '#investment-portfolio', label: 'Live Tracker' },
   { href: '#academic-projects', label: 'Academic Projects' },
+  { href: '#certificates', label: 'Certificates' },
   { href: '#skills-and-activities', label: 'Skills & Activities' },
 ];
 

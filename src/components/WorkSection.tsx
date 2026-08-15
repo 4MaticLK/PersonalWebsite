@@ -55,8 +55,8 @@ export function WorkSection() {
               );
             })}
           </div>
-          <a href="#skills-and-activities" className="experience-section__cta">
-            See skills & activities
+          <a href="#certificates" className="experience-section__cta">
+            See certificates
             <span className="experience-section__cta-arrow" aria-hidden>
               →
             </span>
