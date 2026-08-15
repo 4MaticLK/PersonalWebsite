@@ -13,9 +13,9 @@ export const CHART_LEGEND_PROPS = {
 
 export const PART1_LEVERAGE = 2;
 export const PART1_WEIGHT_SERIES = [
-  { key: 'AGG' as const, label: 'Nominal Bonds (AGG)', color: '#829485' },
+  { key: 'AGG' as const, label: 'Nominal Bonds (AGG)', color: '#8a8a8a' },
   { key: 'ACWI' as const, label: 'Global Equities (ACWI)', color: '#38bdf8' },
-  { key: 'GSG' as const, label: 'Commodities (GSG)', color: '#7ab86f' },
+  { key: 'GSG' as const, label: 'Commodities (GSG)', color: '#ff8f2e' },
   { key: 'TIP' as const, label: 'Inflation-Linked Bonds (TIP)', color: '#34d399' },
 ] as const;
 

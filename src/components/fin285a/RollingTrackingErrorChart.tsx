@@ -27,7 +27,7 @@ import {
   type TrackingErrorPoint,
 } from '../../utils/fin285aChartData';
 
-const TE_ACTIVE_DOT = { r: 5, stroke: '#e8ede9', strokeWidth: 2 };
+const TE_ACTIVE_DOT = { r: 5, stroke: '#e8e8e8', strokeWidth: 2 };
 
 function TeValidationLegend({
   windowDays,
@@ -125,10 +125,10 @@ export function RollingTrackingErrorChart({ data, benchmarks }: RollingTrackingE
                 dataKey="date"
                 ticks={xYearTicks}
                 tickFormatter={formatChartYear}
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
               />
               <YAxis
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
                 domain={teYAxis.domain}
                 ticks={teYAxis.ticks}
                 tickFormatter={(v) => String(Math.round(Number(v)))}
@@ -136,7 +136,7 @@ export function RollingTrackingErrorChart({ data, benchmarks }: RollingTrackingE
                   value: 'Tracking Error (bps)',
                   angle: -90,
                   position: 'insideLeft',
-                  fill: '#829485',
+                  fill: '#8a8a8a',
                   fontSize: 11,
                   offset: 8,
                 }}
@@ -212,17 +212,17 @@ export function RollingTrackingErrorChart({ data, benchmarks }: RollingTrackingE
                 type="number"
                 domain={teYAxis.domain}
                 ticks={teYAxis.ticks}
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
                 label={{
                   value: 'Tracking Error (bps)',
                   position: 'insideBottom',
                   offset: -8,
-                  fill: '#829485',
+                  fill: '#8a8a8a',
                   fontSize: 11,
                 }}
               />
               <YAxis
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
                 domain={[0, histYMax]}
                 tickCount={7}
                 allowDecimals={false}
@@ -230,7 +230,7 @@ export function RollingTrackingErrorChart({ data, benchmarks }: RollingTrackingE
                   value: 'Frequency',
                   angle: -90,
                   position: 'insideLeft',
-                  fill: '#829485',
+                  fill: '#8a8a8a',
                   fontSize: 11,
                   offset: 8,
                 }}
@@ -259,7 +259,7 @@ export function RollingTrackingErrorChart({ data, benchmarks }: RollingTrackingE
               <Bar
                 dataKey="count"
                 fill="rgba(56, 189, 248, 0.75)"
-                stroke="rgba(232, 237, 233, 0.15)"
+                stroke="rgba(232, 232, 232, 0.15)"
                 isAnimationActive={false}
                 legendType="none"
               />

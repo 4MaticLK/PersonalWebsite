@@ -162,14 +162,14 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               type="category"
               interval={xTickInterval}
               tickFormatter={(v) => formatDateShort(v)}
-              tick={{ fill: '#829485', fontSize: 11 }}
+              tick={{ fill: '#8a8a8a', fontSize: 11 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               label={{
                 value: 'Date',
                 position: 'insideBottom',
                 offset: -10,
-                fill: '#829485',
+                fill: '#8a8a8a',
                 fontSize: 12,
               }}
             />
@@ -178,14 +178,14 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               domain={yDomain}
               tickCount={6}
               allowDecimals={true}
-              tick={{ fill: '#829485', fontSize: 11 }}
+              tick={{ fill: '#8a8a8a', fontSize: 11 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               label={{
                 value: 'Return (%)',
                 angle: -90,
                 position: 'insideLeft',
-                fill: '#829485',
+                fill: '#8a8a8a',
                 fontSize: 12,
               }}
               tickFormatter={(v) => `${Number(v).toFixed(1)}%`}
@@ -212,7 +212,7 @@ export function ReturnsOverTimeChart({ embedded = false }: ReturnsOverTimeChartP
               type="monotone"
               dataKey="SPY"
               name="SPY"
-              stroke="#829485"
+              stroke="#8a8a8a"
               strokeWidth={1.5}
               dot={false}
             />

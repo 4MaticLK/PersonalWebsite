@@ -186,14 +186,14 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
                 domain={X_DOMAIN}
                 ticks={X_TICKS}
                 tickFormatter={formatPct}
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
                 axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
                 tickLine={{ stroke: 'rgba(248,250,252,0.25)', width: 1 }}
                 label={{
                   value: 'Risk',
                   position: 'insideBottom',
                   offset: -10,
-                  fill: '#829485',
+                  fill: '#8a8a8a',
                   fontSize: 12,
                 }}
               />
@@ -202,14 +202,14 @@ export function EfficientFrontierChart({ riskFreeRateOverride }: EfficientFronti
                 domain={Y_DOMAIN}
                 ticks={Y_TICKS}
                 tickFormatter={formatPct}
-                tick={{ fill: '#829485', fontSize: 11 }}
+                tick={{ fill: '#8a8a8a', fontSize: 11 }}
                 axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
                 tickLine={{ stroke: 'rgba(248,250,252,0.25)', width: 1 }}
                 label={{
                   value: 'Return',
                   angle: -90,
                   position: 'insideLeft',
-                  fill: '#829485',
+                  fill: '#8a8a8a',
                   fontSize: 12,
                 }}
               />

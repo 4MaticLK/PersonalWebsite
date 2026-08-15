@@ -33,7 +33,7 @@ import {
 
 const CHART_TOOLTIP = {
   contentStyle: {
-    background: '#0a0e0b',
+    background: '#000000',
     border: '1px solid rgba(248,250,252,0.12)',
     borderRadius: 8,
   },
@@ -236,7 +236,7 @@ export function TradingCompsSection() {
               <ReferenceLine
                 key={r.label}
                 y={r.value}
-                stroke={r.label.includes('bid') ? '#94cf89' : '#829485'}
+                stroke={r.label.includes('bid') ? '#ffab5c' : '#8a8a8a'}
                 strokeDasharray="4 4"
                 label={{ value: r.label, fill: 'rgba(248,250,252,0.6)', fontSize: 11 }}
               />
@@ -332,7 +332,7 @@ export function PrecedentTransactionsSection() {
             <ReferenceLine
               yAxisId="mult"
               y={PRECEDENT_MEDIAN_EV_REV}
-              stroke="#829485"
+              stroke="#8a8a8a"
               strokeDasharray="4 4"
               label={{ value: 'Precedent median', fill: 'rgba(248,250,252,0.6)', fontSize: 11 }}
             />
@@ -342,9 +342,9 @@ export function PrecedentTransactionsSection() {
               type="monotone"
               dataKey="dealValue"
               name="Deal value"
-              stroke="#94cf89"
+              stroke="#ffab5c"
               strokeWidth={2}
-              dot={{ r: 4, fill: '#94cf89' }}
+              dot={{ r: 4, fill: '#ffab5c' }}
             />
           </ComposedChart>
         </ResponsiveContainer>
@@ -411,7 +411,7 @@ export function CrmDcfSummarySection() {
               formatter={(v: number, name: string) => [formatMillions(v, 0), name]}
             />
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
-            <Bar yAxisId="left" dataKey="revenue" name="Revenue" fill="rgba(130, 148, 133, 0.35)" radius={[4, 4, 0, 0]} />
+            <Bar yAxisId="left" dataKey="revenue" name="Revenue" fill="rgba(138, 138, 138, 0.35)" radius={[4, 4, 0, 0]} />
             <Line yAxisId="left" type="monotone" dataKey="fcf" name="Free cash flow" stroke="#38bdf8" strokeWidth={2.5} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>
@@ -455,7 +455,7 @@ export function SynergyBuildUpSection() {
             <Tooltip {...CHART_TOOLTIP} formatter={(v: number) => [`$${v}M`, '']} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
             <Bar dataKey="revenue" name="Revenue synergies" stackId="syn" fill="rgba(56, 189, 248, 0.7)" />
-            <Bar dataKey="cost" name="Cost synergies" stackId="syn" fill="rgba(212, 175, 55, 0.65)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="cost" name="Cost synergies" stackId="syn" fill="rgba(255, 143, 46, 0.65)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -515,9 +515,9 @@ export function ProFormaFinancialsSection() {
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
             <Bar dataKey="revenue" name="Combined revenue" fill="rgba(56, 189, 248, 0.45)" radius={[4, 4, 0, 0]} />
             {showCrmOverlay && (
-              <Line type="monotone" dataKey="crmRevenue" name="CRM standalone revenue" stroke="#829485" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+              <Line type="monotone" dataKey="crmRevenue" name="CRM standalone revenue" stroke="#8a8a8a" strokeWidth={2} dot={false} strokeDasharray="5 5" />
             )}
-            <Line type="monotone" dataKey="ebitda" name="Combined EBITDA" stroke="#94cf89" strokeWidth={2.5} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="ebitda" name="Combined EBITDA" stroke="#ffab5c" strokeWidth={2.5} dot={{ r: 3 }} />
             <Line type="monotone" dataKey="fcf" name="Free cash flow" stroke="#34d399" strokeWidth={2} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>
@@ -547,7 +547,7 @@ export function DebtPaydownSection() {
             <YAxis tick={{ fill: 'rgba(248,250,252,0.65)', fontSize: 11 }} tickFormatter={(v) => `$${Math.round(v / 1000)}B`} />
             <Tooltip {...CHART_TOOLTIP} formatter={(v: number, name: string) => [formatMillions(v, 0), name]} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
-            <Bar dataKey="beginning" name="Beginning balance" fill="rgba(212, 175, 55, 0.45)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="beginning" name="Beginning balance" fill="rgba(255, 143, 46, 0.45)" radius={[4, 4, 0, 0]} />
             <Bar dataKey="repayment" name="Repayment" fill="rgba(52, 211, 153, 0.55)" radius={[4, 4, 0, 0]} />
             <Line type="monotone" dataKey="ending" name="Ending balance" stroke="#38bdf8" strokeWidth={2.5} dot={{ r: 4 }} />
           </ComposedChart>
@@ -595,7 +595,7 @@ export function CreditMetricsSection() {
             <Tooltip {...CHART_TOOLTIP} formatter={(v: number, name: string) => [`${v.toFixed(1)}×`, name]} />
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
             <ReferenceLine yAxisId="lev" y={1.0} stroke="rgba(248,250,252,0.25)" strokeDasharray="4 4" />
-            <Bar yAxisId="lev" dataKey="debtToEbitda" name="Total Debt / EBITDA" fill="rgba(212, 175, 55, 0.55)" radius={[4, 4, 0, 0]} />
+            <Bar yAxisId="lev" dataKey="debtToEbitda" name="Total Debt / EBITDA" fill="rgba(255, 143, 46, 0.55)" radius={[4, 4, 0, 0]} />
             <Line yAxisId="cov" type="monotone" dataKey="interestCoverage" name="Interest coverage" stroke="#38bdf8" strokeWidth={2.5} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>

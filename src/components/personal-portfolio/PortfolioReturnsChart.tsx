@@ -117,8 +117,8 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
           cx={cx}
           cy={cy}
           r={6}
-          fill="#7ab86f"
-          stroke="#e8ede9"
+          fill="#ff8f2e"
+          stroke="#e8e8e8"
           strokeWidth={2}
         />
       );
@@ -131,8 +131,8 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
           cx={cx}
           cy={cy}
           r={5}
-          fill="#7ab86f"
-          stroke="#e8ede9"
+          fill="#ff8f2e"
+          stroke="#e8e8e8"
           strokeWidth={2}
           className="personal-portfolio__chart-live-dot"
         />
@@ -158,8 +158,8 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
         cx={cx}
         cy={cy}
         r={6}
-        fill="#5f7a63"
-        stroke="#e8ede9"
+        fill="#6b6b6b"
+        stroke="#e8e8e8"
         strokeWidth={2}
       />
     );
@@ -221,37 +221,37 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
             margin={{ top: 8, right: 16, left: 0, bottom: 0 }}
             onClick={handleChartClick}
           >
-            <CartesianGrid stroke="rgba(130, 148, 133, 0.15)" strokeDasharray="3 3" />
+            <CartesianGrid stroke="rgba(138, 138, 138, 0.15)" strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
               tickFormatter={formatDateShort}
               interval={xTickInterval}
-              tick={{ fill: '#829485', fontSize: 12 }}
-              axisLine={{ stroke: 'rgba(130, 148, 133, 0.3)' }}
-              tickLine={{ stroke: 'rgba(130, 148, 133, 0.3)' }}
+              tick={{ fill: '#8a8a8a', fontSize: 12 }}
+              axisLine={{ stroke: 'rgba(138, 138, 138, 0.3)' }}
+              tickLine={{ stroke: 'rgba(138, 138, 138, 0.3)' }}
             />
             <YAxis
               domain={yDomain}
               tickFormatter={(v) => `${Number(v).toFixed(2)}%`}
-              tick={{ fill: '#829485', fontSize: 12 }}
-              axisLine={{ stroke: 'rgba(130, 148, 133, 0.3)' }}
-              tickLine={{ stroke: 'rgba(130, 148, 133, 0.3)' }}
+              tick={{ fill: '#8a8a8a', fontSize: 12 }}
+              axisLine={{ stroke: 'rgba(138, 138, 138, 0.3)' }}
+              tickLine={{ stroke: 'rgba(138, 138, 138, 0.3)' }}
               width={48}
             />
             {pinnedDate && (
               <ReferenceLine
                 x={pinnedDate}
-                stroke="rgba(122, 184, 111, 0.55)"
+                stroke="rgba(255, 143, 46, 0.55)"
                 strokeDasharray="4 4"
                 strokeWidth={1.5}
               />
             )}
             <Tooltip
               contentStyle={{
-                background: '#151c16',
-                border: '1px solid rgba(122, 184, 111, 0.35)',
+                background: '#111111',
+                border: '1px solid rgba(255, 143, 46, 0.35)',
                 borderRadius: '0.5rem',
-                color: '#e8ede9',
+                color: '#e8e8e8',
               }}
               labelFormatter={(label) => formatDateDisplay(String(label))}
               formatter={(value: number, name: string) => [
@@ -270,7 +270,7 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
               type="monotone"
               dataKey="portfolio"
               name="portfolio"
-              stroke="#7ab86f"
+              stroke="#ff8f2e"
               strokeWidth={2.5}
               dot={renderPortfolioDot}
               activeDot={{ r: 5, cursor: 'pointer' }}
@@ -279,7 +279,7 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
               type="monotone"
               dataKey="benchmark"
               name="benchmark"
-              stroke="#5f7a63"
+              stroke="#6b6b6b"
               strokeWidth={2}
               dot={renderBenchmarkDot}
               activeDot={{ r: 5, cursor: 'pointer' }}

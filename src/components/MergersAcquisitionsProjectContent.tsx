@@ -287,7 +287,7 @@ function AccretionAnalysis() {
             />
             <Tooltip
               contentStyle={{
-                background: '#0a0e0b',
+                background: '#000000',
                 border: '1px solid rgba(248,250,252,0.12)',
                 borderRadius: 8,
               }}
@@ -302,7 +302,7 @@ function AccretionAnalysis() {
               yAxisId="pct"
               dataKey="accretion"
               name="Accretion / (dilution)"
-              fill="rgba(212, 175, 55, 0.55)"
+              fill="rgba(255, 143, 46, 0.55)"
               radius={[4, 4, 0, 0]}
             />
             <Line
@@ -310,7 +310,7 @@ function AccretionAnalysis() {
               type="monotone"
               dataKey="standalone"
               name="CRM standalone EPS"
-              stroke="#829485"
+              stroke="#8a8a8a"
               strokeWidth={2}
               dot={false}
             />

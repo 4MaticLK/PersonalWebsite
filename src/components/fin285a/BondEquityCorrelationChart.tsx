@@ -137,7 +137,7 @@ export function BondEquityCorrelationChart({ data }: BondEquityCorrelationChartP
               label={{
                 value: regime.label,
                 position: 'insideTop',
-                fill: '#829485',
+                fill: '#8a8a8a',
                 fontSize: 10,
                 fontStyle: 'italic',
               }}
@@ -147,10 +147,10 @@ export function BondEquityCorrelationChart({ data }: BondEquityCorrelationChartP
             dataKey="date"
             ticks={xYearTicks}
             tickFormatter={formatChartYear}
-            tick={{ fill: '#829485', fontSize: 11 }}
+            tick={{ fill: '#8a8a8a', fontSize: 11 }}
           />
           <YAxis
-            tick={{ fill: '#829485', fontSize: 11 }}
+            tick={{ fill: '#8a8a8a', fontSize: 11 }}
             domain={yAxis.domain}
             ticks={yAxis.ticks}
             tickFormatter={(v) => Number(v).toFixed(1)}
@@ -158,19 +158,19 @@ export function BondEquityCorrelationChart({ data }: BondEquityCorrelationChartP
               value: 'Correlation',
               angle: -90,
               position: 'insideLeft',
-              fill: '#829485',
+              fill: '#8a8a8a',
               fontSize: 12,
               offset: 12,
             }}
           />
           <Tooltip
             content={<BondCorrelationTooltip />}
-            cursor={{ stroke: 'rgba(232, 237, 233, 0.35)', strokeWidth: 1 }}
+            cursor={{ stroke: 'rgba(232, 232, 232, 0.35)', strokeWidth: 1 }}
             position={fin285aTooltipPositionFn}
             {...FIN285A_CHART_TOOLTIP_PROPS}
             wrapperStyle={{ zIndex: 30, pointerEvents: 'none' }}
           />
-          <ReferenceLine y={0} stroke="rgba(232, 237, 233, 0.55)" strokeDasharray="4 3" />
+          <ReferenceLine y={0} stroke="rgba(232, 232, 232, 0.55)" strokeDasharray="4 3" />
           <Area
             type="linear"
             dataKey="correlationNegative"

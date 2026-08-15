@@ -7,7 +7,7 @@ interface PortfolioHomePreviewProps {
   data: PersonalPortfolioData;
 }
 
-const BAR_COLORS = ['#7ab86f', '#0d9488', '#6366f1', '#f59e0b', '#829485'];
+const BAR_COLORS = ['#ff8f2e', '#0d9488', '#6366f1', '#f59e0b', '#8a8a8a'];
 
 function aggregateSectors(holdings: HoldingRow[]): { sector: string; weightPct: number }[] {
   const total = holdings.reduce((s, h) => s + h.marketValue, 0);
