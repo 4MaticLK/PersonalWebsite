@@ -6937,7 +6937,10 @@ a:hover {
   font-weight: 500;
   color: var(--color-text-muted);
   text-decoration: none;
+  background: transparent;
   border: 1px solid rgba(148, 163, 184, 0.2);
+  font-family: inherit;
+  cursor: pointer;
   transition: color 0.15s, border-color 0.15s, background 0.15s;
 }
 
@@ -6945,6 +6948,18 @@ a:hover {
   color: var(--color-text);
   border-color: rgba(201, 162, 39, 0.45);
   background: rgba(201, 162, 39, 0.08);
+}
+
+.portfolio-subnav__link--active {
+  color: var(--color-base);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: 600;
+}
+
+.portfolio-subnav__link--active:hover {
+  color: var(--color-base);
+  background: var(--color-accent);
 }
 
 .personal-portfolio__suggestions {

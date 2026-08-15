@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
 import { usePersonalPortfolioData } from '../hooks/usePersonalPortfolioData';
 import { PersonalPortfolioContent } from '../components/personal-portfolio/PersonalPortfolioContent';
-import { PortfolioSubnav } from '../components/personal-portfolio/PortfolioSubnav';
 import { PortfolioLiveQuoteBadge } from '../components/personal-portfolio/PortfolioLiveQuoteBadge';
 import { PortfolioMethodologyDrawer } from '../components/personal-portfolio/PortfolioMethodologyDrawer';
 import { PortfolioSuggestionsPanel } from '../components/personal-portfolio/PortfolioSuggestionsPanel';
@@ -47,19 +46,16 @@ export function PortfolioPage() {
         <p className="project-page__meta">{PERSONAL_PORTFOLIO.pageMeta}</p>
 
         {status === 'ok' && data && (
-          <>
-            <div className="personal-portfolio__trust-bar">
-              <PortfolioLiveQuoteBadge meta={data.liveQuotes} />
-              <button
-                type="button"
-                className="personal-portfolio__methodology-btn"
-                onClick={() => setMethodologyOpen(true)}
-              >
-                How numbers are computed
-              </button>
-            </div>
-            <PortfolioSubnav />
-          </>
+          <div className="personal-portfolio__trust-bar">
+            <PortfolioLiveQuoteBadge meta={data.liveQuotes} />
+            <button
+              type="button"
+              className="personal-portfolio__methodology-btn"
+              onClick={() => setMethodologyOpen(true)}
+            >
+              How numbers are computed
+            </button>
+          </div>
         )}
 
         {status === 'loading' && (

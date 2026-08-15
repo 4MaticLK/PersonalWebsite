@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PERSONAL_PORTFOLIO } from '../../data/personalPortfolio';
 import type { PortfolioAnalytics } from '../../utils/computePortfolioAnalytics';
 import { formatPct } from '../../utils/parsePersonalPortfolioCsv';
@@ -41,9 +42,12 @@ function fmtBeta(n: number | null): string {
   return n == null || !Number.isFinite(n) ? '—' : n.toFixed(2);
 }
 
+const DEFAULT_POSITION_ROWS = 8;
+
 export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps) {
   const benchmark = PERSONAL_PORTFOLIO.benchmarkName;
   const { risk } = analytics;
+  const [showAll, setShowAll] = useState(false);
 
   if (risk.observationDays < 20) {
     return (
@@ -65,7 +69,7 @@ export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps)
   const varHighlight = risk.var95DailyPct != null && risk.var95DailyPct <= -3 ? 'high' : 'neutral';
   const betaHighlight = risk.beta != null && risk.beta > 1.15 ? 'high' : risk.beta != null && risk.beta < 0.85 ? 'low' : 'neutral';
 
-  const positionRows = risk.positionRisks;
+  const positionRows = showAll ? risk.positionRisks : risk.positionRisks.slice(0, DEFAULT_POSITION_ROWS);
 
   return (
     <section className="personal-portfolio__risk" aria-labelledby="portfolio-measured-risk-heading">
@@ -165,6 +169,15 @@ export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps)
               </tbody>
             </table>
           </div>
+          {risk.positionRisks.length > DEFAULT_POSITION_ROWS && (
+            <button
+              type="button"
+              className="personal-portfolio__filter-clear"
+              onClick={() => setShowAll((prev) => !prev)}
+            >
+              {showAll ? 'Show fewer' : `Show all ${risk.positionRisks.length} positions`}
+            </button>
+          )}
         </>
       )}
     </section>
