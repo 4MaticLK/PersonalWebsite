@@ -33,7 +33,7 @@ import {
 
 const CHART_TOOLTIP = {
   contentStyle: {
-    background: '#0f172a',
+    background: '#0d2320',
     border: '1px solid rgba(248,250,252,0.12)',
     borderRadius: 8,
   },
@@ -236,7 +236,7 @@ export function TradingCompsSection() {
               <ReferenceLine
                 key={r.label}
                 y={r.value}
-                stroke={r.label.includes('bid') ? '#d4af37' : '#94a3b8'}
+                stroke={r.label.includes('bid') ? '#ff9478' : '#8fb0aa'}
                 strokeDasharray="4 4"
                 label={{ value: r.label, fill: 'rgba(248,250,252,0.6)', fontSize: 11 }}
               />
@@ -332,7 +332,7 @@ export function PrecedentTransactionsSection() {
             <ReferenceLine
               yAxisId="mult"
               y={PRECEDENT_MEDIAN_EV_REV}
-              stroke="#94a3b8"
+              stroke="#8fb0aa"
               strokeDasharray="4 4"
               label={{ value: 'Precedent median', fill: 'rgba(248,250,252,0.6)', fontSize: 11 }}
             />
@@ -342,9 +342,9 @@ export function PrecedentTransactionsSection() {
               type="monotone"
               dataKey="dealValue"
               name="Deal value"
-              stroke="#d4af37"
+              stroke="#ff9478"
               strokeWidth={2}
-              dot={{ r: 4, fill: '#d4af37' }}
+              dot={{ r: 4, fill: '#ff9478' }}
             />
           </ComposedChart>
         </ResponsiveContainer>
@@ -411,7 +411,7 @@ export function CrmDcfSummarySection() {
               formatter={(v: number, name: string) => [formatMillions(v, 0), name]}
             />
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
-            <Bar yAxisId="left" dataKey="revenue" name="Revenue" fill="rgba(148, 163, 184, 0.35)" radius={[4, 4, 0, 0]} />
+            <Bar yAxisId="left" dataKey="revenue" name="Revenue" fill="rgba(143, 176, 170, 0.35)" radius={[4, 4, 0, 0]} />
             <Line yAxisId="left" type="monotone" dataKey="fcf" name="Free cash flow" stroke="#38bdf8" strokeWidth={2.5} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>
@@ -515,9 +515,9 @@ export function ProFormaFinancialsSection() {
             <Legend wrapperStyle={{ fontSize: 12, color: 'rgba(248,250,252,0.75)' }} />
             <Bar dataKey="revenue" name="Combined revenue" fill="rgba(56, 189, 248, 0.45)" radius={[4, 4, 0, 0]} />
             {showCrmOverlay && (
-              <Line type="monotone" dataKey="crmRevenue" name="CRM standalone revenue" stroke="#94a3b8" strokeWidth={2} dot={false} strokeDasharray="5 5" />
+              <Line type="monotone" dataKey="crmRevenue" name="CRM standalone revenue" stroke="#8fb0aa" strokeWidth={2} dot={false} strokeDasharray="5 5" />
             )}
-            <Line type="monotone" dataKey="ebitda" name="Combined EBITDA" stroke="#d4af37" strokeWidth={2.5} dot={{ r: 3 }} />
+            <Line type="monotone" dataKey="ebitda" name="Combined EBITDA" stroke="#ff9478" strokeWidth={2.5} dot={{ r: 3 }} />
             <Line type="monotone" dataKey="fcf" name="Free cash flow" stroke="#34d399" strokeWidth={2} dot={{ r: 3 }} />
           </ComposedChart>
         </ResponsiveContainer>

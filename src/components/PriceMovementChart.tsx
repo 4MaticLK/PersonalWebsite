@@ -87,7 +87,7 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
 
   type TickerKey = 'spy' | 'noc' | 'mcd';
   const tickers: { key: TickerKey; name: string; color: string }[] = [
-    { key: 'spy', name: 'SPY', color: '#94a3b8' },
+    { key: 'spy', name: 'SPY', color: '#8fb0aa' },
     { key: 'noc', name: 'NOC', color: '#38bdf8' },
     { key: 'mcd', name: 'MCD', color: 'var(--color-accent)' },
   ];
@@ -153,27 +153,27 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
               dataKey="date"
               type="category"
               tickFormatter={(v) => formatDate(v)}
-              tick={{ fill: '#94a3b8', fontSize: 10 }}
+              tick={{ fill: '#8fb0aa', fontSize: 10 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               label={{
                 value: 'Date',
                 position: 'insideBottom',
                 offset: -8,
-                fill: '#94a3b8',
+                fill: '#8fb0aa',
                 fontSize: 12,
               }}
             />
             <YAxis
               type="number"
-              tick={{ fill: '#94a3b8', fontSize: 10 }}
+              tick={{ fill: '#8fb0aa', fontSize: 10 }}
               axisLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               tickLine={{ stroke: 'rgba(248,250,252,0.25)' }}
               label={{
                 value: 'Price ($)',
                 angle: -90,
                 position: 'insideLeft',
-                fill: '#94a3b8',
+                fill: '#8fb0aa',
                 fontSize: 12,
               }}
               tickFormatter={(v) => `$${Number(v).toFixed(0)}`}
@@ -200,7 +200,7 @@ export function PriceMovementChart({ embedded = false }: PriceMovementChartProps
               type="monotone"
               dataKey="SPY"
               name="SPY"
-              stroke="#94a3b8"
+              stroke="#8fb0aa"
               strokeWidth={2}
               dot={false}
             />

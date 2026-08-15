@@ -6,9 +6,9 @@ import { Fin285aChartError, Fin285aChartLoading } from './fin285a/Fin285aChartSh
 import type { Fin285aChartData, Fin285aChartDataReady } from './fin285a/useFin285aChartData';
 
 const BENCHMARK_SLEEVES = [
-  { ticker: 'AGG', label: 'Nominal bonds', weight: '76.12%', color: '#94a3b8' },
+  { ticker: 'AGG', label: 'Nominal bonds', weight: '76.12%', color: '#8fb0aa' },
   { ticker: 'ACWI', label: 'Global equities', weight: '48.49%', color: '#38bdf8' },
-  { ticker: 'GSG', label: 'Commodities', weight: '40.66%', color: '#c9a227' },
+  { ticker: 'GSG', label: 'Commodities', weight: '40.66%', color: '#ff7a5c' },
   { ticker: 'TIP', label: 'Inflation-linked bonds', weight: '34.74%', color: '#34d399' },
 ] as const;
 
