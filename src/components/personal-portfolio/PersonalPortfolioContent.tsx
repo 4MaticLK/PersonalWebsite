@@ -7,9 +7,13 @@ import { PortfolioSummaryStats } from './PortfolioSummaryStats';
 import { PortfolioReturnsChart } from './PortfolioReturnsChart';
 import { PortfolioAllocationChart } from './PortfolioAllocationChart';
 import { PortfolioRiskFactors } from './PortfolioRiskFactors';
+import { PortfolioMeasuredRisk } from './PortfolioMeasuredRisk';
 import { PortfolioHoldingsTable } from './PortfolioHoldingsTable';
 import { PortfolioThematicConcentrations } from './PortfolioThematicConcentrations';
 import { PortfolioRebalancingPanel } from './PortfolioRebalancingPanel';
+import { PortfolioAnchorEngineInsight } from './PortfolioAnchorEngineInsight';
+import { PortfolioClosedTradeInsight } from './PortfolioClosedTradeInsight';
+import { PortfolioSoldTooEarlyInsight } from './PortfolioSoldTooEarlyInsight';
 
 interface PersonalPortfolioContentProps {
   data: PersonalPortfolioData;
@@ -18,7 +22,7 @@ interface PersonalPortfolioContentProps {
 }
 
 export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPortfolioContentProps) {
-  const { summary, holdings, analytics, modelAnalytics, liveQuotes } = data;
+  const { summary, holdings, analytics, modelAnalytics, liveQuotes, quotes } = data;
   const [filter, setFilter] = useState<PortfolioFilter | null>(null);
 
   const toggleTicker = useCallback((ticker: string) => {
@@ -62,7 +66,10 @@ export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPo
       <div id="portfolio-summary">
         <PortfolioSummaryStats modelAnalytics={modelAnalytics} />
         <PortfolioThematicConcentrations holdings={holdings} />
+        <PortfolioAnchorEngineInsight analytics={analytics} />
         <PortfolioRebalancingPanel holdings={holdings} />
+        <PortfolioClosedTradeInsight analytics={analytics} />
+        <PortfolioSoldTooEarlyInsight analytics={analytics} quotes={quotes} />
       </div>
 
       <div id="portfolio-returns" className="personal-portfolio__charts-grid">
@@ -71,6 +78,7 @@ export function PersonalPortfolioContent({ data, showIntro = false }: PersonalPo
       </div>
 
       <div id="portfolio-risk">
+        <PortfolioMeasuredRisk analytics={analytics} />
         <PortfolioRiskFactors modelAnalytics={modelAnalytics} />
       </div>
     </>

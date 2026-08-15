@@ -1,4 +1,5 @@
-import type { PortfolioAnalytics } from '../../utils/computePortfolioAnalytics';
+import { useState } from 'react';
+import type { PortfolioAnalytics, PositionPerformance } from '../../utils/computePortfolioAnalytics';
 import type { PortfolioFilter } from '../../utils/portfolioFilter';
 import { isPortfolioFilterActive } from '../../utils/portfolioFilter';
 import { formatPct, formatSharePrice, type HoldingRow } from '../../utils/parsePersonalPortfolioCsv';
@@ -10,17 +11,70 @@ interface PortfolioHoldingsTableProps {
   onSelectTicker?: (ticker: string) => void;
 }
 
+type SortKey = 'ticker' | 'name' | 'weight' | 'price' | 'today' | 'total';
+type SortDir = 'asc' | 'desc';
+
+const COLUMNS: { key: SortKey; label: string; numeric?: boolean }[] = [
+  { key: 'ticker', label: 'Ticker' },
+  { key: 'name', label: 'Name' },
+  { key: 'weight', label: 'Weight', numeric: true },
+  { key: 'price', label: 'Price', numeric: true },
+  { key: 'today', label: 'Today', numeric: true },
+  { key: 'total', label: 'Total return', numeric: true },
+];
+
+function sortValue(
+  key: SortKey,
+  h: HoldingRow,
+  perf: PositionPerformance | undefined
+): string | number {
+  switch (key) {
+    case 'ticker':
+      return h.ticker;
+    case 'name':
+      return h.name;
+    case 'weight':
+      return h.weightPct;
+    case 'price':
+      return perf?.currentPrice ?? h.currentPrice;
+    case 'today':
+      return perf?.dayChangePct ?? -Infinity;
+    case 'total':
+      return perf != null && perf.avgCost > 0 ? (perf.unrealizedGainPct ?? -Infinity) : -Infinity;
+  }
+}
+
 export function PortfolioHoldingsTable({
   holdings,
   analytics,
   filter,
   onSelectTicker,
 }: PortfolioHoldingsTableProps) {
+  const [sortKey, setSortKey] = useState<SortKey>('weight');
+  const [sortDir, setSortDir] = useState<SortDir>('desc');
+
   const perfByTicker = new Map(analytics.positions.map((p) => [p.ticker, p]));
 
-  const sorted = [...holdings]
+  function toggleSort(key: SortKey) {
+    if (key === sortKey) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDir(key === 'ticker' || key === 'name' ? 'asc' : 'desc');
+    }
+  }
+
+  const dirMul = sortDir === 'asc' ? 1 : -1;
+  const sorted = holdings
     .filter((h) => h.ticker !== 'OTHER')
-    .sort((a, b) => b.marketValue - a.marketValue);
+    .sort((a, b) => {
+      const va = sortValue(sortKey, a, perfByTicker.get(a.ticker));
+      const vb = sortValue(sortKey, b, perfByTicker.get(b.ticker));
+      if (typeof va === 'string' || typeof vb === 'string') {
+        return dirMul * String(va).localeCompare(String(vb));
+      }
+      return dirMul * (va - vb);
+    });
 
   return (
     <div className="personal-portfolio__table-wrap">
@@ -37,20 +91,27 @@ export function PortfolioHoldingsTable({
           </colgroup>
           <thead>
             <tr>
-              <th scope="col">Ticker</th>
-              <th scope="col">Name</th>
-              <th scope="col" className="personal-portfolio__num">
-                Weight
-              </th>
-              <th scope="col" className="personal-portfolio__num">
-                Price
-              </th>
-              <th scope="col" className="personal-portfolio__num">
-                Today
-              </th>
-              <th scope="col" className="personal-portfolio__num">
-                Total return
-              </th>
+              {COLUMNS.map((col) => (
+                <th
+                  key={col.key}
+                  scope="col"
+                  className={col.numeric ? 'personal-portfolio__num' : undefined}
+                  aria-sort={
+                    sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none'
+                  }
+                >
+                  <button
+                    type="button"
+                    className="personal-portfolio__sort-btn"
+                    onClick={() => toggleSort(col.key)}
+                  >
+                    {col.label}
+                    <span className="personal-portfolio__sort-arrow" aria-hidden="true">
+                      {sortKey === col.key ? (sortDir === 'asc' ? '▲' : '▼') : ''}
+                    </span>
+                  </button>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>

@@ -5,7 +5,6 @@ import { usePersonalPortfolioData } from '../hooks/usePersonalPortfolioData';
 import { PersonalPortfolioContent } from '../components/personal-portfolio/PersonalPortfolioContent';
 import { PortfolioSubnav } from '../components/personal-portfolio/PortfolioSubnav';
 import { PortfolioLiveQuoteBadge } from '../components/personal-portfolio/PortfolioLiveQuoteBadge';
-import { PortfolioVerificationBadge } from '../components/personal-portfolio/PortfolioVerificationBadge';
 import { PortfolioMethodologyDrawer } from '../components/personal-portfolio/PortfolioMethodologyDrawer';
 import { PortfolioSuggestionsPanel } from '../components/personal-portfolio/PortfolioSuggestionsPanel';
 import { PERSONAL_PORTFOLIO } from '../data/personalPortfolio';
@@ -24,8 +23,6 @@ export function PortfolioPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const asOfDisplay = data?.meta.asOfDisplay ?? PERSONAL_PORTFOLIO.fallbackAsOfDisplay;
 
   return (
     <div className="project-page project-page--portfolio">
@@ -47,17 +44,20 @@ export function PortfolioPage() {
         </p>
         <h1 className="project-page__title">{PERSONAL_PORTFOLIO.pageTitle}</h1>
         <p className="project-page__desc">{PERSONAL_PORTFOLIO.pageDescription}</p>
-        <p className="project-page__meta">
-          {PERSONAL_PORTFOLIO.pageMeta} · Data as of {asOfDisplay}
-        </p>
+        <p className="project-page__meta">{PERSONAL_PORTFOLIO.pageMeta}</p>
 
         {status === 'ok' && data && (
           <>
-            <PortfolioVerificationBadge
-              meta={data.meta}
-              onOpenMethodology={() => setMethodologyOpen(true)}
-            />
-            <PortfolioLiveQuoteBadge meta={data.liveQuotes} />
+            <div className="personal-portfolio__trust-bar">
+              <PortfolioLiveQuoteBadge meta={data.liveQuotes} />
+              <button
+                type="button"
+                className="personal-portfolio__methodology-btn"
+                onClick={() => setMethodologyOpen(true)}
+              >
+                How numbers are computed
+              </button>
+            </div>
             <PortfolioSubnav />
           </>
         )}

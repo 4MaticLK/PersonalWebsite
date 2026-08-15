@@ -70,8 +70,8 @@ export function PortfolioRiskFactors({ modelAnalytics }: PortfolioRiskFactorsPro
         Risk profile
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Single-index model vs {benchmark} · long-run assumptions · risk-free{' '}
-        {formatPct(PORTFOLIO_MODEL_ASSUMPTIONS.riskFreePct, 1)}
+        Single-index model vs {benchmark} · long-run assumptions, not measured from price history
+        (see realized risk above) · risk-free {formatPct(PORTFOLIO_MODEL_ASSUMPTIONS.riskFreePct, 1)}
       </p>
 
       <div className="personal-portfolio__insights-grid personal-portfolio__risk-grid">

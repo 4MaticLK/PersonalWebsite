@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   LineChart,
   Line,
@@ -70,11 +70,15 @@ export function PortfolioReturnsChart({ analytics, liveQuotes }: PortfolioReturn
     }));
   }, [analytics.navHistory, range]);
 
-  useEffect(() => {
+  // Clear a pinned date that's no longer in view (e.g. after a range change) during render,
+  // per React's "adjusting state when a prop changes" pattern — avoids the extra effect commit.
+  const [lastChartData, setLastChartData] = useState(chartData);
+  if (chartData !== lastChartData) {
+    setLastChartData(chartData);
     if (pinnedDate && !chartData.some((row) => row.date === pinnedDate)) {
       setPinnedDate(null);
     }
-  }, [chartData, pinnedDate]);
+  }
 
   const pinnedPoint = pinnedDate
     ? chartData.find((row) => row.date === pinnedDate) ?? null
