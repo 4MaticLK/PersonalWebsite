@@ -2,7 +2,10 @@ export interface Certificate {
   name: string;
   issuer: string;
   date: string;
-  fileUrl: string;
+  /** PDF certificate to open in the viewer modal. Omit for a badge-only credential. */
+  fileUrl?: string;
+  /** Badge image to display directly on the card (e.g. a LinkedIn-style credential badge). */
+  badgeImage?: string;
   verifyUrl?: string;
 }
 
@@ -26,5 +29,11 @@ export const CERTIFICATES: Certificate[] = [
     date: 'August 2025',
     fileUrl: '/pdfs/Yale_Financial_Markets_Certificate.pdf',
     verifyUrl: 'https://coursera.org/verify/8O6LFF9A49DB',
+  },
+  {
+    name: 'FMI Foundations',
+    issuer: 'Financial Modeling Institute',
+    date: 'April 2026',
+    badgeImage: '/images/fmi-foundations-badge.png',
   },
 ];

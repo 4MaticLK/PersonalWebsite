@@ -17,29 +17,47 @@ export function CertificatesSection() {
         <div className="page-section__scroll-inner">
           <h2 className="work-section__title">Certificates</h2>
           <p className="work-section__intro">
-            Selected certifications. Click a card to view the certificate.
+            Selected certifications and credentials. Click a card to view the certificate.
           </p>
           <div className="work-section__grid">
-            {CERTIFICATES.map((cert) => (
-              <button
-                key={cert.name}
-                type="button"
-                className="work-section__card work-section__card--button"
-                onClick={() => setActiveCert(cert)}
-              >
-                <div className="work-section__card-tags" aria-label="Issuer">
-                  <span className="work-section__card-tag">{cert.issuer}</span>
-                </div>
-                <h3 className="work-section__card-title">{cert.name}</h3>
-                <p className="work-section__card-desc">Completed {cert.date}</p>
-                <span className="work-section__card-link">
-                  View certificate{' '}
-                  <span className="work-section__card-arrow" aria-hidden>
-                    →
+            {CERTIFICATES.map((cert) =>
+              cert.fileUrl ? (
+                <button
+                  key={cert.name}
+                  type="button"
+                  className="work-section__card certificate-card work-section__card--button"
+                  onClick={() => setActiveCert(cert)}
+                >
+                  <div className="work-section__card-tags" aria-label="Issuer">
+                    <span className="work-section__card-tag">{cert.issuer}</span>
+                  </div>
+                  <h3 className="work-section__card-title">{cert.name}</h3>
+                  <p className="work-section__card-desc">Completed {cert.date}</p>
+                  <span className="work-section__card-link">
+                    View certificate{' '}
+                    <span className="work-section__card-arrow" aria-hidden>
+                      →
+                    </span>
                   </span>
-                </span>
-              </button>
-            ))}
+                </button>
+              ) : (
+                <div key={cert.name} className="work-section__card certificate-card certificate-badge-card">
+                  <img
+                    src={cert.badgeImage}
+                    alt={`${cert.name} badge`}
+                    className="certificate-badge-card__image"
+                    width={140}
+                    height={140}
+                    loading="lazy"
+                  />
+                  <div className="work-section__card-tags" aria-label="Issuer">
+                    <span className="work-section__card-tag">{cert.issuer}</span>
+                  </div>
+                  <h3 className="work-section__card-title">{cert.name}</h3>
+                  <p className="work-section__card-desc">Earned {cert.date}</p>
+                </div>
+              )
+            )}
           </div>
           <a href="#skills-and-activities" className="experience-section__cta">
             See skills & activities

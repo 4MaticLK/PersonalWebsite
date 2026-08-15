@@ -1966,6 +1966,28 @@ a:hover {
   opacity: 1;
 }
 
+.certificate-card {
+  height: 220px;
+}
+
+.certificate-card .work-section__card-link {
+  margin-top: auto;
+}
+
+.certificate-badge-card {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: default;
+}
+
+.certificate-badge-card__image {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: var(--space-md);
+}
+
 .scroll-reveal--visible .work-section__grid .work-section__card {
   opacity: 1;
   transform: translateY(0);

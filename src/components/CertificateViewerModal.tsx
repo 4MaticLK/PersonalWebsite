@@ -69,7 +69,7 @@ export function CertificateViewerModal({ certificate, onClose }: CertificateView
 
   useEffect(() => {
     const container = pagesRef.current;
-    if (!certificate || !container) return;
+    if (!certificate?.fileUrl || !container) return;
 
     let cancelled = false;
     renderPdfPages(certificate.fileUrl, container, () => cancelled)
