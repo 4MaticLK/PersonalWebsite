@@ -15,6 +15,7 @@
     "sync:portfolio": "npx tsx scripts/syncPortfolioFromRobinhood.mts",
     "apply:model-portfolio": "npx tsx scripts/applyModelPortfolio.mts",
     "refresh:portfolio-prices": "npx tsx scripts/refreshPortfolioPrices.mts",
+    "auto:portfolio": "npx tsx scripts/dailyPortfolioAutomation.mts",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

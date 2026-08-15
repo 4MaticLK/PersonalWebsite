@@ -70,6 +70,24 @@ To refresh prices only (no new trades):
 npm run refresh:portfolio-prices -- --write
 ```
 
+### Automated daily sync + rebalance
+
+`.github/workflows/portfolio-daily-sync.yml` runs on a schedule (weekdays, shortly after market close) and:
+
+1. Refreshes all holdings' prices from Yahoo.
+2. Checks each position's drift against `PORTFOLIO_TARGET_WEIGHTS` (`src/data/portfolioTargets.ts`) using the exact same band rule as the Rebalancing panel on the site (`src/utils/portfolioRebalancing.ts`).
+3. For any position outside its band, trades it back to target (trims fund adds — no new capital needed since target weights sum to 100%).
+4. Commits `holdings.csv`, `transactions.csv` (if any trades ran), and `meta.json` back to the repo, which triggers a normal Vercel redeploy.
+
+Run it by hand with:
+
+```bash
+npm run auto:portfolio            # dry run — prints what it would do
+npm run auto:portfolio -- --write # persists changes
+```
+
+Requires the repo's Actions settings to allow "Read and write permissions" for the default `GITHUB_TOKEN` (Settings → Actions → General → Workflow permissions), since the job commits and pushes directly.
+
 ### Export from Robinhood
 
 1. Open [robinhood.com/account/reports-statements/activity-reports](https://robinhood.com/account/reports-statements/activity-reports) (desktop browser).

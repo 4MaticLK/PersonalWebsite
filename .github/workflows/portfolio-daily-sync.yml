@@ -1,0 +1,37 @@
+name: Daily portfolio sync
+
+on:
+  schedule:
+    # 21:30 UTC, Mon-Fri — shortly after the US market close.
+    - cron: '30 21 * * 1-5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - name: Refresh prices and auto-rebalance if triggered
+        run: npx tsx scripts/dailyPortfolioAutomation.mts --write
+
+      - name: Commit and push if anything changed
+        run: |
+          git config user.name "portfolio-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/data/personal-portfolio/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Daily portfolio sync: refresh prices + auto-rebalance"
+            git push
+          fi
