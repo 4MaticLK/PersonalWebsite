@@ -287,7 +287,7 @@ function AccretionAnalysis() {
             />
             <Tooltip
               contentStyle={{
-                background: '#0d2320',
+                background: '#0a0e0b',
                 border: '1px solid rgba(248,250,252,0.12)',
                 borderRadius: 8,
               }}
@@ -310,7 +310,7 @@ function AccretionAnalysis() {
               type="monotone"
               dataKey="standalone"
               name="CRM standalone EPS"
-              stroke="#8fb0aa"
+              stroke="#829485"
               strokeWidth={2}
               dot={false}
             />

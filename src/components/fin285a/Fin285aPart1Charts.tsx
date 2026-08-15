@@ -119,10 +119,10 @@ export function Fin285aPart1Charts({
                 dataKey="date"
                 ticks={part1XYearTicks}
                 tickFormatter={formatChartYear}
-                tick={{ fill: '#8fb0aa', fontSize: 11 }}
+                tick={{ fill: '#829485', fontSize: 11 }}
               />
               <YAxis
-                tick={{ fill: '#8fb0aa', fontSize: 11 }}
+                tick={{ fill: '#829485', fontSize: 11 }}
                 domain={part1CumYAxis.domain}
                 ticks={part1CumYAxis.ticks}
                 tickFormatter={(v) => Number(v).toFixed(1)}
@@ -137,7 +137,7 @@ export function Fin285aPart1Charts({
                 x={REGIME_SPLIT}
                 stroke="rgba(248, 113, 113, 0.6)"
                 strokeDasharray="4 4"
-                label={{ value: '2022', fill: '#8fb0aa', fontSize: 11 }}
+                label={{ value: '2022', fill: '#829485', fontSize: 11 }}
               />
               <Legend {...CHART_LEGEND_PROPS} />
               <Line
@@ -152,7 +152,7 @@ export function Fin285aPart1Charts({
                 type="linear"
                 dataKey="benchmark"
                 name="ALLW benchmark"
-                stroke="#ff7a5c"
+                stroke="#7ab86f"
                 strokeWidth={2}
                 dot={false}
               />
@@ -178,10 +178,10 @@ export function Fin285aPart1Charts({
                 dataKey="date"
                 ticks={part1XYearTicks}
                 tickFormatter={formatChartYear}
-                tick={{ fill: '#8fb0aa', fontSize: 11 }}
+                tick={{ fill: '#829485', fontSize: 11 }}
               />
               <YAxis
-                tick={{ fill: '#8fb0aa', fontSize: 11 }}
+                tick={{ fill: '#829485', fontSize: 11 }}
                 domain={[0, PART1_LEVERAGE + 0.1]}
                 ticks={[...PART1_WEIGHT_Y_TICKS]}
                 tickFormatter={(v) => `${(Number(v) * 100).toFixed(0)}%`}
@@ -197,7 +197,7 @@ export function Fin285aPart1Charts({
               />
               <ReferenceLine
                 y={PART1_LEVERAGE}
-                stroke="rgba(238, 246, 243, 0.55)"
+                stroke="rgba(232, 237, 233, 0.55)"
                 strokeDasharray="5 4"
               />
               <Legend {...CHART_LEGEND_PROPS} />

@@ -118,7 +118,7 @@ export function RegressionChart() {
   const yPadMcd = (yMaxMcd - yMinMcd) * padding || 1;
 
   const sharedAxisStyle = {
-    tick: { fill: '#8fb0aa' as const, fontSize: 10 },
+    tick: { fill: '#829485' as const, fontSize: 10 },
     axisLine: { stroke: 'rgba(248,250,252,0.25)' as const },
     tickLine: { stroke: 'rgba(248,250,252,0.25)' as const },
     tickFormatter: (v: number) => `${Number(v).toFixed(1)}%`,
@@ -161,7 +161,7 @@ export function RegressionChart() {
                     value: 'Market (SPY %)',
                     position: 'insideBottom',
                     offset: -6,
-                    fill: '#8fb0aa',
+                    fill: '#829485',
                     fontSize: 11,
                   }}
                 />
@@ -174,7 +174,7 @@ export function RegressionChart() {
                     value: 'NOC return (%)',
                     angle: -90,
                     position: 'insideLeft',
-                    fill: '#8fb0aa',
+                    fill: '#829485',
                     fontSize: 11,
                   }}
                 />
@@ -240,7 +240,7 @@ export function RegressionChart() {
                     value: 'Market (SPY %)',
                     position: 'insideBottom',
                     offset: -6,
-                    fill: '#8fb0aa',
+                    fill: '#829485',
                     fontSize: 11,
                   }}
                 />
@@ -253,7 +253,7 @@ export function RegressionChart() {
                     value: 'MCD return (%)',
                     angle: -90,
                     position: 'insideLeft',
-                    fill: '#8fb0aa',
+                    fill: '#829485',
                     fontSize: 11,
                   }}
                 />

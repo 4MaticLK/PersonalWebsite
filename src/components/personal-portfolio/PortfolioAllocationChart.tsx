@@ -15,7 +15,7 @@ interface PortfolioAllocationChartProps {
   filter?: PortfolioFilter | null;
 }
 
-const COLORS = ['#ff7a5c', '#0d9488', '#6366f1', '#f59e0b', '#8fb0aa', '#ec4899', '#22c55e', '#8b5cf6', '#14b8a6', '#f97316', '#5f8a83'];
+const COLORS = ['#7ab86f', '#0d9488', '#6366f1', '#f59e0b', '#829485', '#ec4899', '#22c55e', '#8b5cf6', '#14b8a6', '#f97316', '#5f7a63'];
 
 type AllocationMode = 'ticker' | 'sector';
 
@@ -167,10 +167,10 @@ export function PortfolioAllocationChart({
             <Tooltip
               trigger="hover"
               contentStyle={{
-                background: '#153936',
-                border: '1px solid rgba(255, 122, 92, 0.35)',
+                background: '#151c16',
+                border: '1px solid rgba(122, 184, 111, 0.35)',
                 borderRadius: '0.5rem',
-                color: '#eef6f3',
+                color: '#e8ede9',
               }}
               formatter={(_value: number, _name, item) => {
                 const payload = item.payload as ChartSlice;

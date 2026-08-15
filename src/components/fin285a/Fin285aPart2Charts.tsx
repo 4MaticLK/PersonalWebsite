@@ -100,9 +100,9 @@ export function Fin285aPart2Charts({
                 dataKey="date"
                 tickFormatter={formatChartDateShort}
                 interval={xTickInterval(part2CumDisplay.length, 8)}
-                tick={{ fill: '#8fb0aa', fontSize: 11 }}
+                tick={{ fill: '#829485', fontSize: 11 }}
               />
-              <YAxis tick={{ fill: '#8fb0aa', fontSize: 11 }} domain={['auto', 'auto']} />
+              <YAxis tick={{ fill: '#829485', fontSize: 11 }} domain={['auto', 'auto']} />
               <Tooltip
                 labelFormatter={formatChartDate}
                 formatter={(v: number, name: string) => [Number(v).toFixed(3), name]}
@@ -112,9 +112,9 @@ export function Fin285aPart2Charts({
               {!showTestOnly && (
                 <ReferenceLine
                   x={TRAIN_TEST_SPLIT}
-                  stroke="rgba(255, 122, 92, 0.7)"
+                  stroke="rgba(122, 184, 111, 0.7)"
                   strokeDasharray="4 4"
-                  label={{ value: 'Test start', fill: '#ff7a5c', fontSize: 10 }}
+                  label={{ value: 'Test start', fill: '#7ab86f', fontSize: 10 }}
                 />
               )}
               <Legend />
@@ -130,7 +130,7 @@ export function Fin285aPart2Charts({
                 type="monotone"
                 dataKey="benchmark"
                 name="Benchmark"
-                stroke="#ff7a5c"
+                stroke="#7ab86f"
                 strokeWidth={2}
                 dot={false}
               />
