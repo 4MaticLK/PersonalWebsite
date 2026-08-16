@@ -77,7 +77,7 @@ export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps)
         Realized risk &amp; performance
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Measured from {risk.observationDays} trading days of actual price history vs {benchmark} —
+        Measured from {risk.observationDays} trading days of actual price history vs {benchmark},
         distinct from the long-run assumption model below, which uses static per-holding estimates
         rather than what actually happened.
       </p>
@@ -130,7 +130,7 @@ export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps)
         <RiskCard
           label="Effective holdings"
           value={risk.effectiveHoldings.toFixed(1)}
-          sub="1 / HHI — behaves like this many equal-sized bets"
+          sub="1 / HHI, behaves like this many equal-sized bets"
         />
         <RiskCard label="Top 3 weight" value={formatPct(risk.top3WeightPct, 1)} sub="Share of book in largest 3 positions" />
         <RiskCard
@@ -144,7 +144,7 @@ export function PortfolioMeasuredRisk({ analytics }: PortfolioMeasuredRiskProps)
         <>
           <h4 className="personal-portfolio__risk-subhead">Measured beta &amp; volatility per position</h4>
           <p className="personal-portfolio__insights-caption">
-            From each holding&apos;s own daily price history vs {benchmark} — compare against the
+            From each holding&apos;s own daily price history vs {benchmark}, compare against the
             assumption-model beta used in the risk-contribution table below.
           </p>
           <div className="personal-portfolio__risk-table-wrap">

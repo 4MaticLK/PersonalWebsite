@@ -47,7 +47,7 @@ export function PortfolioClosedTradeInsight({ analytics }: PortfolioClosedTradeI
         Closed trade highlights
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Best and worst tracked round-trips from FIFO cost basis — percentages only, no position
+        Best and worst tracked round-trips from FIFO cost basis: percentages only, no position
         sizes.
       </p>
       <div className="personal-portfolio__insights-grid personal-portfolio__insights-grid--duo">

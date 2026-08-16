@@ -66,7 +66,7 @@ export function PortfolioSoldTooEarlyInsight({
         Exit timing vs today
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Hypothetical — compares each sell price to today&apos;s live quote. Not investment advice.
+        Hypothetical: compares each sell price to today&apos;s live quote. Not investment advice.
       </p>
       <div className="personal-portfolio__insights-grid personal-portfolio__insights-grid--duo">
         {leftOnTable && (

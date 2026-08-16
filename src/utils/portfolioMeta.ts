@@ -88,9 +88,9 @@ export function mergePortfolioMeta(
 
 export const VERIFY_WARNING_LABELS: Record<PortfolioVerifyWarning, string> = {
   deposits_incomplete:
-    'Deposit history may be incomplete — lifetime returns use deployed buy capital, not full account funding.',
+    'Deposit history may be incomplete: lifetime returns use deployed buy capital, not full account funding.',
   untracked_sells:
-    'Some sells have no matching buy in the export window — excluded from realized return.',
-  holdings_weight_drift: 'Holdings weights do not sum to 100% — allocation may be incomplete.',
-  verify_stale: 'Analytics have not been verified recently — run npm run verify:portfolio after syncing.',
+    'Some sells have no matching buy in the export window, excluded from realized return.',
+  holdings_weight_drift: 'Holdings weights do not sum to 100%, allocation may be incomplete.',
+  verify_stale: 'Analytics have not been verified recently, run npm run verify:portfolio after syncing.',
 };

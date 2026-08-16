@@ -396,7 +396,7 @@ export function PortfolioSuggestionsPanel({ boxSlug }: { boxSlug: string }) {
               )}
               {!loading && topics.length === 0 && (
                 <p className="personal-portfolio__suggestions-empty">
-                  No conversations yet — start the first topic.
+                  No conversations yet, start the first topic.
                 </p>
               )}
               {topics.map((item) => (

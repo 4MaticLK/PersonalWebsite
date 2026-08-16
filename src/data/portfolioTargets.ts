@@ -41,7 +41,7 @@ export const PORTFOLIO_THEMES: PortfolioTheme[] = [
   {
     id: 'financials',
     label: 'Financials',
-    description: 'Banks and payments — rate- and credit-cycle sensitive.',
+    description: 'Banks and payments, rate- and credit-cycle sensitive.',
     tickers: ['C', 'JPM', 'AXP'],
   },
   {
@@ -61,7 +61,7 @@ export const PORTFOLIO_THEMES: PortfolioTheme[] = [
     id: 'diversifiers',
     label: 'Diversifiers',
     description:
-      'Added in the Aug 2026 rebalance specifically to cut beta, tracking error, and correlation to the market — low-vol equity, gold, and a sector this book had zero exposure to.',
+      'Added in the Aug 2026 rebalance specifically to cut beta, tracking error, and correlation to the market: low-vol equity, gold, and a sector this book had zero exposure to.',
     tickers: ['USMV', 'GLD', 'VOX'],
   },
 ];

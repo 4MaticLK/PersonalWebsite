@@ -18,7 +18,7 @@ export function PortfolioThematicConcentrations({ holdings }: PortfolioThematicC
         Thematic concentrations
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Cross-cutting exposures that cut across sector labels — the sector chart below can look
+        Cross-cutting exposures that cut across sector labels. The sector chart below can look
         diversified even when a theme like this is concentrated, so worth monitoring together.
       </p>
       <div className="personal-portfolio__insights-grid">

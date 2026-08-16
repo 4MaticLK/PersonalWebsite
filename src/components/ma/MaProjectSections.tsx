@@ -302,7 +302,7 @@ export function PrecedentTransactionsSection() {
         Precedent SaaS transactions
       </h2>
       <p className="ma-project__section-lead">
-        Recent control transactions traded at a median {PRECEDENT_MEDIAN_EV_REV}× LTM revenue — roughly
+        Recent control transactions traded at a median {PRECEDENT_MEDIAN_EV_REV}× LTM revenue, roughly
         half the proposed HubSpot bid multiple, reflecting a discount for size and the 2026 market.
       </p>
       <div className="ma-project__viz-stack">
@@ -417,7 +417,7 @@ export function CrmDcfSummarySection() {
         </ResponsiveContainer>
       </div>
       <SortableTable
-        caption="WACC assumptions — HUBS vs CRM"
+        caption="WACC assumptions: HUBS vs CRM"
         columns={[
           { key: 'label', label: 'Assumption' },
           { key: 'hubs', label: 'HubSpot', align: 'right' },

@@ -37,7 +37,7 @@ export function PortfolioRebalancingPanel({ holdings }: PortfolioRebalancingPane
         Rebalancing
       </h3>
       <p className="personal-portfolio__insights-caption">
-        Target weights with a band — rebalance when drift exceeds{' '}
+        Target weights with a band, rebalance when drift exceeds{' '}
         {REBALANCE_ABS_BAND_PCT} percentage points or {formatPct(REBALANCE_REL_BAND * 100, 0)} of
         the target weight.
       </p>
@@ -48,7 +48,7 @@ export function PortfolioRebalancingPanel({ holdings }: PortfolioRebalancingPane
         </p>
       ) : (
         <p className="personal-portfolio__rebalance-alert" role="status">
-          {triggered.length} position{triggered.length === 1 ? '' : 's'} outside band — trim winners
+          {triggered.length} position{triggered.length === 1 ? '' : 's'} outside band: trim winners
           or add to laggards back toward target.
         </p>
       )}

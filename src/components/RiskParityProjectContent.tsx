@@ -24,7 +24,7 @@ const REGIME = {
     label: 'Post-2022',
     correlation: '≈ +0.6 to +0.8',
     summary:
-      'During the inflation shock, stocks and bonds fell together. The traditional bond hedge broke—TIPS and real assets became critical diversifiers.',
+      'During the inflation shock, stocks and bonds fell together. The traditional bond hedge broke, and TIPS and real assets became critical diversifiers.',
   },
 } as const;
 
@@ -70,7 +70,7 @@ const SLEEVES: Record<
     optimizedPct: '37.33%',
     funds: 'GLD, USO, CPER, SLV, DBA, UNG',
     insight:
-      'Precious metals (GLD, SLV) diversified well; energy (USO, UNG) faced drawdowns and roll drag—splitting GSG matters for risk control.',
+      'Precious metals (GLD, SLV) diversified well; energy (USO, UNG) faced drawdowns and roll drag, so splitting GSG matters for risk control.',
   },
 };
 
@@ -264,7 +264,7 @@ export function RiskParityProjectContent({ project }: RiskParityProjectContentPr
         aria-labelledby="rp-part-2-heading"
       >
         <h2 id="rp-part-2-heading" className="risk-parity__section-title">
-          Part 2 — Tracking error minimization (20 ETFs)
+          Part 2: Tracking error minimization (20 ETFs)
         </h2>
         <div className="risk-parity__section-layout risk-parity__section-layout--stacked">
           <div className="risk-parity__section-prose">

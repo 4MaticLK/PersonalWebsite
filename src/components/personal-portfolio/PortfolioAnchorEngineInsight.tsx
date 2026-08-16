@@ -61,7 +61,7 @@ export function PortfolioAnchorEngineInsight({ analytics }: PortfolioAnchorEngin
         Anchor vs engine
       </h3>
       <p className="personal-portfolio__insights-caption">
-        ETF ballast vs single-name bets in the open book — how each side is weighted and moving
+        ETF ballast vs single-name bets in the open book: how each side is weighted and moving
         today.
       </p>
       <div className="personal-portfolio__insights-grid personal-portfolio__insights-grid--duo">

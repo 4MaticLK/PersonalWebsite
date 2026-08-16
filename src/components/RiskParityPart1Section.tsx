@@ -58,7 +58,7 @@ export function RiskParityPart1Section({ chartMeta, chartData }: RiskParityPart1
         </h2>
         <p className="risk-parity__part1-lead">
           A monthly rebalanced, equal-risk-contribution portfolio on the same broad asset classes as
-          the Bridgewater All Weather benchmark—before expanding to 20 granular ETFs in Part 2.
+          the Bridgewater All Weather benchmark, before expanding to 20 granular ETFs in Part 2.
         </p>
       </header>
 

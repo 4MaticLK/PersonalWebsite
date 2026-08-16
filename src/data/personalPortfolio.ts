@@ -6,20 +6,20 @@ export const PERSONAL_PORTFOLIO = {
   /** Home page section */
   sectionTitle: 'Live Portfolio Tracker',
   sectionIntro:
-    'A hypothetical $100K model portfolio — live prices, allocation, benchmark comparison, and risk analytics.',
+    'A hypothetical $100K model portfolio: live prices, allocation, benchmark comparison, and risk analytics.',
 
   /** Full /portfolio page */
   pageTitle: 'Live Portfolio Tracker',
   pageDescription:
-    'A hypothetical $100K model portfolio with live market data — holdings, allocation, thematic exposures, rebalancing bands, and risk analytics.',
+    'A hypothetical $100K model portfolio with live market data: holdings, allocation, thematic exposures, rebalancing bands, and risk analytics.',
   pageMeta: 'Live prices · Yahoo Finance · 24 positions',
 
-  framingLead: 'This is a hypothetical $100K model portfolio — not real capital, and not investment advice.',
+  framingLead: 'This is a hypothetical $100K model portfolio, not real capital, and not investment advice.',
   framingBody:
     'Live prices, allocation, benchmark comparison, and risk metrics for the full book.',
 
   disclaimer:
-    'A hypothetical $100K model portfolio for education and demonstration — not real capital. Past performance does not guarantee future results. Not investment advice.',
+    'A hypothetical $100K model portfolio for education and demonstration, not real capital. Past performance does not guarantee future results. Not investment advice.',
 
   homeCta: 'Explore analytics dashboard',
   experienceCta: 'Explore live tracker',

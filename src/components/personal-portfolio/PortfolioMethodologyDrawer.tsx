@@ -21,12 +21,12 @@ const SECTIONS = [
   {
     title: 'Thematic concentrations',
     body:
-      'Cross-cutting themes (financials, AI/power, international, speculative) sum weights across defined ticker groups. Overlap across themes is intentional — the same name can appear in multiple themes.',
+      'Cross-cutting themes (financials, AI/power, international, speculative) sum weights across defined ticker groups. Overlap across themes is intentional: the same name can appear in multiple themes.',
   },
   {
     title: 'Rebalancing',
     body:
-      'Each holding has a target weight. Rebalance when current weight drifts more than 5 percentage points or 25% relative to target — trim winners or add to laggards back toward target.',
+      'Each holding has a target weight. Rebalance when current weight drifts more than 5 percentage points or 25% relative to target, trimming winners or adding to laggards back toward target.',
   },
   {
     title: 'Performance chart',

@@ -32,7 +32,7 @@ export function PortfolioLiveQuoteBadge({ meta }: PortfolioLiveQuoteBadgeProps) 
         ? `Updated ${formatUpdatedAt(fetchedAt)} · refreshes every minute`
         : fetchedAt
           ? `Last attempt ${formatUpdatedAt(fetchedAt)}`
-          : 'Live feed unavailable — showing statement prices.';
+          : 'Live feed unavailable, showing statement prices.';
 
   return (
     <p className="personal-portfolio__live-badge" role="status">
@@ -43,7 +43,7 @@ export function PortfolioLiveQuoteBadge({ meta }: PortfolioLiveQuoteBadgeProps) 
       <span>
         <strong>{label}</strong>
         {source ? ` · ${source}` : ''}
-        {detail ? ` — ${detail}` : ''}
+        {detail ? ` · ${detail}` : ''}
       </span>
     </p>
   );
