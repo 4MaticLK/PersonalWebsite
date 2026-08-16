@@ -6201,6 +6201,8 @@ main:focus-visible {
 .personal-portfolio__methodology-title {
   margin: 0;
   font-size: 1.125rem;
+  /* <dialog> sits in the top layer and doesn't inherit body's color — set explicitly. */
+  color: var(--color-text);
 }
 
 .personal-portfolio__methodology-intro {
@@ -6229,6 +6231,7 @@ main:focus-visible {
 .personal-portfolio__methodology-section-title {
   margin: 0 0 0.35rem;
   font-size: 0.9375rem;
+  color: var(--color-text);
 }
 
 .personal-portfolio__methodology-section p {
@@ -6275,6 +6278,8 @@ main:focus-visible {
 .certificate-viewer__title {
   margin: 0;
   font-size: 1.125rem;
+  /* <dialog> sits in the top layer and doesn't inherit body's color — set explicitly. */
+  color: var(--color-text);
 }
 
 .certificate-viewer__meta {
