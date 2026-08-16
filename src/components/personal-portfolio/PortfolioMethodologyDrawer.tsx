@@ -21,7 +21,7 @@ const SECTIONS = [
   {
     title: 'Thematic concentrations',
     body:
-      'Cross-cutting themes (financials, AI/power, international, speculative) sum weights across defined ticker groups. Overlap across themes is intentional: the same name can appear in multiple themes.',
+      'Cross-cutting themes (financials, AI/power, international, diversifiers) sum weights across defined ticker groups. Overlap across themes is intentional: the same name can appear in multiple themes.',
   },
   {
     title: 'Rebalancing',

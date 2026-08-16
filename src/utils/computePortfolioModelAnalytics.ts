@@ -1,5 +1,6 @@
 import {
   BOND_TICKERS,
+  OTHER_ASSET_TICKERS,
   PORTFOLIO_MODEL_ASSUMPTIONS,
   PORTFOLIO_MODEL_INPUTS,
 } from '../data/portfolioModelInputs';
@@ -24,6 +25,8 @@ export interface PortfolioModelAnalytics {
   sharpeRatio: number;
   equityWeightPct: number;
   bondWeightPct: number;
+  /** Commodities and other non-equity, non-bond assets (e.g. gold). */
+  otherWeightPct: number;
   typicalYearLowPct: number;
   typicalYearHighPct: number;
   badYearPct: number;
@@ -80,8 +83,10 @@ export function computePortfolioModelAnalytics(
 
   let equityWeight = 0;
   let bondWeight = 0;
+  let otherWeight = 0;
   for (const x of weighted) {
     if (BOND_TICKERS.has(x.ticker)) bondWeight += x.weight;
+    else if (OTHER_ASSET_TICKERS.has(x.ticker)) otherWeight += x.weight;
     else equityWeight += x.weight;
   }
 
@@ -116,6 +121,7 @@ export function computePortfolioModelAnalytics(
     sharpeRatio,
     equityWeightPct: equityWeight * 100,
     bondWeightPct: bondWeight * 100,
+    otherWeightPct: otherWeight * 100,
     typicalYearLowPct: expectedReturnPct - volatilityPct,
     typicalYearHighPct: expectedReturnPct + volatilityPct,
     badYearPct: expectedReturnPct - 2 * volatilityPct,

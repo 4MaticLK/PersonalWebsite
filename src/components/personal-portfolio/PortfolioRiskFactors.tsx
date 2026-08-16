@@ -99,9 +99,9 @@ export function PortfolioRiskFactors({ modelAnalytics }: PortfolioRiskFactorsPro
           highlight={sharpeRatio >= 0.5 ? 'low' : sharpeRatio < 0 ? 'high' : 'neutral'}
         />
         <RiskCard
-          label="Equity / bond"
-          value={`${formatPct(modelAnalytics.equityWeightPct, 0)} / ${formatPct(modelAnalytics.bondWeightPct, 0)}`}
-          sub="Current allocation split"
+          label="Equity / bond / other"
+          value={`${formatPct(modelAnalytics.equityWeightPct, 0)} / ${formatPct(modelAnalytics.bondWeightPct, 0)} / ${formatPct(modelAnalytics.otherWeightPct, 0)}`}
+          sub="Other = commodities (gold)"
         />
         <RiskCard
           label="Bad year (≈ −2σ)"

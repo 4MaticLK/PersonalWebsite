@@ -12,6 +12,9 @@ export const PORTFOLIO_MODEL_ASSUMPTIONS = {
 
 export const BOND_TICKERS = new Set(['BND', 'GOVT', 'VTIP']);
 
+/** Neither equity nor bond (commodities like gold) — shown as "other" in the allocation split. */
+export const OTHER_ASSET_TICKERS = new Set(['GLD']);
+
 /** Representative asset-class assumptions — not measured from price history. */
 export const PORTFOLIO_MODEL_INPUTS: Record<string, PortfolioModelInput> = {
   VOO: { expReturnPct: 8.0, volPct: 15.5, beta: 1.0 },

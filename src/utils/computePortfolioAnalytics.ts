@@ -355,6 +355,29 @@ function lastTradingDayOfMonth(
   return out;
 }
 
+/** Days of daily-granularity history kept at the end of the nav series (for 1M/3M chart windows). */
+const NAV_DAILY_TAIL_DAYS = 92;
+
+/**
+ * Monthly points for older history, daily points for the recent tail. Keeps the "All" view light
+ * while giving the 1M/3M chart ranges enough resolution to be meaningful.
+ */
+function sampleNavRows(
+  rows: { date: string; value: number }[]
+): { date: string; value: number }[] {
+  const last = rows[rows.length - 1];
+  if (!last) return [];
+  const cutoffDate = new Date(last.date + 'T12:00:00');
+  cutoffDate.setDate(cutoffDate.getDate() - NAV_DAILY_TAIL_DAYS);
+  const cutoff = cutoffDate.toISOString().slice(0, 10);
+
+  const monthly = lastTradingDayOfMonth(rows.filter((r) => r.date < cutoff));
+  const dailyTail = rows.filter((r) => r.date >= cutoff);
+  const lastMonthly = monthly[monthly.length - 1];
+  if (lastMonthly && dailyTail[0]?.date === lastMonthly.date) monthly.pop();
+  return [...monthly, ...dailyTail];
+}
+
 interface BacktestResult {
   navHistory: NavHistoryRow[];
   returnPct: number | null;
@@ -610,12 +633,11 @@ function computeRiskMetrics(
     years > 0 ? (1 + totalReturn) ** (1 / years) - 1 : mean(portRets) * TRADING_DAYS;
   const rf = RISK_FREE_RATE_PCT / 100;
 
-  const downside = portRets.filter((r) => r < 0);
+  // Textbook downside deviation: sqrt(mean(min(r, 0)^2)) over ALL observations,
+  // not just losing days (dividing by losing days only overstates downside vol).
   const downsideDev =
-    downside.length > 0
-      ? Math.sqrt(downside.reduce((s, r) => s + r * r, 0) / downside.length) *
-        Math.sqrt(TRADING_DAYS)
-      : 0;
+    Math.sqrt(portRets.reduce((s, r) => s + Math.min(0, r) ** 2, 0) / portRets.length) *
+    Math.sqrt(TRADING_DAYS);
 
   const sharpeRatio = portVol > 1e-8 ? (annualReturn - rf) / portVol : null;
   const sortinoRatio = downsideDev > 1e-8 ? (annualReturn - rf) / downsideDev : null;
@@ -786,8 +808,8 @@ function buildBacktest(
     if (dd < maxDd) maxDd = dd;
   }
 
-  const monthly = lastTradingDayOfMonth(daily.map((d) => ({ date: d.date, value: d.index })));
-  const navHistory: NavHistoryRow[] = monthly.map((d) => {
+  const sampled = sampleNavRows(daily.map((d) => ({ date: d.date, value: d.index })));
+  const navHistory: NavHistoryRow[] = sampled.map((d) => {
     const spyC = spyClose.get(d.date) ?? null;
     return {
       date: d.date,
