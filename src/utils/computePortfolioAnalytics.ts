@@ -8,8 +8,9 @@
  * - Sells with no matching buy lot (e.g. ETH/DOGE bought before the export window) are flagged as
  *   "untracked" and excluded from realized P/L, win rate, and returns so they can't create phantom
  *   gains.
- * - The cumulative chart is an explicit backtest of the CURRENT holdings (today's share counts held
- *   over the period) valued at real historical prices — clearly distinct from the realized return.
+ * - The cumulative chart replays the ACTUAL share counts through time from the transaction log,
+ *   valued at real historical prices, with daily flow adjustment so buys/sells aren't read as gains.
+ *   Early history therefore reflects the book as it was then, not today's allocation.
  */
 
 import type { HoldingRow, NavHistoryRow, TransactionRow } from './parsePersonalPortfolioCsv';
@@ -74,7 +75,7 @@ export interface PortfolioAnalytics {
   alphaPct: number | null;
   dividendYieldPct: number;
 
-  /** Backtest of current holdings (today's shares) at real historical prices. */
+  /** Transaction-replay backtest of the book at real historical prices, plus a live end point. */
   navHistory: NavHistoryRow[];
   backtestReturnPct: number | null;
   backtestBenchmarkPct: number | null;
@@ -152,7 +153,9 @@ function sharesFromTx(tx: TransactionRow): number {
 }
 
 /** Returns a function giving the close on or before a date (forward-filled). */
-function makeCloseLookup(history: { date: string; close: number }[]): (iso: string) => number | null {
+function makeCloseLookup(
+  history: { date: string; close: number }[]
+): (iso: string) => number | null {
   const sorted = [...history].sort((a, b) => a.date.localeCompare(b.date));
   return (iso: string) => {
     let best: number | null = null;
@@ -339,7 +342,9 @@ function moneyWeightedBenchmark(
   return (wret / wsum) * 100;
 }
 
-function lastTradingDayOfMonth(rows: { date: string; value: number }[]): { date: string; value: number }[] {
+function lastTradingDayOfMonth(
+  rows: { date: string; value: number }[]
+): { date: string; value: number }[] {
   const byMonth = new Map<string, { date: string; value: number }>();
   for (const r of rows) {
     byMonth.set(r.date.slice(0, 7), r);
@@ -358,29 +363,45 @@ interface BacktestResult {
   excludes: string[];
   alignedReturns: { port: number; spy: number }[];
   lastDailyIndex: number;
+  /** Portfolio value (eligible tickers only) priced at the last daily bar's closes. */
+  lastDailyValue: number;
+  /** Tickers priced in the backtest; the live point must value the same set. */
+  eligibleTickers: Set<string>;
   spyBase: number | null;
   lastHistoricalDate: string;
 }
 
-/** Extend monthly series with today's live quote move. */
+/**
+ * Extend the monthly series with a live point.
+ *
+ * The index is re-based on the *value* of the last daily bar rather than on the day change, because
+ * that bar already reflects the latest session (Yahoo returns a bar for the session in progress, and
+ * on a weekend the last bar is Friday while `previousClose` is Thursday). Scaling the index by the
+ * day change would therefore count the latest session's move twice. Comparing live value against
+ * the last bar's value is correct mid-session, after hours, and on weekends alike.
+ */
 function appendLiveNavPoint(
   navHistory: NavHistoryRow[],
   ctx: {
     lastDailyIndex: number;
+    lastDailyValue: number;
+    liveValue: number;
     spyBase: number | null;
     liveBenchmarkPrice: number | null;
-    dayChangeUsd: number | null;
-    currentValue: number;
   }
 ): NavHistoryRow[] {
-  if (ctx.dayChangeUsd == null || ctx.lastDailyIndex <= 0 || !navHistory.length) return navHistory;
+  if (ctx.lastDailyIndex <= 0 || !navHistory.length) return navHistory;
+  if (ctx.lastDailyValue <= 0 || ctx.liveValue <= 0) return navHistory;
 
-  const prevValue = ctx.currentValue - ctx.dayChangeUsd;
-  if (prevValue <= 0) return navHistory;
+  // A single session cannot plausibly reprice the book this much. If it did, the backtested book and
+  // the live book have diverged (missing price history, unrecorded trades) and extrapolating would
+  // draw a wildly wrong point — better to end the series at the last real bar.
+  const ratio = ctx.liveValue / ctx.lastDailyValue;
+  if (ratio < 0.5 || ratio > 2) return navHistory;
 
   const today = new Date().toISOString().slice(0, 10);
   const last = navHistory[navHistory.length - 1]!;
-  const liveIndex = ctx.lastDailyIndex * (ctx.currentValue / prevValue);
+  const liveIndex = ctx.lastDailyIndex * ratio;
   const benchCumulative =
     ctx.spyBase != null && ctx.spyBase > 0 && ctx.liveBenchmarkPrice != null
       ? (ctx.liveBenchmarkPrice / ctx.spyBase - 1) * 100
@@ -582,14 +603,18 @@ function computeRiskMetrics(
 
   const years = alignedReturns.length / TRADING_DAYS;
   const totalReturn =
-    backtestReturnPct != null ? backtestReturnPct / 100 : portRets.reduce((acc, r) => acc * (1 + r), 1) - 1;
-  const annualReturn = years > 0 ? (1 + totalReturn) ** (1 / years) - 1 : mean(portRets) * TRADING_DAYS;
+    backtestReturnPct != null
+      ? backtestReturnPct / 100
+      : portRets.reduce((acc, r) => acc * (1 + r), 1) - 1;
+  const annualReturn =
+    years > 0 ? (1 + totalReturn) ** (1 / years) - 1 : mean(portRets) * TRADING_DAYS;
   const rf = RISK_FREE_RATE_PCT / 100;
 
   const downside = portRets.filter((r) => r < 0);
   const downsideDev =
     downside.length > 0
-      ? Math.sqrt(downside.reduce((s, r) => s + r * r, 0) / downside.length) * Math.sqrt(TRADING_DAYS)
+      ? Math.sqrt(downside.reduce((s, r) => s + r * r, 0) / downside.length) *
+        Math.sqrt(TRADING_DAYS)
       : 0;
 
   const sharpeRatio = portVol > 1e-8 ? (annualReturn - rf) / portVol : null;
@@ -644,6 +669,8 @@ function buildBacktest(
     excludes: [],
     alignedReturns: [],
     lastDailyIndex: 1,
+    lastDailyValue: 0,
+    eligibleTickers: new Set<string>(),
     spyBase: null,
     lastHistoricalDate: inceptionDate,
   };
@@ -659,17 +686,24 @@ function buildBacktest(
   for (const ticker of buyTickers) {
     const hist = historyByTicker.get(ticker);
     if (hist && hist.length) {
-      closes.set(ticker, new Map([...hist].sort((a, b) => a.date.localeCompare(b.date)).map((p) => [p.date, p.close])));
+      closes.set(
+        ticker,
+        new Map(
+          [...hist].sort((a, b) => a.date.localeCompare(b.date)).map((p) => [p.date, p.close])
+        )
+      );
       eligible.add(ticker);
     }
   }
 
   // Tickers in current holdings that we couldn't price (e.g. illiquid/manual) → note as excluded.
   const excludes = holdings
-    .filter((h) => h.ticker !== 'CASH' && h.ticker !== 'OTHER' && h.shares > 0 && !eligible.has(h.ticker))
+    .filter(
+      (h) => h.ticker !== 'CASH' && h.ticker !== 'OTHER' && h.shares > 0 && !eligible.has(h.ticker)
+    )
     .map((h) => h.ticker);
 
-  if (!eligible.size) return { ...empty, excludes };
+  if (!eligible.size) return { ...empty, excludes, eligibleTickers: eligible };
 
   const spy = [...benchmarkHistory].sort((a, b) => a.date.localeCompare(b.date));
   const spyClose = new Map(spy.map((p) => [p.date, p.close]));
@@ -693,11 +727,17 @@ function buildBacktest(
   let prevValue: number | null = null;
   let index = 1;
 
-  const daily: { date: string; index: number }[] = [];
+  const daily: { date: string; index: number; value: number }[] = [];
+
+  const lastCalendarDate = calendar[calendar.length - 1] ?? '';
 
   for (const date of calendar) {
+    // Trades dated after the last price bar (a weekend/after-hours rebalance) still belong to the
+    // book. Drain them on the final bar and price them at its closes; the flow adjustment keeps the
+    // return neutral. Without this the whole trade is dropped and the backtest replays a stale book.
+    const cutoff = date === lastCalendarDate ? '9999-12-31' : date;
     let flowToday = 0;
-    while (evIdx < events.length && events[evIdx]!.date <= date) {
+    while (evIdx < events.length && events[evIdx]!.date <= cutoff) {
       const e = events[evIdx]!;
       shares.set(e.ticker, (shares.get(e.ticker) ?? 0) + e.delta);
       flowToday += e.flow;
@@ -718,7 +758,7 @@ function buildBacktest(
       if (value >= 1) {
         prevValue = value;
         index = 1;
-        daily.push({ date, index });
+        daily.push({ date, index, value });
       }
       continue;
     }
@@ -728,12 +768,12 @@ function buildBacktest(
     if (denom > 0) {
       const r = value / denom - 1;
       index *= 1 + r;
-      daily.push({ date, index });
+      daily.push({ date, index, value });
     }
     prevValue = value;
   }
 
-  if (daily.length < 2) return { ...empty, lastDailyIndex: 1, spyBase: null, lastHistoricalDate: inceptionDate };
+  if (daily.length < 2) return { ...empty, excludes, eligibleTickers: eligible };
 
   const startDate = daily[0]!.date;
   const spyBase = spyClose.get(startDate) ?? spy.find((p) => p.date >= startDate)?.close ?? null;
@@ -779,6 +819,8 @@ function buildBacktest(
     excludes,
     alignedReturns,
     lastDailyIndex: lastDay.index,
+    lastDailyValue: lastDay.value,
+    eligibleTickers: eligible,
     spyBase,
     lastHistoricalDate: lastDay.date,
   };
@@ -825,8 +867,7 @@ export function computePortfolioAnalytics(
     const enriched = holdingsWithCost.find((x) => x.ticker === h.ticker) ?? h;
     const ac = lots.openAvgCost.get(h.ticker);
     const fifoAvg = ac && ac.shares > 0 ? ac.totalCost / ac.shares : 0;
-    const avg =
-      fifoAvg > 0 ? fifoAvg : enriched.costBasis > 0 ? enriched.costBasis : 0;
+    const avg = fifoAvg > 0 ? fifoAvg : enriched.costBasis > 0 ? enriched.costBasis : 0;
 
     const shareDrift =
       ac && ac.shares > 0 ? Math.abs(h.shares - ac.shares) / Math.max(h.shares, ac.shares) : 0;
@@ -905,14 +946,20 @@ export function computePortfolioAnalytics(
     inceptionDate
   );
 
+  // Value the same ticker set the backtest priced, so the live ratio isn't skewed by holdings
+  // the backtest had to exclude.
+  const liveValue = positions
+    .filter((p) => backtest.eligibleTickers.has(p.ticker))
+    .reduce((s, p) => s + p.marketValue, 0);
+
   const navHistory =
     options.liveBenchmarkPrice != null && dayChangeUsd != null
       ? appendLiveNavPoint(backtest.navHistory, {
           lastDailyIndex: backtest.lastDailyIndex,
+          lastDailyValue: backtest.lastDailyValue,
+          liveValue,
           spyBase: backtest.spyBase,
           liveBenchmarkPrice: options.liveBenchmarkPrice,
-          dayChangeUsd,
-          currentValue,
         })
       : backtest.navHistory;
 
@@ -990,7 +1037,9 @@ export function analyticsToSummary(analytics: PortfolioAnalytics) {
 }
 
 /** Yahoo symbols for every ticker ever bought (for the historical backtest fetches). */
-export function backtestSymbols(transactions: TransactionRow[]): { ticker: string; symbol: string }[] {
+export function backtestSymbols(
+  transactions: TransactionRow[]
+): { ticker: string; symbol: string }[] {
   const seen = new Set<string>();
   const out: { ticker: string; symbol: string }[] = [];
   for (const tx of transactions) {

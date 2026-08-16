@@ -20,9 +20,21 @@ npm run dev
 npm run build
 ```
 
-The built site is output to the `dist` folder and can be deployed to any static host (e.g. GitHub Pages, Vercel, Netlify).
+The static site is output to `dist`. Note the site is **not** purely static: the live portfolio
+tracker depends on serverless functions in `api/` (quotes, chart history, suggestions), so it needs a
+host that runs them.
 
 ## Deploy
 
-- **GitHub Pages:** Use the `dist` folder as the site source, or connect the repo to GitHub Actions / Pages.
-- **Vercel / Netlify:** Connect this repository; the build command is `npm run build` and the output directory is `dist`.
+**Vercel.** Connect this repository; build command `npm run build`, output directory `dist`. Routing
+and function config live in `vercel.json`. A static-only host (GitHub Pages, Netlify) will serve the
+pages but leave the tracker without live prices.
+
+Optional environment variables (see `.env.example`):
+
+- `BLOB_READ_WRITE_TOKEN` — persists portfolio suggestions to Vercel Blob. Without it, local dev
+  writes to `data/portfolio-suggestions.json`.
+- `PORTFOLIO_SUGGESTIONS_ADMIN_TOKEN` — unlocks moderation on the suggestions panel.
+
+In `npm run dev`, Vite middleware in `vite.config.ts` emulates the `api/` routes, so live quotes work
+locally without Vercel.

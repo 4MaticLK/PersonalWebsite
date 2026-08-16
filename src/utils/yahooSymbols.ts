@@ -4,6 +4,8 @@ const YAHOO_SYMBOL: Record<string, string | null> = {
   OTHER: null,
   CHIP: null,
   TRUMP: null,
+  // Forward Industries — closed position, delisted from Yahoo (every fetch 404s).
+  FORD: null,
   BTC: 'BTC-USD',
   ETH: 'ETH-USD',
   DOGE: 'DOGE-USD',

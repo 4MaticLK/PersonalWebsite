@@ -1,8 +1,9 @@
 /** Used for <title> and Open Graph site name */
 export const SITE_NAME = 'Levan Kvinikadze';
 
-/** Default browser tab title on the home page */
-export const SITE_DEFAULT_TITLE = `${SITE_NAME} - Investments, Valuation & Portfolio`;
+/** Default browser tab title on the home page. Must match the <title> and og:title in index.html,
+ * otherwise React rewrites the tab title on mount and it visibly flickers. */
+export const SITE_DEFAULT_TITLE = `${SITE_NAME} — Investments, valuation & portfolio`;
 
 /**
  * Production origin only (no trailing slash), e.g. 'https://www.yourdomain.com'.

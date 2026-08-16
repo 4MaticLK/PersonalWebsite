@@ -41,15 +41,20 @@ export function CertificatesSection() {
                   </span>
                 </button>
               ) : (
-                <div key={cert.name} className="work-section__card certificate-card certificate-badge-card">
-                  <img
-                    src={cert.badgeImage}
-                    alt={`${cert.name} badge`}
-                    className="certificate-badge-card__image"
-                    width={140}
-                    height={140}
-                    loading="lazy"
-                  />
+                <div
+                  key={cert.name}
+                  className="work-section__card certificate-card certificate-badge-card"
+                >
+                  {cert.badgeImage && (
+                    <img
+                      src={cert.badgeImage}
+                      alt={`${cert.name} badge`}
+                      className="certificate-badge-card__image"
+                      width={72}
+                      height={72}
+                      loading="lazy"
+                    />
+                  )}
                   <div className="work-section__card-tags" aria-label="Issuer">
                     <span className="work-section__card-tag">{cert.issuer}</span>
                   </div>
