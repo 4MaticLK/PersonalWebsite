@@ -37,7 +37,7 @@ export function PortfolioPage() {
         </span>
         <span className="project-page__nav-current">Analytics</span>
       </nav>
-      <main className="project-page__main">
+      <main className="project-page__main" id="main-content" tabIndex={-1}>
         <p className="personal-portfolio__eyebrow personal-portfolio__eyebrow--page">
           Analytics dashboard
         </p>

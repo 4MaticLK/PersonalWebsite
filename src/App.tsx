@@ -6,12 +6,17 @@ import { NotFoundPage } from './pages/NotFoundPage';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />} />
-      <Route path="/portfolio" element={<PortfolioPage />} />
-      <Route path="/work/:slug" element={<ProjectPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <Routes>
+        <Route path="/" element={<Layout />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
+        <Route path="/work/:slug" element={<ProjectPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </>
   );
 }
 

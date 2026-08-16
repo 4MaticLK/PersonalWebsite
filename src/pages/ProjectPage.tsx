@@ -98,7 +98,7 @@ export function ProjectPage() {
             Academic Projects
           </Link>
         </nav>
-        <main className="project-page__main">
+        <main className="project-page__main" id="main-content" tabIndex={-1}>
           <p>Project not found.</p>
         </main>
       </div>
@@ -133,7 +133,7 @@ export function ProjectPage() {
         </span>
         <span className="project-page__nav-current">{project.name}</span>
       </nav>
-      <main className="project-page__main">
+      <main className="project-page__main" id="main-content" tabIndex={-1}>
         {project.slug === 'goodyear-equity-research-valuation' && (
           <div className="project-page__company-hero">
             {goodyearLogoUseText ? (
@@ -230,6 +230,17 @@ export function ProjectPage() {
               .filter(Boolean)
               .join(' · ')}
           </p>
+        )}
+
+        {project.keyStats && project.keyStats.length > 0 && (
+          <dl className="project-page__key-stats">
+            {project.keyStats.map((stat) => (
+              <div key={stat.label} className="project-page__key-stat">
+                <dt className="project-page__key-stat-label">{stat.label}</dt>
+                <dd className="project-page__key-stat-value">{stat.value}</dd>
+              </div>
+            ))}
+          </dl>
         )}
 
         {isRiskParity && <RiskParitySubnav />}

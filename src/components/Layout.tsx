@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useActiveSection } from '../hooks/useActiveSection';
@@ -21,6 +21,7 @@ export function Layout() {
   const location = useLocation();
   const { revealRef: cardRevealRef, isVisible: cardVisible } = useScrollReveal();
   const activeSection = useActiveSection();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     document.title = SITE_DEFAULT_TITLE;
@@ -43,34 +44,68 @@ export function Layout() {
     });
   }, [location.pathname, location.hash]);
 
+  // Close the mobile menu on Escape, and if the viewport grows past the mobile breakpoint
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    const mql = window.matchMedia('(min-width: 768px)');
+    const onMqlChange = () => setMenuOpen(false);
+    window.addEventListener('keydown', onKeyDown);
+    mql.addEventListener('change', onMqlChange);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      mql.removeEventListener('change', onMqlChange);
+    };
+  }, [menuOpen]);
+
   return (
     <>
       <nav className="site-nav" aria-label="Main navigation">
-        {NAV_LINKS.map(({ href, label }) => (
-          <a
-            key={href}
-            href={href}
-            className={
-              activeSection === href.slice(1)
-                ? 'site-nav__link site-nav__link--active'
-                : 'site-nav__link'
-            }
-            aria-current={activeSection === href.slice(1) ? 'true' : undefined}
-            onClick={() => {
-              const id = href.startsWith('#') ? href.slice(1) : '';
-              if (id) {
-                document
-                  .getElementById(id)
-                  ?.querySelector<HTMLElement>('.page-section__scroll')
-                  ?.scrollTo(0, 0);
+        <button
+          type="button"
+          className="site-nav__toggle"
+          aria-expanded={menuOpen}
+          aria-controls="site-nav-links"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className="site-nav__toggle-bar" aria-hidden="true" />
+          <span className="site-nav__toggle-bar" aria-hidden="true" />
+          <span className="site-nav__toggle-bar" aria-hidden="true" />
+        </button>
+        <div
+          id="site-nav-links"
+          className={`site-nav__links ${menuOpen ? 'site-nav__links--open' : ''}`}
+        >
+          {NAV_LINKS.map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className={
+                activeSection === href.slice(1)
+                  ? 'site-nav__link site-nav__link--active'
+                  : 'site-nav__link'
               }
-            }}
-          >
-            {label}
-          </a>
-        ))}
+              aria-current={activeSection === href.slice(1) ? 'true' : undefined}
+              onClick={() => {
+                setMenuOpen(false);
+                const id = href.startsWith('#') ? href.slice(1) : '';
+                if (id) {
+                  document
+                    .getElementById(id)
+                    ?.querySelector<HTMLElement>('.page-section__scroll')
+                    ?.scrollTo(0, 0);
+                }
+              }}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
       </nav>
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section
           id="card"
           ref={cardRevealRef}

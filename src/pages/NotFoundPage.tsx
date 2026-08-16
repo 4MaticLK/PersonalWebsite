@@ -20,7 +20,7 @@ export function NotFoundPage() {
           Home
         </Link>
       </nav>
-      <main className="project-page__main">
+      <main className="project-page__main" id="main-content" tabIndex={-1}>
         <h1 className="project-page__title">Page not found</h1>
         <p>That URL does not exist on this site.</p>
         <Link to="/" className="project-page__download">
