@@ -151,8 +151,12 @@ export function PortfolioHoldingsTable({
                     <strong>{h.ticker}</strong>
                   </td>
                   <td>{h.name}</td>
-                  <td className="personal-portfolio__num">{formatPct(h.weightPct)}</td>
-                  <td className="personal-portfolio__num">{formatSharePrice(sharePrice)}</td>
+                  <td className="personal-portfolio__num" data-label="Weight">
+                    {formatPct(h.weightPct)}
+                  </td>
+                  <td className="personal-portfolio__num" data-label="Price">
+                    {formatSharePrice(sharePrice)}
+                  </td>
                   <td
                     className={`personal-portfolio__num ${
                       dayPct != null
@@ -161,10 +165,11 @@ export function PortfolioHoldingsTable({
                           : 'personal-portfolio__gain--negative'
                         : ''
                     }`}
+                    data-label="Today"
                   >
                     {dayPct != null ? formatPct(dayPct, 2, true) : '—'}
                   </td>
-                  <td className={`personal-portfolio__num ${gainClass}`}>
+                  <td className={`personal-portfolio__num ${gainClass}`} data-label="Total return">
                     {hasReturn && gainPct != null ? formatPct(gainPct, 2, true) : '—'}
                   </td>
                 </tr>
