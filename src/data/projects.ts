@@ -57,6 +57,8 @@ export interface Project {
   paperTopics?: string[];
   /** Project-only: optional page body (paragraphs separated by \n\n). Replaces placeholder when set. */
   description?: string;
+  /** Project-only: headline result stats shown in a callout above the write-up, for skimmers. */
+  keyStats?: { label: string; value: string }[];
   /** Project-only: chart/graph images (export from Excel as PNG/JPG, place in public/images/) */
   chartImages?: ProjectChartImage[];
   /** Project-only: interactive charts (data read from excelFile; specify sheet + range) */
@@ -75,6 +77,12 @@ export const PROJECTS: Project[] = [
     dataAsOf: 'Financials as of Dec 31, 2024',
     pdfFile: 'Goodyear_Writing_Word2.pdf',
     excelFile: 'GoodYear_Valuation_Final.xlsx',
+    keyStats: [
+      { label: 'Recommendation', value: 'Buy' },
+      { label: 'Base case target', value: '$11.48' },
+      { label: 'Close (5/2/25)', value: '$11.01' },
+      { label: 'WACC', value: '6.66%' },
+    ],
     description: `Goodyear (GT) is not a simple "cheap vs expensive" stock. It is a balance-sheet and cash-flow story, where operating stability, cost discipline, and leverage determine whether equity value compounds or gets squeezed.
 
 This report walks through the business from the ground up, starting with industry structure and Goodyear's positioning, then moving into debt and liquidity, ratio trends, and working-capital efficiency (cash conversion cycle). I tie those operating and credit factors into an unlevered DCF that is fully traceable, so a reader can follow each assumption from source data to valuation output.
@@ -93,23 +101,29 @@ Below you’ll find key metrics and scenario toggles (base / bull / bear), expan
     dataAsOf: 'Prices 2014–2025 · Train 2014–2018 / Test 2019–2025',
     pdfFile: 'FIN285A_Risk_Parity_ETF.pdf',
     excelFile: 'AssetPrices_Part2.xlsx',
-    description: `FIN 285A (Computer Simulations & Risk Assessment): design and backtest a Bridgewater-style “All Weather” portfolio using liquid ETFs—first with dynamic risk parity on four broad sleeves, then with a 20-fund universe that minimizes tracking error against the same benchmark.
+    keyStats: [
+      { label: 'Leverage', value: '200%' },
+      { label: 'Out-of-sample test', value: '2019–2025' },
+      { label: 'Best OOS tracking error', value: '~12 bps' },
+      { label: 'Key finding', value: '2022 correlation shift' },
+    ],
+    description: `FIN 285A (Computer Simulations & Risk Assessment): design and backtest a Bridgewater-style “All Weather” portfolio using liquid ETFs, first with dynamic risk parity on four broad sleeves, then with a 20-fund universe that minimizes tracking error against the same benchmark.
 
 Part 1 builds a **200% leveraged** risk-parity strategy on AGG (nominal bonds), ACWI (global equities), GSG (commodities), and TIP (inflation-linked bonds), using an EWMA covariance model (λ = 0.97), an 18-month rolling window, monthly rebalancing, and a static ALLW-style benchmark for comparison. Part 2 disaggregates each sleeve into granular ETFs (equity, bonds, TIPS, commodities) and solves for weights that minimize tracking error, with train/test validation (2014–2018 in-sample, 2019–2025 out-of-sample) and MA vs EWMA covariance models.
 
-A central finding is the **2022 bond–equity correlation regime shift**: when stocks and bonds moved together during the inflation shock, the traditional hedging assumption behind risk parity and 60/40 portfolios broke down—highlighting why TIPS and real assets matter as diversifiers. Out of sample, a **7-year training window with a moving-average covariance model** produced the smallest gap between forecast and realized tracking error (~12 bps).
+A central finding is the **2022 bond–equity correlation regime shift**: when stocks and bonds moved together during the inflation shock, the traditional hedging assumption behind risk parity and 60/40 portfolios broke down, highlighting why TIPS and real assets matter as diversifiers. Out of sample, a **7-year training window with a moving-average covariance model** produced the smallest gap between forecast and realized tracking error (~12 bps).
 
 Charts below summarize performance, weights, tracking error, and correlations. Open the presentation (PDF) for the full methodology, or download the daily price panel (Excel) used in Part 2.`,
     chartImages: [
       {
         file: 'fin285a-cumulative-returns.png',
-        caption: 'Part 1 — Cumulative return vs benchmark',
+        caption: 'Part 1: Cumulative return vs benchmark',
         description:
           'Monthly rebalanced risk parity (EWMA λ = 0.97, 18-month covariance window) compared with a static ALLW-style mix rescaled to 200% leverage on AGG, ACWI, GSG, and TIP. The lines separate when volatility regimes change: risk parity typically runs at lower volatility but can trail the static benchmark in extended risk-on periods.',
       },
       {
         file: 'fin285a-part1-weights.png',
-        caption: 'Part 1 — Dynamic weights over time',
+        caption: 'Part 1: Dynamic weights over time',
         description:
           'Optimized weights after the five-year burn-in. Nominal bonds (AGG) begin near the top of the range and decline as equity volatility rises; TIPS and commodities tend to hold closer to the 10% floor. Rebalancing is visible around 2020 (COVID) and 2022 (inflation shock), when the model shifts risk across sleeves.',
       },
@@ -121,21 +135,21 @@ Charts below summarize performance, weights, tracking error, and correlations. O
       },
       {
         file: 'fin285a-part2-cumulative.png',
-        caption: 'Part 2 — Optimized 20-ETF vs benchmark (test period)',
+        caption: 'Part 2: Optimized 20-ETF vs benchmark (test period)',
         description:
           'Out-of-sample cumulative returns (2019–2025) for the tracking-error-minimized portfolio versus the Part 1 benchmark, using weights fixed after training on 2014–2018. The paths stay close, indicating that a 20-ETF implementation can replicate the broad four-asset ALLW-style exposure without a large return gap in the test window.',
       },
       {
         file: 'fin285a-tracking-error.png',
-        caption: 'Part 2 — Rolling tracking error',
+        caption: 'Part 2: Rolling tracking error',
         description:
           'Rolling tracking error between the optimized fund portfolio and the benchmark. Spikes align with macro stress (notably 2020 and 2022), when realized TE exceeded in-sample forecasts; in calmer periods TE compresses. This pattern motivated comparing MA vs EWMA models and longer training windows in the sensitivity analysis.',
       },
       {
         file: 'fin285a-correlation-matrix.png',
-        caption: 'Part 2 — Correlation matrix (20 ETFs)',
+        caption: 'Part 2: Correlation matrix (20 ETFs)',
         description:
-          'Pairwise correlations for the full Part 2 universe. Equities correlate strongly with each other, as do bonds and commodities within their sleeves, while cross-sleeve correlations are lower—supporting diversification and the choice to split ACWI and GSG into granular funds rather than rely on a single broad ETF per sleeve.',
+          'Pairwise correlations for the full Part 2 universe. Equities correlate strongly with each other, as do bonds and commodities within their sleeves, while cross-sleeve correlations are lower, supporting diversification and the choice to split ACWI and GSG into granular funds rather than rely on a single broad ETF per sleeve.',
       },
     ],
     codeFiles: [
@@ -173,6 +187,11 @@ Charts below summarize performance, weights, tracking error, and correlations. O
     type: 'project',
     dataAsOf: 'Historical data as of March 2025',
     excelFile: '306 Portfolio Project (version 1).xlsx',
+    keyStats: [
+      { label: 'Recommended mix', value: '54% MCD / 36% NOC / 10% UST' },
+      { label: 'Expected annual return', value: '~13.6%' },
+      { label: 'Portfolio beta', value: '~0.49' },
+    ],
     description: `This report documents a $100 million portfolio mandate: select two equities and a U.S. government bond position, then recommend an allocation that targets a strong 24-month return while keeping risk disciplined and measurable. The goal is not just to pick "good stocks," but to build a portfolio where the mix is doing real work through diversification and controlled market exposure.
 
 I sourced the two equities from a pre-screened universe and started with six candidates (NOC, MCD, LMT, KO, KR, RTX). I narrowed to Northrop Grumman (NOC) and McDonald's (MCD) because, together, they offered a cleaner balance of defensiveness and return potential, plus diversification benefits versus holding either name alone. I use SPY as the market benchmark and add a 10-year U.S. Treasury sleeve as the risk-free component.
@@ -196,9 +215,15 @@ Recommendation: invest $36M in NOC (36%), $54M in MCD (54%), and $10M in 10-year
     dataAsOf: 'Market data as of Mar 2026',
     pdfFile: 'CRM_HUBS_MA_Report.pdf',
     excelFile: 'CRM_HUBS_MA_Model.xlsx',
+    keyStats: [
+      { label: 'Deal value', value: '$17.0B' },
+      { label: 'Implied multiple', value: '4.6× EV/NTM rev' },
+      { label: 'Year 1 EPS impact', value: '−10.8%' },
+      { label: 'Accretive by', value: '2028' },
+    ],
     description: `This FIN 232a final project analyzes a **proposed acquisition of HubSpot (HUBS) by Salesforce (CRM)** for **$17.0 billion** (100% cash). The memorandum covers strategic rationale, standalone DCFs for both companies, trading comparables, precedent SaaS transactions, and full merger-consequence modeling across three financing structures.
 
-The recommended bid implies **4.6× EV/NTM revenue**—above current trading comps but below recent SaaS precedent deals. **Option A (100% cash)** is dilutive to GAAP EPS in year one (−10.8%) but turns **accretive by 2028** (+1.0%) and reaches **+3.3% by 2030**, supported by $450M run-rate synergies and rapid acquisition debt paydown from combined free cash flow.
+The recommended bid implies **4.6× EV/NTM revenue**, above current trading comps but below recent SaaS precedent deals. **Option A (100% cash)** is dilutive to GAAP EPS in year one (−10.8%) but turns **accretive by 2028** (+1.0%) and reaches **+3.3% by 2030**, supported by $450M run-rate synergies and rapid acquisition debt paydown from combined free cash flow.
 
 Use the interactive tools below to explore HubSpot's DCF sensitivity, the valuation football field, and how financing structure affects accretion/dilution. The full advisory memorandum and linked Excel model (16 sheets) are available for download.`,
   },
@@ -206,12 +231,12 @@ Use the interactive tools below to explore HubSpot's DCF sensitivity, the valuat
     name: 'International Finance: Argentine Economy',
     slug: 'research-paper',
     shortDescription:
-      'Research on Argentina’s economy in an International Finance context — macro drivers, FX and sovereign risk, and implications.',
+      'Research on Argentina’s economy in an International Finance context: macro drivers, FX and sovereign risk, and implications.',
     type: 'paper',
     projectDate: '2025',
     paperDate: '2025',
     abstract:
-      'This paper analyzes Argentina’s economy from an international finance perspective. It reviews the country’s macroeconomic context—including growth, inflation, and fiscal and monetary policy—and examines foreign exchange dynamics, capital flows, and sovereign debt and default history. The discussion covers how these factors interact with global financial conditions and policy choices (including IMF programs) and what they imply for external financing, currency stability, and investment and credit risk. The paper aims to give a structured view of the main drivers and challenges facing Argentina in the international financial system.',
+      'This paper analyzes Argentina’s economy from an international finance perspective. It reviews the country’s macroeconomic context, including growth, inflation, and fiscal and monetary policy, and examines foreign exchange dynamics, capital flows, and sovereign debt and default history. The discussion covers how these factors interact with global financial conditions and policy choices (including IMF programs) and what they imply for external financing, currency stability, and investment and credit risk. The paper aims to give a structured view of the main drivers and challenges facing Argentina in the international financial system.',
     body: 'Research conducted for an International Finance course. The full paper develops the analysis in the abstract and is available as a PDF below.',
     pdfFile: 'Argentina fixed.pdf',
     paperImages: [

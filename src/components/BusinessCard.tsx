@@ -20,22 +20,6 @@ const FOCUS_CHIPS = [
   'Financial Reporting',
 ] as const;
 
-const EDUCATION = [
-  {
-    logoUrl: '/logos/Brandeis_seal_white.png',
-    name: 'Brandeis University',
-    degree: 'Candidate for Master of Science in Finance (STEM-Designated)',
-    dates: '01/2026 – 12/2026',
-  },
-  {
-    logoUrl: '/logos/Bentley.png',
-    name: 'Bentley University',
-    degree:
-      'Bachelor of Science in Corporate Finance and Accounting, Minor in Computer Information Systems',
-    dates: '09/2021 – 05/2025',
-  },
-] as const;
-
 const TILT_MAX = 3;
 const TOAST_DURATION_MS = 2000;
 
@@ -196,26 +180,6 @@ export function BusinessCard() {
               ↓
             </span>
           </a>
-        </div>
-        <div className="business-card__education">
-          {EDUCATION.map((school) => (
-            <div key={school.name} className="business-card__school">
-              <img
-                src={school.logoUrl}
-                alt=""
-                className="business-card__school-logo"
-                width={48}
-                height={48}
-              />
-              <div className="business-card__school-text">
-                <div className="business-card__school-header">
-                  <p className="business-card__school-name">{school.name}</p>
-                  <p className="business-card__school-dates">{school.dates}</p>
-                </div>
-                <p className="business-card__school-degree">{school.degree}</p>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>

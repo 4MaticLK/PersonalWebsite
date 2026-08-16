@@ -13,7 +13,156 @@ const LETTER_PDF_PATHS = {
 const COMPANY_LOGOS = {
   rsm: '/logos/rsm.jpg',
   bankOfGeorgia: '/logos/bog.png',
+  bentley: '/logos/Bentley.png',
 } as const;
+
+interface SchoolCourse {
+  code: string;
+  title: string;
+  description: string;
+}
+
+interface School {
+  logoUrl: string;
+  name: string;
+  degree: string;
+  dates: string;
+  /** Shown as a badge next to the dates when present. */
+  gpa?: string;
+  achievements?: string[];
+  clubs?: string[];
+  courses?: SchoolCourse[];
+}
+
+const EDUCATION: School[] = [
+  {
+    logoUrl: '/logos/Brandeis_seal_white.png',
+    name: 'Brandeis University',
+    degree: 'Candidate for Master of Science in Finance (STEM-Designated)',
+    dates: '01/2026 – 12/2026',
+    clubs: ['Global Markets Investment Club'],
+    courses: [
+      {
+        code: 'FIN 217F',
+        title: 'Corporate Financial Modeling',
+        description:
+          'Building integrated financial models in Excel, projecting company performance and valuing earnings streams through cases and hands-on spreadsheet work.',
+      },
+      {
+        code: 'FIN 219G',
+        title: 'Financial Modeling Bootcamp',
+        description:
+          'Advanced modeling technique building on the corporate modeling course, including LBO (capital structure) modeling and merger modeling.',
+      },
+      {
+        code: 'FIN 242F',
+        title: 'Credit Risk Analysis',
+        description:
+          'Credit risk from a commercial banker’s perspective: structuring asset-based and cash-flow loans, assessing borrower viability, and how the qualitative "story" behind a business shapes risk/return decisions, through bank-lending case studies.',
+      },
+      {
+        code: 'FIN 285A',
+        title: 'Computer Simulations and Risk Assessment',
+        description:
+          'Computational risk modeling in Python, using bootstrapping, extreme value theory, and copulas to quantify tail risk and confidence in risk measures.',
+      },
+      {
+        code: 'FIN 232A',
+        title: 'Mergers and Acquisitions Analysis',
+        description:
+          'Core M&A concepts (valuation, negotiation, deal structuring, corporate strategy, and financing) through case studies (Anheuser-Busch, Berkshire Partners, and others) and a semester-long project analyzing a real acquirer/target pair end-to-end.',
+      },
+      {
+        code: 'FIN 261A',
+        title: 'Fixed Income Securities',
+        description:
+          'Markets for Treasuries, corporate and municipal bonds, asset-backed securities, and fixed-income derivatives, with the quantitative tools to value them.',
+      },
+      {
+        code: 'FIN 231F',
+        title: 'Private Equity',
+        description:
+          'Private equity, investment banking, and M&A-oriented finance for students pursuing careers in those fields.',
+      },
+    ],
+  },
+  {
+    logoUrl: '/logos/Bentley.png',
+    name: 'Bentley University',
+    degree:
+      'Bachelor of Science in Corporate Finance and Accounting, Minor in Computer Information Systems',
+    dates: '09/2021 – 05/2025',
+    achievements: ["Dean's List (multiple semesters)"],
+    courses: [
+      {
+        code: 'FI 306',
+        title: 'Financial Markets and Investment',
+        description:
+          'Bond, equity, and options markets: how they set asset values, with hands-on valuation work in Bentley’s Trading Room.',
+      },
+      {
+        code: 'FI 312',
+        title: 'Quantitative Portfolio Management',
+        description:
+          'Quantitative models for stock selection, portfolio construction, and risk management, building on fundamental equity analysis.',
+      },
+      {
+        code: 'FI 307',
+        title: 'Advanced Managerial Finance',
+        description:
+          'Capital budgeting under uncertainty, capital structure and payout policy, investment banking, and corporate restructuring, taught through case studies.',
+      },
+      {
+        code: 'FI 347',
+        title: 'Financial Modeling',
+        description:
+          'Advanced Excel modeling for time value of money, cost of capital, forecasting, valuation, and portfolio theory.',
+      },
+      {
+        code: 'FI 351',
+        title: 'International Finance',
+        description:
+          'Foreign exchange determination, hedging, international capital markets, and multinational capital budgeting.',
+      },
+      {
+        code: 'AC 311',
+        title: 'Financial Accounting and Reporting I',
+        description:
+          'U.S. GAAP for financial statement preparation, covering asset valuation, income determination, and current liabilities.',
+      },
+      {
+        code: 'AC 312',
+        title: 'Financial Accounting and Reporting II',
+        description:
+          'GAAP for the liabilities and equity side of the balance sheet, covering leases, stockholders’ equity, EPS, and income tax accounting.',
+      },
+      {
+        code: 'AC 310',
+        title: 'Cost Management',
+        description:
+          'Product and service costing, budgeting, standard and activity-based costing, and performance analysis for management decisions.',
+      },
+      {
+        code: 'GB 213',
+        title: 'Business Statistics',
+        description:
+          'Probability, sampling distributions, confidence intervals, hypothesis testing, and linear regression for business decision-making.',
+      },
+      {
+        code: 'CS 230',
+        title: 'Introduction to Programming with Python',
+        description:
+          'Programming fundamentals and algorithmic thinking in Python, building several standalone applications.',
+      },
+      {
+        code: 'GB 320',
+        title: 'Integrated Business Project',
+        description:
+          'Capstone consulting project working directly with a client company to research and propose solutions to a real business problem.',
+      },
+    ],
+  },
+];
 
 const FOCUS_AREAS = [
   {
@@ -48,11 +197,6 @@ const SKILLS_ITEMS = [
     title: 'Technical Skills',
     text: 'Excel (VLOOKUP, SUMIFS, PivotTables, Macros), FactSet, QuickBooks, CaseWare, Python',
   },
-  {
-    key: 'activities',
-    title: 'Activities',
-    text: 'Economics, Accounting, and Finance Tutor at Bentley (September 2023 – May 2025)',
-  },
   { key: 'volunteer', title: 'Volunteer', text: 'Service-Learning Program (2+2=5)' },
   {
     key: 'languages',
@@ -77,24 +221,6 @@ const SKILLS_ICONS = {
       <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
       <line x1="8" y1="21" x2="16" y2="21" />
       <line x1="12" y1="17" x2="12" y2="21" />
-    </svg>
-  ),
-  activities: (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   ),
   volunteer: (
@@ -139,6 +265,7 @@ export function ExperienceSection() {
   const { revealRef: revealWork, isVisible: workVisible } = useScrollReveal();
   const { revealRef: revealSkills, isVisible: skillsVisible } = useScrollReveal();
   const [expandedFocusIndex, setExpandedFocusIndex] = useState<number | null>(null);
+  const [expandedSchools, setExpandedSchools] = useState<Set<number>>(new Set());
 
   return (
     <>
@@ -161,6 +288,136 @@ export function ExperienceSection() {
                 contribute immediately while continuing to develop transaction- and
                 investment-relevant judgment.
               </p>
+              <h4 className="experience-section__heading experience-section__heading--education">
+                Education
+              </h4>
+              <div className="experience-section__education">
+                {EDUCATION.map((school, index) => {
+                  const expanded = expandedSchools.has(index);
+                  const hasDetail =
+                    (school.courses && school.courses.length > 0) ||
+                    (school.achievements && school.achievements.length > 0) ||
+                    (school.clubs && school.clubs.length > 0);
+
+                  return (
+                    <div key={school.name} className="experience-section__school">
+                      <div className="experience-section__school-main">
+                        <img
+                          src={school.logoUrl}
+                          alt=""
+                          className="experience-section__school-logo"
+                          width={48}
+                          height={48}
+                        />
+                        <div className="experience-section__school-text">
+                          <div className="experience-section__school-header">
+                            <p className="experience-section__school-name">{school.name}</p>
+                            <p className="experience-section__school-dates">
+                              {school.dates}
+                              {school.gpa && (
+                                <span className="experience-section__school-gpa">
+                                  {' '}
+                                  · {school.gpa}
+                                </span>
+                              )}
+                            </p>
+                          </div>
+                          <p className="experience-section__school-degree">{school.degree}</p>
+                        </div>
+                      </div>
+
+                      {hasDetail && (
+                        <>
+                          <button
+                            type="button"
+                            className="experience-section__school-toggle"
+                            onClick={() =>
+                              setExpandedSchools((prev) => {
+                                const next = new Set(prev);
+                                if (next.has(index)) next.delete(index);
+                                else next.add(index);
+                                return next;
+                              })
+                            }
+                            aria-expanded={expanded}
+                          >
+                            {expanded ? 'Hide' : 'Show'} courses & achievements
+                            <span
+                              className="experience-section__school-toggle-chevron"
+                              aria-hidden="true"
+                            >
+                              {expanded ? '▾' : '▸'}
+                            </span>
+                          </button>
+
+                          {expanded && (
+                            <div className="experience-section__school-detail">
+                              {school.achievements && school.achievements.length > 0 && (
+                                <div className="experience-section__school-detail-group">
+                                  <h5 className="experience-section__school-detail-heading">
+                                    Achievements
+                                  </h5>
+                                  <div className="experience-section__school-tags">
+                                    {school.achievements.map((item) => (
+                                      <span
+                                        key={item}
+                                        className="experience-section__school-tag experience-section__school-tag--achievement"
+                                      >
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {school.clubs && school.clubs.length > 0 && (
+                                <div className="experience-section__school-detail-group">
+                                  <h5 className="experience-section__school-detail-heading">
+                                    Clubs
+                                  </h5>
+                                  <div className="experience-section__school-tags">
+                                    {school.clubs.map((item) => (
+                                      <span key={item} className="experience-section__school-tag">
+                                        {item}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {school.courses && school.courses.length > 0 && (
+                                <div className="experience-section__school-detail-group">
+                                  <h5 className="experience-section__school-detail-heading">
+                                    Relevant coursework
+                                  </h5>
+                                  <ul className="experience-section__school-courses">
+                                    {school.courses.map((course) => (
+                                      <li
+                                        key={course.code}
+                                        className="experience-section__school-course"
+                                      >
+                                        <p className="experience-section__school-course-title">
+                                          <span className="experience-section__school-course-code">
+                                            {course.code}
+                                          </span>{' '}
+                                          {course.title}
+                                        </p>
+                                        <p className="experience-section__school-course-desc">
+                                          {course.description}
+                                        </p>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
               <h4 className="experience-section__heading">Focus areas</h4>
               <p className="experience-section__focus-hint">Click a card to expand</p>
               <div className="experience-section__focus-grid">
@@ -289,6 +546,45 @@ export function ExperienceSection() {
                     Examined regulatory and market conditions in Georgia’s microfinance industry and
                     agricultural export sector (blueberries), assessing regulatory impacts, demand
                     trends, and sector risks; summarized insights for corporate banking department
+                  </li>
+                </ul>
+              </div>
+              <div className="experience-section__item">
+                <div className="experience-section__company-row">
+                  <img
+                    src={COMPANY_LOGOS.bentley}
+                    alt=""
+                    className="experience-section__company-logo"
+                    width={48}
+                    height={48}
+                  />
+                  <p className="experience-section__company">
+                    <span className="experience-section__company-link">LEAF</span>
+                  </p>
+                  <span className="experience-section__location">
+                    Bentley University, Waltham, MA
+                  </span>
+                </div>
+                <div className="experience-section__item-header">
+                  <span className="experience-section__item-title">
+                    Peer Tutor, Economics, Accounting & Finance
+                  </span>
+                  <span className="experience-section__item-dates">09/2023 – 05/2025</span>
+                </div>
+                <ul className="experience-section__bullets">
+                  <li>
+                    Tutored Bentley undergraduates one-on-one and in small groups across economics,
+                    accounting, and finance coursework, from introductory principles through
+                    upper-level corporate finance and financial reporting
+                  </li>
+                  <li>
+                    Broke down quantitative and conceptual material, including regression and
+                    statistics, GAAP-based financial statements, and corporate valuation, into
+                    clear, student-specific explanations
+                  </li>
+                  <li>
+                    Built repeat tutoring relationships across three semesters, adapting approach to
+                    each student’s course, instructor, and learning style
                   </li>
                 </ul>
               </div>
