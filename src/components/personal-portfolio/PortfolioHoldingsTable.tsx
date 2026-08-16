@@ -73,7 +73,9 @@ export function PortfolioHoldingsTable({
       if (typeof va === 'string' || typeof vb === 'string') {
         return dirMul * String(va).localeCompare(String(vb));
       }
-      return dirMul * (va - vb);
+      // Both can be -Infinity (missing metric); subtraction would yield NaN.
+      if (va === vb) return 0;
+      return dirMul * (va < vb ? -1 : 1);
     });
 
   return (

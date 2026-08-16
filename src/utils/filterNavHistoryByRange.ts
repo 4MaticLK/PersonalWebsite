@@ -39,12 +39,20 @@ export function filterNavHistoryByRange(
   const filtered = rows.filter((r) => r.date >= startIso);
   if (filtered.length < 2) return rows;
 
-  const basePort = filtered[0]!.cumulativeReturnPct;
-  const baseBench = filtered[0]!.benchmarkReturnPct;
+  // Geometric rebase: a cumulative series must be re-indexed by growth factors, not by
+  // subtracting the window-start return (subtraction overstates gains after a run-up).
+  const basePort = 1 + filtered[0]!.cumulativeReturnPct / 100;
+  const baseBench = 1 + filtered[0]!.benchmarkReturnPct / 100;
 
   return filtered.map((r) => ({
     ...r,
-    cumulativeReturnPct: r.cumulativeReturnPct - basePort,
-    benchmarkReturnPct: r.benchmarkReturnPct - baseBench,
+    cumulativeReturnPct:
+      basePort > 0
+        ? ((1 + r.cumulativeReturnPct / 100) / basePort - 1) * 100
+        : r.cumulativeReturnPct - filtered[0]!.cumulativeReturnPct,
+    benchmarkReturnPct:
+      baseBench > 0
+        ? ((1 + r.benchmarkReturnPct / 100) / baseBench - 1) * 100
+        : r.benchmarkReturnPct - filtered[0]!.benchmarkReturnPct,
   }));
 }

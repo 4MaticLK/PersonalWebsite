@@ -140,6 +140,7 @@ export function buildHistogramBins(
   if (values.length === 0) return [];
   const min = Math.min(...values);
   const max = Math.max(...values);
+  if (max === min) return [{ binMid: min, count: values.length }];
   const width = (max - min) / binCount;
   const counts = new Array<number>(binCount).fill(0);
   for (const v of values) {

@@ -1,12 +1,16 @@
 import type { TransactionRow } from './parsePersonalPortfolioCsv';
 
 function parseNum(s: string): number {
-  const cleaned = String(s)
+  const raw = String(s).trim();
+  // Robinhood formats debits as "($123.45)" — parentheses mean negative.
+  const parenNegative = raw.startsWith('(') && raw.endsWith(')');
+  const cleaned = raw
     .replace(/[()$]/g, '')
     .replace(/,/g, '')
     .trim();
   const n = parseFloat(cleaned);
-  return Number.isFinite(n) ? n : NaN;
+  if (!Number.isFinite(n)) return NaN;
+  return parenNegative ? -Math.abs(n) : n;
 }
 
 function parseDateFlexible(s: string): string | null {
