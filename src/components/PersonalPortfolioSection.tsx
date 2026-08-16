@@ -17,7 +17,6 @@ export function PersonalPortfolioSection() {
     >
       <div className="page-section__scroll">
         <div className="page-section__scroll-inner">
-          <p className="personal-portfolio__eyebrow">{PERSONAL_PORTFOLIO.sectionTitle}</p>
           <h2 id="investment-portfolio-heading" className="experience-section__title">
             Live Portfolio Tracker
           </h2>

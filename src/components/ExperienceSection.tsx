@@ -164,33 +164,6 @@ const EDUCATION: School[] = [
   },
 ];
 
-const FOCUS_AREAS = [
-  {
-    title: 'Banking and advisory',
-    description:
-      'Financial statement and cash flow analysis, credit style thinking, operating and liquidity risk review, business process evaluation',
-  },
-  {
-    title: 'Valuation and deals',
-    description:
-      'Valuation support, driver-based analysis, scenario and sensitivity thinking, translating assumptions into a clear investment narrative',
-  },
-  {
-    title: 'Quant and markets',
-    description:
-      'Portfolio analytics, risk measurement mindset, factor and performance attribution concepts, data-driven decision support',
-  },
-  {
-    title: 'Accounting foundation',
-    description:
-      'Reporting support, reconciliations, internal control evaluation, documentation and tie-outs that hold up under review',
-  },
-  {
-    title: 'Execution',
-    description: 'Excel-based modeling and schedules built for clarity, reuse, and auditability',
-  },
-] as const;
-
 const SKILLS_ITEMS = [
   {
     key: 'technical',
@@ -264,7 +237,6 @@ export function ExperienceSection() {
   const { revealRef: revealSummary, isVisible: summaryVisible } = useScrollReveal();
   const { revealRef: revealWork, isVisible: workVisible } = useScrollReveal();
   const { revealRef: revealSkills, isVisible: skillsVisible } = useScrollReveal();
-  const [expandedFocusIndex, setExpandedFocusIndex] = useState<number | null>(null);
   const [expandedSchools, setExpandedSchools] = useState<Set<number>>(new Set());
 
   return (
@@ -288,9 +260,9 @@ export function ExperienceSection() {
                 contribute immediately while continuing to develop transaction- and
                 investment-relevant judgment.
               </p>
-              <h4 className="experience-section__heading experience-section__heading--education">
+              <h2 className="experience-section__title experience-section__title--education">
                 Education
-              </h4>
+              </h2>
               <div className="experience-section__education">
                 {EDUCATION.map((school, index) => {
                   const expanded = expandedSchools.has(index);
@@ -417,29 +389,6 @@ export function ExperienceSection() {
                     </div>
                   );
                 })}
-              </div>
-              <h4 className="experience-section__heading">Focus areas</h4>
-              <p className="experience-section__focus-hint">Click a card to expand</p>
-              <div className="experience-section__focus-grid">
-                {FOCUS_AREAS.map((area, index) => (
-                  <button
-                    key={area.title}
-                    type="button"
-                    className={`experience-section__focus-card ${expandedFocusIndex === index ? 'experience-section__focus-card--expanded' : ''}`}
-                    onClick={() =>
-                      setExpandedFocusIndex(expandedFocusIndex === index ? null : index)
-                    }
-                    aria-expanded={expandedFocusIndex === index}
-                  >
-                    <span className="experience-section__focus-card-header">
-                      <span className="experience-section__focus-card-title">{area.title}</span>
-                      <span className="experience-section__focus-card-chevron" aria-hidden="true">
-                        {expandedFocusIndex === index ? '▾' : '▸'}
-                      </span>
-                    </span>
-                    <span className="experience-section__focus-card-desc">{area.description}</span>
-                  </button>
-                ))}
               </div>
               <a href="#work-experience" className="experience-section__cta">
                 See my work

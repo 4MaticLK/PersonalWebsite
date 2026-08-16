@@ -404,8 +404,9 @@ main:focus-visible {
   margin-bottom: var(--space-lg);
   border-bottom: 1px solid rgba(232, 232, 232, 0.06);
 }
-/* Summary: title not sticky so it doesn't overlap text when scrolling; extra top padding so it sits below nav */
-#summary .experience-section__title {
+/* Summary: title not sticky so it doesn't overlap text when scrolling; extra top padding so it sits below nav.
+   Excludes the Education heading — it's mid-section, not the first element, so it doesn't need nav clearance. */
+#summary .experience-section__title:not(.experience-section__title--education) {
   position: static;
   padding-top: var(--nav-height);
   padding-bottom: 0;
@@ -517,7 +518,9 @@ main:focus-visible {
   font-weight: 700;
   color: var(--color-text);
   margin: 0 0 var(--space-xl);
-  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  /* Positive tracking reads better on all-caps than the mixed-case -0.02em this used before. */
+  letter-spacing: 0.04em;
   display: flex;
   align-items: center;
   gap: var(--space-md);
@@ -540,16 +543,6 @@ main:focus-visible {
 
 .experience-section__block:last-child {
   margin-bottom: 0;
-}
-
-.experience-section__heading {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  margin: 0 0 var(--space-md);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 .experience-section__summary {
@@ -589,9 +582,12 @@ main:focus-visible {
   margin: 0 0 var(--space-xl);
 }
 
-/* Extra breathing room so Education doesn't feel glued to the intro paragraphs above it */
-.experience-section__heading--education {
-  margin-top: var(--space-xl);
+/* Matches the --space-2xl rhythm used elsewhere for section-level breaks (e.g. .experience-section__block),
+   so the gap above Education reads as a real section break, not just a paragraph gap.
+   #summary-scoped for specificity: .page-section h2 (0,1,1) otherwise wins over a bare class (0,1,0)
+   and forces margin-top back to 0, same reason the sticky-title override below is ID-scoped too. */
+#summary .experience-section__title--education {
+  margin-top: var(--space-2xl);
 }
 
 .experience-section__education {
@@ -769,112 +765,6 @@ main:focus-visible {
   color: var(--color-text-muted);
   line-height: 1.5;
   margin: 2px 0 0;
-}
-
-.experience-section__focus-hint {
-  font-size: 0.8125rem;
-  color: var(--color-text-muted);
-  margin: 0 0 var(--space-sm);
-}
-
-.experience-section__focus-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
-  max-width: 100%;
-}
-
-@media (max-width: 700px) {
-  .experience-section__focus-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 420px) {
-  .experience-section__focus-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.experience-section__focus-card {
-  display: block;
-  width: 100%;
-  padding: var(--space-sm) var(--space-md);
-  padding-left: var(--space-md);
-  background-color: var(--color-surface);
-  border-radius: var(--radius);
-  border: 1px solid rgba(232, 232, 232, 0.06);
-  border-left: 2px solid var(--color-accent);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition:
-    box-shadow 0.2s ease,
-    border-left-color 0.2s ease;
-  font-family: inherit;
-  font-size: inherit;
-  text-align: left;
-  cursor: pointer;
-  appearance: none;
-}
-
-.experience-section__focus-card:hover {
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15);
-  border-left-color: rgba(255, 143, 46, 0.9);
-}
-
-.experience-section__focus-card--expanded {
-  border-left-color: rgba(255, 143, 46, 0.9);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-.experience-section__focus-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-xs);
-  margin-bottom: 0.125rem;
-}
-
-.experience-section__focus-card-title {
-  font-family: var(--font-heading);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.experience-section__focus-card-chevron {
-  font-size: 0.6875rem;
-  color: var(--color-text-muted);
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-  line-height: 1;
-}
-
-.experience-section__focus-card--expanded .experience-section__focus-card-chevron {
-  color: var(--color-accent);
-}
-
-.experience-section__focus-card-desc {
-  display: block;
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: var(--color-text-muted);
-  margin: 0;
-  overflow: hidden;
-  max-height: 0;
-  opacity: 0;
-  transition:
-    max-height 0.3s ease,
-    opacity 0.25s ease,
-    padding-top 0.2s ease;
-}
-
-.experience-section__focus-card--expanded .experience-section__focus-card-desc {
-  max-height: 30em;
-  opacity: 1;
-  padding-top: var(--space-xs);
 }
 
 .experience-section__cta {
