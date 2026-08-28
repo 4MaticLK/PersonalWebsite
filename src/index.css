@@ -6500,6 +6500,58 @@ main:focus-visible {
   }
 }
 
+.personal-portfolio__table-total-row th,
+.personal-portfolio__table-total-row td {
+  border-top: 2px solid rgba(255, 143, 46, 0.3);
+  border-bottom: none;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  font-weight: 600;
+}
+
+.personal-portfolio__table-total-label {
+  text-align: left;
+  color: var(--color-text);
+  font-family: inherit;
+}
+
+@media (max-width: 640px) {
+  .personal-portfolio__table--holdings tfoot {
+    display: block;
+  }
+
+  .personal-portfolio__table-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    border-top: 2px solid rgba(255, 143, 46, 0.3);
+  }
+
+  .personal-portfolio__table-total-row th,
+  .personal-portfolio__table-total-row td {
+    border-top: none;
+    padding: 0;
+  }
+
+  .personal-portfolio__table-total-row td {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .personal-portfolio__table-total-row td[data-label]::before {
+    content: attr(data-label);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    margin-bottom: 2px;
+  }
+}
+
 .personal-portfolio__live-badge {
   display: flex;
   align-items: flex-start;

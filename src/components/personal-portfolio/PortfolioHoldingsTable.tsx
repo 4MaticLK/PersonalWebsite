@@ -178,6 +178,37 @@ export function PortfolioHoldingsTable({
               );
             })}
           </tbody>
+          <tfoot>
+            <tr className="personal-portfolio__table-total-row">
+              <th scope="row" colSpan={4} className="personal-portfolio__table-total-label">
+                Portfolio total
+              </th>
+              <td
+                className={`personal-portfolio__num ${
+                  analytics.dayChangePct != null
+                    ? analytics.dayChangePct >= 0
+                      ? 'personal-portfolio__gain--positive'
+                      : 'personal-portfolio__gain--negative'
+                    : ''
+                }`}
+                data-label="Today"
+              >
+                {analytics.dayChangePct != null ? formatPct(analytics.dayChangePct, 2, true) : '—'}
+              </td>
+              <td
+                className={`personal-portfolio__num ${
+                  analytics.unrealizedGainPct > 0
+                    ? 'personal-portfolio__gain--positive'
+                    : analytics.unrealizedGainPct < 0
+                      ? 'personal-portfolio__gain--negative'
+                      : ''
+                }`}
+                data-label="Total return"
+              >
+                {formatPct(analytics.unrealizedGainPct, 2, true)}
+              </td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
