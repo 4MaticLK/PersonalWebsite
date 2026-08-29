@@ -228,28 +228,22 @@ The recommended bid implies **4.6× EV/NTM revenue**, above current trading comp
 Use the interactive tools below to explore HubSpot's DCF sensitivity, the valuation football field, and how financing structure affects accretion/dilution. The full advisory memorandum and linked Excel model (16 sheets) are available for download.`,
   },
   {
-    name: 'International Finance: Argentine Economy',
+    name: 'Rules Without Institutions: Argentina’s Search for a Nominal Anchor, 1930–2026',
     slug: 'research-paper',
     shortDescription:
-      'Research on Argentina’s economy in an International Finance context: macro drivers, FX and sovereign risk, and implications.',
+      'Ninety-six years of Argentine monetary history argued as one recurring pattern: each stabilization borrows an external rule instead of building the fiscal institutions it never had.',
     type: 'paper',
-    projectDate: '2025',
-    paperDate: '2025',
+    projectDate: 'August 2026',
+    paperDate: 'August 2026',
+    keyStats: [
+      { label: 'Sovereign defaults', value: '9 (3 since 2001)' },
+      { label: '1989 peak inflation', value: '4,923%' },
+      { label: '2025 inflation', value: '31.5%' },
+      { label: '2018 IMF program', value: '$57B — largest in Fund history' },
+    ],
     abstract:
-      'This paper analyzes Argentina’s economy from an international finance perspective. It reviews the country’s macroeconomic context, including growth, inflation, and fiscal and monetary policy, and examines foreign exchange dynamics, capital flows, and sovereign debt and default history. The discussion covers how these factors interact with global financial conditions and policy choices (including IMF programs) and what they imply for external financing, currency stability, and investment and credit risk. The paper aims to give a structured view of the main drivers and challenges facing Argentina in the international financial system.',
-    body: 'Research conducted for an International Finance course. The full paper develops the analysis in the abstract and is available as a PDF below.',
-    pdfFile: 'Argentina fixed.pdf',
-    paperImages: [
-      { file: 'argentine flag.jpg', label: 'Flag of Argentina' },
-      { file: 'Javier_Milei_en_el_Salon_Blanco_NEW.jpeg', label: 'Javier Milei' },
-    ],
-    paperTopics: [
-      'Macro context (growth, inflation, fiscal & monetary policy)',
-      'Foreign exchange and capital flows',
-      'Sovereign debt and default history',
-      'IMF programs and policy choices',
-      'Implications for financing and credit risk',
-    ],
+      'Argentina reached the top ten of world income per head around 1913 and has since defaulted on its sovereign debt nine times, three in the last twenty-five years, spending much of the past half-century in double- or triple-digit inflation. The conventional explanation, fiscal indiscipline, is not wrong but is incomplete: Argentina does not fail to stabilize, it stabilizes repeatedly and dramatically, then loses what it gained. This paper argues the pattern has a common structure. Each stabilization has substituted an external rule, a currency peg, an IMF program, a foreign creditor’s discipline, for the domestic fiscal institutions the country never built. The rule works quickly precisely because it is hard to reverse, borrowing credibility the underlying political settlement has not earned. But because nothing beneath the rule changes, it eventually absorbs pressure it was never designed to bear, and when it breaks, the search for a new anchor begins again. The argument is developed through five episodes, from the 1930–1989 long decline through convertibility’s collapse, the post-default decade of isolation and statistical manipulation, the 2018 Stand-By Arrangement, and the adjustment underway since December 2023, before weighing the strongest case against this reading.',
+    pdfFile: 'Argentina_Rules_Without_Institutions.pdf',
   },
 ];
 

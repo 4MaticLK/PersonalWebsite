@@ -7,7 +7,7 @@ const PROJECT_TAGS: Record<string, string[]> = {
   'risk-parity-etf-fin285a': ['Risk Parity', 'Tracking Error', 'Python', 'Backtesting'],
   'financial-markets-and-investments': ['Portfolio Analysis', 'Quantitative', 'Interactive Charts'],
   'mergers-and-acquisitions': ['M&A', 'Valuation', 'Accretion/Dilution', 'Excel Model'],
-  'research-paper': ['International Finance', 'Macro Research', 'PDF'],
+  'research-paper': ['Monetary History', 'Sovereign Debt', 'IMF Programs', 'PDF'],
 };
 
 export function WorkSection() {

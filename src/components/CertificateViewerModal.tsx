@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { Certificate } from '../data/certificates';
+import { renderPdfPages } from '../utils/renderPdfPages';
 
 interface CertificateViewerModalProps {
   certificate: Certificate | null;
@@ -8,46 +9,6 @@ interface CertificateViewerModalProps {
 }
 
 type ViewerStatus = 'loading' | 'ready' | 'error';
-
-/** Render every page of the PDF into the container as canvases sized to its width. */
-async function renderPdfPages(
-  fileUrl: string,
-  container: HTMLDivElement,
-  isCancelled: () => boolean
-): Promise<void> {
-  const pdfjs = await import('pdfjs-dist');
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.mjs',
-    import.meta.url
-  ).toString();
-
-  const doc = await pdfjs.getDocument({ url: fileUrl }).promise;
-  if (isCancelled()) return;
-
-  container.replaceChildren();
-  const containerWidth = container.clientWidth || 800;
-  const dpr = window.devicePixelRatio || 1;
-
-  for (let pageNum = 1; pageNum <= doc.numPages; pageNum++) {
-    const page = await doc.getPage(pageNum);
-    if (isCancelled()) return;
-
-    const baseViewport = page.getViewport({ scale: 1 });
-    const scale = containerWidth / baseViewport.width;
-    const viewport = page.getViewport({ scale: scale * dpr });
-
-    const canvas = document.createElement('canvas');
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    canvas.className = 'certificate-viewer__page';
-    const ctx = canvas.getContext('2d');
-    if (!ctx) continue;
-
-    await page.render({ canvas, canvasContext: ctx, viewport }).promise;
-    if (isCancelled()) return;
-    container.appendChild(canvas);
-  }
-}
 
 export function CertificateViewerModal({ certificate, onClose }: CertificateViewerModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -72,7 +33,7 @@ export function CertificateViewerModal({ certificate, onClose }: CertificateView
     if (!certificate?.fileUrl || !container) return;
 
     let cancelled = false;
-    renderPdfPages(certificate.fileUrl, container, () => cancelled)
+    renderPdfPages(certificate.fileUrl, container, () => cancelled, 'certificate-viewer__page')
       .then(() => {
         if (!cancelled) setStatus('ready');
       })

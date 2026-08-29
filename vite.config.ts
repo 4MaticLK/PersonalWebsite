@@ -161,6 +161,16 @@ export default defineConfig(({ command, mode }) => {
   const siteUrlForHtml = command === 'serve' ? 'http://localhost:5173' : originProduction || '';
 
   return {
+    server: {
+      port: process.env.PORT ? Number(process.env.PORT) : 5173,
+      host: true,
+    },
+    optimizeDeps: {
+      // Avoid Vite pre-bundling pdfjs-dist separately from its worker file — the two can end up
+      // on different internal API versions in dev, which makes pdf.js silently hang instead of
+      // rendering (the worker connects but the version handshake never completes).
+      exclude: ['pdfjs-dist'],
+    },
     plugins: [
       react(),
       ...(command === 'serve' ? [yahooQuotesDevApi()] : []),

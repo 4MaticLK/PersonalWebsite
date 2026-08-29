@@ -10,6 +10,7 @@ import { ReturnsOverTimeChart } from '../components/ReturnsOverTimeChart';
 import { CorrelationHeatmapChart } from '../components/CorrelationHeatmapChart';
 import { RiskParityProjectContent } from '../components/RiskParityProjectContent';
 import { RiskParitySubnav } from '../components/RiskParitySubnav';
+import { ArgentinaResearchPaperContent } from '../components/ArgentinaResearchPaperContent';
 import { ProjectChartFigure } from '../components/ProjectChartFigure';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
 import { suggestionBoxSlugForProject } from '../data/suggestionBoxes';
@@ -108,6 +109,7 @@ export function ProjectPage() {
   const isMergersAcquisitions = project.slug === 'mergers-and-acquisitions';
   const isPortfolioProject = project.slug === 'financial-markets-and-investments';
   const isRiskParity = project.slug === 'risk-parity-etf-fin285a';
+  const isArgentinaPaper = project.slug === 'research-paper';
   const isPaper = project.type === 'paper';
   const isReportFirst =
     !isPaper &&
@@ -253,40 +255,48 @@ export function ProjectPage() {
                 <p className="project-page__abstract-text">{project.abstract}</p>
               </div>
             )}
-            {project.paperImages && project.paperImages.length > 0 && (
-              <div className="project-page__paper-images" aria-label="Context images">
-                {project.paperImages.map((item, i) => (
-                  <figure key={i} className="project-page__paper-fig">
-                    <img
-                      src={`/images/${encodeURIComponent(item.file)}`}
-                      alt=""
-                      className="project-page__paper-img"
-                    />
-                    <figcaption className="project-page__paper-figcaption">{item.label}</figcaption>
-                  </figure>
-                ))}
-              </div>
-            )}
-            {project.paperTopics && project.paperTopics.length > 0 && (
-              <div className="project-page__paper-topics">
-                <h2 className="project-page__paper-topics-title">Key topics</h2>
-                <ul className="project-page__paper-topics-list">
-                  {project.paperTopics.map((topic, i) => (
-                    <li key={i} className="project-page__paper-topics-item">
-                      {topic}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {project.body && (
-              <div className="project-page__body project-page__body--paper">
-                {project.body.split(/\n\n+/).map((para, i) => (
-                  <p key={i} className="project-page__body-p">
-                    {para}
-                  </p>
-                ))}
-              </div>
+            {isArgentinaPaper ? (
+              <ArgentinaResearchPaperContent />
+            ) : (
+              <>
+                {project.paperImages && project.paperImages.length > 0 && (
+                  <div className="project-page__paper-images" aria-label="Context images">
+                    {project.paperImages.map((item, i) => (
+                      <figure key={i} className="project-page__paper-fig">
+                        <img
+                          src={`/images/${encodeURIComponent(item.file)}`}
+                          alt=""
+                          className="project-page__paper-img"
+                        />
+                        <figcaption className="project-page__paper-figcaption">
+                          {item.label}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                )}
+                {project.paperTopics && project.paperTopics.length > 0 && (
+                  <div className="project-page__paper-topics">
+                    <h2 className="project-page__paper-topics-title">Key topics</h2>
+                    <ul className="project-page__paper-topics-list">
+                      {project.paperTopics.map((topic, i) => (
+                        <li key={i} className="project-page__paper-topics-item">
+                          {topic}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {project.body && (
+                  <div className="project-page__body project-page__body--paper">
+                    {project.body.split(/\n\n+/).map((para, i) => (
+                      <p key={i} className="project-page__body-p">
+                        {para}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
             {project.pdfFile && (
               <a
