@@ -22,6 +22,7 @@ import { GoodyearForecastChart } from '../components/GoodyearForecastChart';
 import { GoodyearSensitivityGrid } from '../components/GoodyearSensitivityGrid';
 import { GoodyearLivePriceBadge } from '../components/GoodyearLivePriceBadge';
 import { GoodyearLeverageFragility } from '../components/GoodyearLeverageFragility';
+import { GoodyearTradingComps } from '../components/GoodyearTradingComps';
 import { useGoodyearLiveQuote } from '../hooks/useGoodyearLiveQuote';
 import { goodyearDcfPricePerShare, GOODYEAR_WACC_BASE } from '../data/goodyearHistoricalData';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
@@ -700,6 +701,9 @@ export function ProjectPage() {
                         </div>
                         <div className="project-page__section">
                           <GoodyearLeverageFragility />
+                        </div>
+                        <div className="project-page__section">
+                          <GoodyearTradingComps />
                         </div>
                       </>
                     )}

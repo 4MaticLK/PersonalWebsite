@@ -5,6 +5,7 @@
   --color-text: #e8e8e8;
   --color-text-muted: #8a8a8a;
   --color-accent: #ff8f2e;
+  --color-accent-rgb: 255, 143, 46;
   --color-accent-secondary: #3fc1e0;
   /* Semantic status colors: use these (not one-off hex) for gain/loss/status indicators everywhere. */
   --color-positive: #4ade80;
@@ -3845,6 +3846,118 @@ main:focus-visible {
 }
 
 /* Goodyear project page rebuild */
+/* --- Goodyear trading comps --- */
+.goodyear-comps__table td:not(:first-child),
+.goodyear-comps__table th:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.goodyear-comps__name {
+  display: block;
+}
+
+.goodyear-comps__ticker {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.04em;
+}
+
+.goodyear-comps__row--subject {
+  background: rgba(var(--color-accent-rgb), 0.08);
+}
+
+.goodyear-comps__row--subject td {
+  font-weight: 600;
+}
+
+.goodyear-comps__row--median td {
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.goodyear-comps__read {
+  margin-top: var(--space-md);
+}
+
+.goodyear-comps__crosscheck {
+  margin: var(--space-md) 0;
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md, 8px);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.goodyear-comps__crosscheck-head {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.goodyear-comps__crosscheck-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.goodyear-comps__crosscheck-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.goodyear-comps__crosscheck-value {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.goodyear-comps__crosscheck-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.goodyear-comps__crosscheck-note {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.goodyear-comps__sources {
+  margin-top: var(--space-md);
+}
+
+.goodyear-comps__sources-head {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xs);
+}
+
+.goodyear-comps__sources-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.goodyear-comps__caveat {
+  color: var(--color-negative);
+}
+
 /* --- Goodyear leverage fragility callout --- */
 .goodyear-fragility__headline {
   display: flex;
