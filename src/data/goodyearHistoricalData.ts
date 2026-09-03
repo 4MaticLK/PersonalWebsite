@@ -224,7 +224,28 @@ export const GOODYEAR_DCF_UNLEVERED_FCF = [
 export const GOODYEAR_DCF_NET_DEBT = 7922;
 export const GOODYEAR_DCF_DILUTED_SHARES = 288;
 
-export function goodyearDcfPricePerShare(wacc: number, terminalGrowth: number): number {
+export interface GoodyearDcfBreakdown {
+  /** PV of the explicit 5-year unlevered FCF stream, $M. */
+  pvFcf: number;
+  /** PV of the terminal value, $M. */
+  pvTerminal: number;
+  enterpriseValue: number;
+  /** EV less net debt — the residual claim left for shareholders, $M. */
+  equityValue: number;
+  pricePerShare: number;
+  /** Terminal value as a share of enterprise value. */
+  terminalShare: number;
+  /** Equity value as a share of enterprise value — the cushion above net debt. */
+  equityShare: number;
+}
+
+/**
+ * Full enterprise-to-equity bridge for a given discount rate and perpetuity growth.
+ * Net debt is a fixed claim that does not move with the assumptions, so any change in
+ * enterprise value lands entirely on the equity stub — the leverage effect the page
+ * makes explicit.
+ */
+export function goodyearDcfBreakdown(wacc: number, terminalGrowth: number): GoodyearDcfBreakdown {
   const fcf = GOODYEAR_DCF_UNLEVERED_FCF;
   let pvFcf = 0;
   fcf.forEach((cf, i) => {
@@ -234,7 +255,20 @@ export function goodyearDcfPricePerShare(wacc: number, terminalGrowth: number): 
   const pvTerminal = terminalValue / Math.pow(1 + wacc, fcf.length);
   const enterpriseValue = pvFcf + pvTerminal;
   const equityValue = enterpriseValue - GOODYEAR_DCF_NET_DEBT;
-  return equityValue / GOODYEAR_DCF_DILUTED_SHARES;
+
+  return {
+    pvFcf,
+    pvTerminal,
+    enterpriseValue,
+    equityValue,
+    pricePerShare: equityValue / GOODYEAR_DCF_DILUTED_SHARES,
+    terminalShare: pvTerminal / enterpriseValue,
+    equityShare: equityValue / enterpriseValue,
+  };
+}
+
+export function goodyearDcfPricePerShare(wacc: number, terminalGrowth: number): number {
+  return goodyearDcfBreakdown(wacc, terminalGrowth).pricePerShare;
 }
 
 export const GOODYEAR_WACC_BASE = 0.06656139448457017;

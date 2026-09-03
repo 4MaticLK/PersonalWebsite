@@ -21,6 +21,7 @@ import { GoodyearCashConversionCycle } from '../components/GoodyearCashConversio
 import { GoodyearForecastChart } from '../components/GoodyearForecastChart';
 import { GoodyearSensitivityGrid } from '../components/GoodyearSensitivityGrid';
 import { GoodyearLivePriceBadge } from '../components/GoodyearLivePriceBadge';
+import { GoodyearLeverageFragility } from '../components/GoodyearLeverageFragility';
 import { useGoodyearLiveQuote } from '../hooks/useGoodyearLiveQuote';
 import { goodyearDcfPricePerShare, GOODYEAR_WACC_BASE } from '../data/goodyearHistoricalData';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
@@ -696,6 +697,9 @@ export function ProjectPage() {
                               goodyearLiveQuote ? 'live GT price' : 'May 2, 2025 close'
                             }
                           />
+                        </div>
+                        <div className="project-page__section">
+                          <GoodyearLeverageFragility />
                         </div>
                       </>
                     )}
