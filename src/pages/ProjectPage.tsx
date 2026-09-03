@@ -20,6 +20,9 @@ import { GoodyearRatioTrends } from '../components/GoodyearRatioTrends';
 import { GoodyearCashConversionCycle } from '../components/GoodyearCashConversionCycle';
 import { GoodyearForecastChart } from '../components/GoodyearForecastChart';
 import { GoodyearSensitivityGrid } from '../components/GoodyearSensitivityGrid';
+import { GoodyearLivePriceBadge } from '../components/GoodyearLivePriceBadge';
+import { useGoodyearLiveQuote } from '../hooks/useGoodyearLiveQuote';
+import { goodyearDcfPricePerShare, GOODYEAR_WACC_BASE } from '../data/goodyearHistoricalData';
 import { SITE_DEFAULT_TITLE, SITE_NAME } from '../constants/site';
 import { suggestionBoxSlugForProject } from '../data/suggestionBoxes';
 import { SuggestionsSection } from '../components/SuggestionsSection';
@@ -36,28 +39,30 @@ const MCD_LOGO_REMOTE =
 const NOC_LOGO_REMOTE =
   'https://upload.wikimedia.org/wikipedia/commons/9/9e/Northrop_Grumman_logo.svg';
 
+/** Close the report was written against; fallback when the live feed is unavailable. */
+const GOODYEAR_MODEL_CLOSE = 11.01;
+const GOODYEAR_MODEL_CLOSE_LABEL = 'May 2, 2025';
+
+/**
+ * Scenarios are defined by their DCF inputs and priced through the same model as the
+ * sensitivity grid, so the headline target and the grid can never drift apart.
+ */
 const goodyearScenarios = {
   base: {
-    priceTarget: '$11.48',
-    upside: '~4.3%',
-    wacc: '6.66%',
-    terminalGrowth: '2%',
+    wacc: GOODYEAR_WACC_BASE,
+    terminalGrowth: 0.02,
     recommendation: 'Buy',
     recommendationSub: 'stock trading below intrinsic value',
   },
   bull: {
-    priceTarget: '$30.96',
-    upside: '~181%',
-    wacc: '6%',
-    terminalGrowth: '3%',
+    wacc: 0.06,
+    terminalGrowth: 0.03,
     recommendation: 'Buy',
     recommendationSub: 'terminal growth 3%, WACC 6%',
   },
   bear: {
-    priceTarget: '$0.85',
-    upside: '~−92%',
-    wacc: '8%',
-    terminalGrowth: '1.5%',
+    wacc: 0.08,
+    terminalGrowth: 0.015,
     recommendation: 'Sell',
     recommendationSub: 'terminal growth 1.5%, WACC 8%',
   },
@@ -79,6 +84,9 @@ export function ProjectPage() {
   const [hubsLogoUseText, setHubsLogoUseText] = useState(false);
   const [goodyearScenario, setGoodyearScenario] = useState<'base' | 'bull' | 'bear'>('base');
   const [goodyearExpandedAssumption, setGoodyearExpandedAssumption] = useState<string | null>(null);
+  const { quote: goodyearLiveQuote, status: goodyearQuoteStatus } = useGoodyearLiveQuote(
+    project?.slug === 'goodyear-equity-research-valuation'
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -127,6 +135,13 @@ export function ProjectPage() {
     !isRiskParity;
 
   const goodyearScenarioData = goodyearScenarios[goodyearScenario];
+  const goodyearPriceTarget = goodyearDcfPricePerShare(
+    goodyearScenarioData.wacc,
+    goodyearScenarioData.terminalGrowth
+  );
+  const goodyearReferencePrice = goodyearLiveQuote?.price ?? GOODYEAR_MODEL_CLOSE;
+  const goodyearUpsidePct =
+    ((goodyearPriceTarget - goodyearReferencePrice) / goodyearReferencePrice) * 100;
 
   return (
     <div
@@ -433,7 +448,15 @@ export function ProjectPage() {
                     {project.slug === 'goodyear-equity-research-valuation' && (
                       <div className="project-page__key-metrics" aria-label="Key valuation metrics">
                         <div className="project-page__key-metrics-header">
-                          <h2 className="project-page__key-metrics-heading">Key metrics</h2>
+                          <div className="goodyear-metrics-headline">
+                            <h2 className="project-page__key-metrics-heading">Key metrics</h2>
+                            <GoodyearLivePriceBadge
+                              quote={goodyearLiveQuote}
+                              status={goodyearQuoteStatus}
+                              modelClose={GOODYEAR_MODEL_CLOSE}
+                              modelCloseLabel={GOODYEAR_MODEL_CLOSE_LABEL}
+                            />
+                          </div>
                           <div
                             className="project-page__scenario-toggles"
                             role="group"
@@ -470,7 +493,7 @@ export function ProjectPage() {
                           >
                             <span className="project-page__key-metrics-label">Price target</span>
                             <span className="project-page__key-metrics-value">
-                              {goodyearScenarioData.priceTarget}
+                              ${goodyearPriceTarget.toFixed(2)}
                             </span>
                             <span className="project-page__key-metrics-sub">
                               per share ({goodyearScenario} case DCF)
@@ -478,14 +501,19 @@ export function ProjectPage() {
                           </div>
                           <div
                             className="project-page__key-metrics-card"
-                            title="Implied return vs May 2, 2025 closing price ($11.01)."
+                            title="Implied return from the scenario DCF target vs the live GT price, or the May 2, 2025 close ($11.01) when the live feed is unavailable."
                           >
                             <span className="project-page__key-metrics-label">Upside</span>
-                            <span className="project-page__key-metrics-value">
-                              {goodyearScenarioData.upside}
+                            <span
+                              className={`project-page__key-metrics-value goodyear-upside goodyear-upside--${goodyearUpsidePct >= 0 ? 'up' : 'down'}`}
+                            >
+                              {goodyearUpsidePct >= 0 ? '+' : '−'}
+                              {Math.abs(goodyearUpsidePct).toFixed(1)}%
                             </span>
                             <span className="project-page__key-metrics-sub">
-                              vs May 2, 2025 close ($11.01)
+                              {goodyearLiveQuote
+                                ? `vs live GT price ($${goodyearLiveQuote.price.toFixed(2)})`
+                                : `vs ${GOODYEAR_MODEL_CLOSE_LABEL} close ($${GOODYEAR_MODEL_CLOSE.toFixed(2)})`}
                             </span>
                           </div>
                           <div
@@ -498,13 +526,13 @@ export function ProjectPage() {
                             <div className="project-page__key-metrics-value-row">
                               <span className="project-page__key-metrics-value">
                                 <span className="project-page__key-metrics-value-inline">WACC</span>{' '}
-                                {goodyearScenarioData.wacc}
+                                {(goodyearScenarioData.wacc * 100).toFixed(2)}%
                               </span>
                               <span className="project-page__key-metrics-value">
                                 <span className="project-page__key-metrics-value-inline">
                                   Term.
                                 </span>{' '}
-                                {goodyearScenarioData.terminalGrowth}
+                                {(goodyearScenarioData.terminalGrowth * 100).toFixed(1)}%
                               </span>
                             </div>
                             <span className="project-page__key-metrics-sub">
@@ -662,7 +690,12 @@ export function ProjectPage() {
                           <GoodyearForecastChart />
                         </div>
                         <div className="project-page__section">
-                          <GoodyearSensitivityGrid />
+                          <GoodyearSensitivityGrid
+                            currentPrice={goodyearReferencePrice}
+                            currentPriceLabel={
+                              goodyearLiveQuote ? 'live GT price' : 'May 2, 2025 close'
+                            }
+                          />
                         </div>
                       </>
                     )}

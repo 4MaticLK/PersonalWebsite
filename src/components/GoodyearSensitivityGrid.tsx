@@ -5,17 +5,25 @@ import {
   GOODYEAR_WACC_BASE,
 } from '../data/goodyearHistoricalData';
 
-const CURRENT_PRICE = 11.01;
+interface GoodyearSensitivityGridProps {
+  /** Price the grid is shaded against — the live GT quote when available. */
+  currentPrice: number;
+  /** How that price is described in the legend (e.g. "live GT price"). */
+  currentPriceLabel: string;
+}
 
-function cellClass(price: number): string {
-  const diff = (price - CURRENT_PRICE) / CURRENT_PRICE;
+function cellClass(price: number, currentPrice: number): string {
+  const diff = (price - currentPrice) / currentPrice;
   if (diff >= 0.3) return 'goodyear-sensitivity__cell--strong-buy';
   if (diff >= 0) return 'goodyear-sensitivity__cell--buy';
   if (diff >= -0.3) return 'goodyear-sensitivity__cell--caution';
   return 'goodyear-sensitivity__cell--sell';
 }
 
-export function GoodyearSensitivityGrid() {
+export function GoodyearSensitivityGrid({
+  currentPrice,
+  currentPriceLabel,
+}: GoodyearSensitivityGridProps) {
   return (
     <div className="project-page__table-block goodyear-sensitivity">
       <h3 className="project-page__table-title">
@@ -49,7 +57,7 @@ export function GoodyearSensitivityGrid() {
                 {GOODYEAR_SENSITIVITY_GROWTH.map((g) => {
                   const price = goodyearDcfPricePerShare(wacc, g);
                   return (
-                    <td key={g} className={cellClass(price)}>
+                    <td key={g} className={cellClass(price, currentPrice)}>
                       ${price.toFixed(2)}
                     </td>
                   );
@@ -60,8 +68,8 @@ export function GoodyearSensitivityGrid() {
         </table>
       </div>
       <p className="goodyear-sparkline-note goodyear-sparkline-note--legend">
-        Green = above the $11.01 close (buy case) · red = below (sell case). Base case: WACC 6.66%,
-        terminal growth 2.0%.
+        Green = above the {currentPriceLabel} (${currentPrice.toFixed(2)}) · red = below. Base case:
+        WACC 6.66%, terminal growth 2.0%.
       </p>
     </div>
   );
