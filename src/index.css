@@ -3553,6 +3553,16 @@ main:focus-visible {
   }
 }
 
+.project-page__tables-wrap--single {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .project-page__tables-wrap--single {
+    grid-template-columns: 1fr;
+  }
+}
+
 .project-page__table-block {
   padding: var(--space-lg);
   background: rgba(0, 0, 0, 0.2);
@@ -3832,6 +3842,239 @@ main:focus-visible {
 
 .project-page__body-p:last-child {
   margin-bottom: 0;
+}
+
+/* Goodyear project page rebuild */
+.goodyear-sparkline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-md) 0 var(--space-lg);
+}
+
+.goodyear-sparkline {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius);
+  border: 1px solid rgba(232, 232, 232, 0.06);
+}
+
+.goodyear-sparkline__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: 2px;
+}
+
+.goodyear-sparkline__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.goodyear-sparkline__value {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.goodyear-sparkline-note {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
+  max-width: 70ch;
+}
+
+.goodyear-sparkline-note--legend {
+  margin: var(--space-md) 0 0;
+  font-size: 0.8125rem;
+}
+
+.goodyear-ratio-table th {
+  padding: var(--space-xs) var(--space-sm) var(--space-xs) 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: right;
+  border-bottom: 1px solid rgba(232, 232, 232, 0.12);
+}
+
+.goodyear-ratio-table th:first-child,
+.goodyear-ratio-table td:first-child {
+  text-align: left;
+}
+
+.goodyear-ratio-table td:not(:first-child) {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sensitivity grid */
+.goodyear-sensitivity__scroll {
+  overflow-x: auto;
+}
+
+.goodyear-sensitivity__table {
+  min-width: 420px;
+}
+
+.goodyear-sensitivity__table th {
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-align: center;
+  border-bottom: 1px solid rgba(232, 232, 232, 0.12);
+}
+
+.goodyear-sensitivity__table th:first-child {
+  text-align: left;
+}
+
+.goodyear-sensitivity__table td {
+  padding: var(--space-xs) var(--space-sm);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(232, 232, 232, 0.06);
+}
+
+.goodyear-sensitivity__table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.goodyear-sensitivity__base-tag {
+  margin-left: var(--space-xs);
+  padding: 1px 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  background: rgba(255, 143, 46, 0.12);
+  border-radius: var(--radius);
+}
+
+.goodyear-sensitivity__cell--strong-buy {
+  color: var(--color-positive);
+  background: rgba(var(--color-positive-rgb), 0.14);
+}
+
+.goodyear-sensitivity__cell--buy {
+  color: var(--color-positive);
+  background: rgba(var(--color-positive-rgb), 0.06);
+}
+
+.goodyear-sensitivity__cell--caution {
+  color: var(--color-warning);
+  background: rgba(var(--color-warning-rgb), 0.08);
+}
+
+.goodyear-sensitivity__cell--sell {
+  color: var(--color-negative);
+  background: rgba(var(--color-negative-rgb), 0.12);
+}
+
+/* Company & industry context */
+.goodyear-context {
+  padding: var(--space-xl);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(232, 232, 232, 0.08);
+}
+
+.goodyear-context__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 800px) {
+  .goodyear-context__grid {
+    grid-template-columns: minmax(0, 1fr) 15rem;
+  }
+}
+
+.goodyear-context__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.goodyear-context__side-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-sm);
+}
+
+.goodyear-context__risks-heading {
+  margin-top: var(--space-xl);
+}
+
+.goodyear-risks {
+  list-style: none;
+  margin: var(--space-md) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+}
+
+@media (min-width: 640px) {
+  .goodyear-risks {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.goodyear-risks__item {
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius);
+  border-left: 3px solid var(--color-warning);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.goodyear-risks__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.goodyear-risks__detail {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.goodyear-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+}
+
+@media (min-width: 1024px) {
+  .goodyear-charts-grid--split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.goodyear-viewer-note {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-md);
 }
 
 /* M&A interactive model */
@@ -5454,7 +5697,11 @@ main:focus-visible {
   top: 0.25rem;
   height: 0.75rem;
   border-radius: 0;
-  background: linear-gradient(90deg, rgba(var(--color-info-rgb), 0.35), rgba(var(--color-info-rgb), 0.65));
+  background: linear-gradient(
+    90deg,
+    rgba(var(--color-info-rgb), 0.35),
+    rgba(var(--color-info-rgb), 0.65)
+  );
 }
 
 .ma-project__football-mid {
@@ -5629,7 +5876,9 @@ main:focus-visible {
   font-variant-numeric: tabular-nums;
   padding: 0.5rem 0.25rem;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .ma-project__heatmap-cell:hover {
@@ -5805,7 +6054,9 @@ main:focus-visible {
   vertical-align: middle;
 }
 
-.ma-project__table tbody tr:nth-child(even):not(.ma-project__tr--footer):not(.ma-project__tr--emphasis) {
+.ma-project__table
+  tbody
+  tr:nth-child(even):not(.ma-project__tr--footer):not(.ma-project__tr--emphasis) {
   background: rgba(232, 232, 232, 0.018);
 }
 
@@ -5987,11 +6238,7 @@ main:focus-visible {
   margin-bottom: var(--space-lg);
   padding: var(--space-lg) var(--space-xl);
   border-radius: var(--radius-lg);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 143, 46, 0.08) 0%,
-    rgba(63, 193, 224, 0.06) 100%
-  );
+  background: linear-gradient(135deg, rgba(255, 143, 46, 0.08) 0%, rgba(63, 193, 224, 0.06) 100%);
   border: 1px solid rgba(255, 143, 46, 0.22);
 }
 
@@ -6144,7 +6391,9 @@ main:focus-visible {
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .personal-portfolio__toggle-btn:hover {
@@ -7572,7 +7821,9 @@ main:focus-visible {
   color: var(--color-base);
   background: var(--color-accent);
   border: 1px solid rgba(255, 143, 46, 0.5);
-  transition: background 0.15s, transform 0.15s;
+  transition:
+    background 0.15s,
+    transform 0.15s;
 }
 
 .personal-portfolio__view-more:hover {
@@ -7609,7 +7860,10 @@ main:focus-visible {
   border: 1px solid rgba(138, 138, 138, 0.2);
   font-family: inherit;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .portfolio-subnav__link:hover {
@@ -7678,7 +7932,9 @@ main:focus-visible {
   border-radius: 0;
   padding: 0.55rem 1rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .personal-portfolio__suggestions-toggle:hover {
@@ -7714,7 +7970,10 @@ main:focus-visible {
   border-radius: 0;
   padding: 0.45rem 0.85rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .personal-portfolio__suggestions-back {
@@ -7765,7 +8024,9 @@ main:focus-visible {
   background: rgba(138, 138, 138, 0.06);
   color: var(--color-text);
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .personal-portfolio__topic-row:hover {
@@ -7845,7 +8106,9 @@ main:focus-visible {
   border-radius: 0;
   padding: 0.2rem 0.55rem;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .personal-portfolio__suggestion-delete:hover:not(:disabled) {
@@ -8059,4 +8322,3 @@ main:focus-visible {
     grid-template-columns: 1fr;
   }
 }
-
