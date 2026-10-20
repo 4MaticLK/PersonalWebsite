@@ -426,7 +426,7 @@ export function ExperienceSection() {
                       RSM
                     </a>
                   </p>
-                  <span className="experience-section__location">Tbilisi, Georgia (Country)</span>
+                  <span className="experience-section__location">Tbilisi, Georgia</span>
                 </div>
                 <div className="experience-section__item-header">
                   <span className="experience-section__item-title">
@@ -499,7 +499,7 @@ export function ExperienceSection() {
                       Bank of Georgia
                     </a>
                   </p>
-                  <span className="experience-section__location">Tbilisi, Georgia (Country)</span>
+                  <span className="experience-section__location">Tbilisi, Georgia</span>
                 </div>
                 <div className="experience-section__item-header">
                   <span className="experience-section__item-title">Corporate Banking Intern</span>
