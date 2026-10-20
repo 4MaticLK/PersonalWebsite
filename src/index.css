@@ -902,6 +902,11 @@ main:focus-visible {
   margin-bottom: var(--space-xs, 0.25rem);
 }
 
+/* Later roles at the same company (e.g. RSM) */
+.experience-section__bullets + .experience-section__item-header {
+  margin-top: var(--space-md);
+}
+
 .experience-section__item-title {
   font-family: var(--font-heading);
   font-weight: 600;

@@ -429,28 +429,53 @@ export function ExperienceSection() {
                   <span className="experience-section__location">Tbilisi, Georgia (Country)</span>
                 </div>
                 <div className="experience-section__item-header">
+                  <span className="experience-section__item-title">
+                    Financial Audit Intern (Return Engagement — University-Required)
+                  </span>
+                  <span className="experience-section__item-dates">06/2026 – 07/2026</span>
+                </div>
+                <ul className="experience-section__bullets">
+                  <li>
+                    Built the indirect-method statement of cash flows for a $4.5M-revenue client as
+                    a self-reconciling, SUMIFS-driven Excel model sourced directly from the trial
+                    balance; included in the issued financial statements and retained as the
+                    template for the following year’s engagement
+                  </li>
+                  <li>
+                    Rebuilt an 11-tab reporting workbook after the statement of financial position
+                    failed to reconcile, tracing the break to erroneous year-end adjustments and
+                    remapping ~35 Georgian-language trial balance accounts to the correct statement
+                    line items; the restored statements agreed to prior-year comparatives and
+                    cleared review by the managing partner
+                  </li>
+                </ul>
+                <div className="experience-section__item-header">
                   <span className="experience-section__item-title">Financial Audit Associate</span>
                   <span className="experience-section__item-dates">05/2024 – 08/2024</span>
                 </div>
                 <ul className="experience-section__bullets">
                   <li>
-                    Managed AR, inventory (weighted-average costing), write-offs, SG&A, and cash
-                    testing in CaseWare during two-month audit of a large agricultural retailer,
-                    proposing adjustments and confirming compliance with IFRS
+                    Executed the end-to-end audit of a $250K alcohol-producer subsidiary under IFRS,
+                    analyzing sales, COGS, cash, inventory, and fixed assets and proposing
+                    adjustments approved by senior review; tested AR and inventory on a large
+                    agricultural retailer audit
                   </li>
                   <li>
-                    Executed end-to-end audit of $250K alcohol-producer subsidiary, analyzing sales,
-                    COGS, cash, inventory, and fixed assets
+                    Supported an engagement for a Chinese contractor on Georgia’s Rikoti Highway, an
+                    ADB- and EIB-financed infrastructure project, coordinating across language and
+                    reporting-standard barriers to deliver month-end close in SAP Silver
                   </li>
+                </ul>
+                <div className="experience-section__item-header">
+                  <span className="experience-section__item-title">Audit Intern</span>
+                  <span className="experience-section__item-dates">05/2022 – 08/2022</span>
+                </div>
+                <ul className="experience-section__bullets">
                   <li>
-                    Prepared review-ready workpapers in CaseWare, managed multi-area account
-                    testing, resolved client and manager queries, and ensured audit quality and
-                    timely completion
-                  </li>
-                  <li>
-                    Assisted outsourced accounting engagement for China-based construction company,
-                    assisting with transaction recording, account reconciliations, and monthly close
-                    support under IFRS-aligned reporting
+                    Completed 60 hours of firm instruction in accounting principles, tax
+                    legislation, and audit methodology, then continued as Audit Assistant, vouching
+                    client documentation against recorded transactions and preparing work files in
+                    RSM’s standard forms
                   </li>
                 </ul>
               </div>
@@ -482,19 +507,20 @@ export function ExperienceSection() {
                 </div>
                 <ul className="experience-section__bullets">
                   <li>
-                    Developed credit analysis models from raw financials, performing ratio and
-                    sensitivity analyses that enabled approval of $2M+ corporate facilities and
-                    surfaced risks driving rejection of $3M loan request
+                    Built credit analysis models from raw financials and ran ratio and sensitivity
+                    analyses, reviewed by senior banking officers, that supported approval of $2M+
+                    in corporate facilities and surfaced risks driving rejection of a $3M loan
+                    request
                   </li>
                   <li>
                     Evaluated borrower liquidity, leverage, and cash flow trends across corporate
-                    and project finance clients, directly informing credit decisions, including
-                    long-term financing approval for a renewable hydroelectric project
+                    and project finance clients, contributing analysis that informed long-term
+                    financing approval for a renewable hydroelectric infrastructure project
                   </li>
                   <li>
-                    Examined regulatory and market conditions in Georgia’s microfinance industry and
-                    agricultural export sector (blueberries), assessing regulatory impacts, demand
-                    trends, and sector risks; summarized insights for corporate banking department
+                    Researched Georgia’s microfinance sector through a regulatory shift that capped
+                    rates from 200% to 50% and contracted the market by ~80%, synthesizing findings
+                    into briefings for the corporate banking team
                   </li>
                 </ul>
               </div>
