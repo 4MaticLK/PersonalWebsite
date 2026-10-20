@@ -4338,12 +4338,6 @@ main:focus-visible {
   gap: var(--space-xl);
 }
 
-@media (min-width: 1024px) {
-  .goodyear-charts-grid--split {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .goodyear-viewer-note {
   font-size: 0.875rem;
   color: var(--color-text-muted);

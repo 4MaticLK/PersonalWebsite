@@ -680,11 +680,11 @@ export function ProjectPage() {
                           </div>
                           <GoodyearRatioTrends />
                         </div>
-                        <div className="project-page__section goodyear-charts-grid goodyear-charts-grid--split">
+                        <div className="project-page__section goodyear-charts-grid">
                           <GoodyearPriceChart />
                           <GoodyearRegressionChart />
                         </div>
-                        <div className="project-page__section goodyear-charts-grid goodyear-charts-grid--split">
+                        <div className="project-page__section goodyear-charts-grid">
                           <GoodyearDebtChart />
                           <GoodyearCashConversionCycle />
                         </div>
