@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PERSONAL_PORTFOLIO } from '../data/personalPortfolio';
 import { WorkSection } from './WorkSection';
 import { PersonalPortfolioSection } from './PersonalPortfolioSection';
 import { CertificatesSection } from './CertificatesSection';
+import { HOTEL_VALUATION_SLUG } from '../data/hotelValuationCaseStudy';
 
 const LETTER_PDF_PATHS = {
   rsm: '/pdfs/RSM%20Georgia.pdf',
@@ -40,7 +42,9 @@ const EDUCATION: School[] = [
     name: 'Brandeis University',
     degree: 'Candidate for Master of Science in Finance (STEM-Designated)',
     dates: '01/2026 – 12/2026',
-    clubs: ['Global Markets Investment Club'],
+    gpa: 'GPA 3.9 / 4.0',
+    achievements: ['Merit-Based Scholarship Recipient'],
+    clubs: ['Global Markets Investment Club', 'Brandeis Consulting Association'],
     courses: [
       {
         code: 'FIN 217F',
@@ -92,7 +96,7 @@ const EDUCATION: School[] = [
     degree:
       'Bachelor of Science in Corporate Finance and Accounting, Minor in Computer Information Systems',
     dates: '09/2021 – 05/2025',
-    achievements: ["Dean's List (multiple semesters)"],
+    achievements: ["Dean's List (multiple semesters)", 'Presidential Scholar'],
     courses: [
       {
         code: 'FI 306',
@@ -168,7 +172,7 @@ const SKILLS_ITEMS = [
   {
     key: 'technical',
     title: 'Technical Skills',
-    text: 'Excel (VLOOKUP, SUMIFS, PivotTables, Macros), FactSet, QuickBooks, CaseWare, Python',
+    text: 'Excel (three-statement models, DCFs, sensitivity analyses, PivotTables, Macros), PowerPoint, Python (NumPy), FactSet, CaseWare, SAP Silver, QuickBooks',
   },
   { key: 'volunteer', title: 'Volunteer', text: 'Service-Learning Program (2+2=5)' },
   {
@@ -251,7 +255,8 @@ export function ExperienceSection() {
                 audit, financial reporting, and analytical advisory in U.S. and international
                 settings (RSM; Bank of Georgia). I translate financial statements and business
                 processes into decision-ready insight, spanning performance and cash flow driver
-                analysis, controls-informed risk assessment, and valuation support.
+                analysis, controls-informed risk assessment, and valuation, most recently a DCF of a
+                hotel resort asset on a live RSM Georgia engagement.
               </p>
               <p className="experience-section__summary-intro">
                 I build decision-ready models and schedules in Excel, pressure-test assumptions, and
@@ -406,6 +411,54 @@ export function ExperienceSection() {
           <div className="page-section__scroll-inner">
             <h2 className="experience-section__title">Work Experience</h2>
             <div className="experience-section__block">
+              <div className="experience-section__item">
+                <div className="experience-section__company-row">
+                  <img
+                    src={COMPANY_LOGOS.rsm}
+                    alt=""
+                    className="experience-section__company-logo"
+                    width={48}
+                    height={48}
+                  />
+                  <p className="experience-section__company">
+                    <Link
+                      to={`/experience/${HOTEL_VALUATION_SLUG}`}
+                      className="experience-section__company-link"
+                      title="Read the case study"
+                    >
+                      Independent Valuation Engagement
+                    </Link>
+                  </p>
+                  <span className="experience-section__location">Tbilisi, Georgia</span>
+                </div>
+                <div className="experience-section__item-header">
+                  <span className="experience-section__item-title">
+                    Hotel Resort DCF Valuation (Live Engagement at RSM Georgia)
+                  </span>
+                  <span className="experience-section__item-dates">09/2026 – 10/2026</span>
+                </div>
+                <ul className="experience-section__bullets">
+                  <li>
+                    Contributed to a DCF valuation of a 38-key hotel resort asset on a live
+                    engagement at RSM Georgia, building 10-year USALI-format forecasts across rooms,
+                    F&amp;B, events, and leisure departments, with mid-year discounting and a
+                    Gordon-growth terminal value
+                  </li>
+                  <li>
+                    Constructed the property discount rate (13.25%) from GEL sovereign yields,
+                    Damodaran country risk premia, and hotel asset betas; bridged management’s
+                    business plan to the valuation case through 14 quantified adjustments and ran
+                    sensitivity analysis on occupancy, ADR, and events volumes
+                  </li>
+                </ul>
+                <Link
+                  to={`/experience/${HOTEL_VALUATION_SLUG}`}
+                  className="experience-section__case-link"
+                >
+                  Read the case study
+                  <span aria-hidden>→</span>
+                </Link>
+              </div>
               <div className="experience-section__item">
                 <div className="experience-section__company-row">
                   <img

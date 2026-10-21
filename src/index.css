@@ -8594,3 +8594,269 @@ main:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+
+/* Hotel resort valuation case study (anonymized client engagement) */
+.valuation-case__notice {
+  margin: 0 0 var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  border-left: 3px solid var(--color-accent);
+  background: rgba(var(--color-accent-rgb), 0.06);
+}
+
+.valuation-case__section {
+  margin-top: var(--space-2xl);
+}
+
+.valuation-case__spaced {
+  margin-top: var(--space-lg);
+}
+
+.valuation-case__muted {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.valuation-case__note {
+  margin: var(--space-md) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.valuation-case__judgements .valuation-case__note {
+  margin-top: 0;
+}
+
+.valuation-case__scroll {
+  overflow-x: auto;
+}
+
+.valuation-case__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.valuation-case__table th,
+.valuation-case__table td {
+  padding: var(--space-xs) var(--space-sm);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  border-bottom: 1px solid rgba(232, 232, 232, 0.06);
+  white-space: nowrap;
+}
+
+.valuation-case__table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom-color: rgba(232, 232, 232, 0.12);
+}
+
+.valuation-case__table th:first-child,
+.valuation-case__table td:first-child {
+  text-align: left;
+  padding-left: 0;
+}
+
+.valuation-case__table--build td:last-child,
+.valuation-case__table--build th:last-child {
+  text-align: left;
+  white-space: normal;
+  min-width: 16rem;
+}
+
+.valuation-case__table--build td:first-child {
+  white-space: normal;
+}
+
+.valuation-case__row--subtotal td {
+  font-weight: 600;
+  border-top: 1px solid rgba(232, 232, 232, 0.12);
+}
+
+.valuation-case__row--subtotal:last-child td {
+  color: var(--color-accent);
+}
+
+.valuation-case__row--subject {
+  background: rgba(var(--color-accent-rgb), 0.08);
+}
+
+.valuation-case__row--subject td {
+  font-weight: 600;
+}
+
+.valuation-case__table--grid td {
+  text-align: center;
+}
+
+.valuation-case__table--grid th:not(:first-child) {
+  text-align: center;
+}
+
+.valuation-case__cell--base {
+  outline: 1px solid var(--color-accent);
+  outline-offset: -1px;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.valuation-case__tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+}
+
+.valuation-case__tab-group {
+  padding: var(--space-md);
+  border: 1px solid rgba(232, 232, 232, 0.08);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.valuation-case__tab-group ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.valuation-case__tab-group code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+
+.valuation-case__bridge,
+.valuation-case__tornado {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.valuation-case__bridge-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.valuation-case__bridge-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.valuation-case__bridge-label {
+  font-size: 0.9375rem;
+  color: var(--color-text);
+}
+
+.valuation-case__bridge-value,
+.valuation-case__tornado-val {
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.valuation-case__bar-track {
+  height: 0.625rem;
+  background: rgba(232, 232, 232, 0.04);
+}
+
+.valuation-case__bar {
+  height: 0.625rem;
+}
+
+.valuation-case__bar--down {
+  background: rgba(var(--color-negative-rgb), 0.7);
+}
+
+.valuation-case__bar--up {
+  background: rgba(var(--color-positive-rgb), 0.7);
+}
+
+.valuation-case__tornado-row {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) 3.5rem minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.valuation-case__tornado-label {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.valuation-case__tornado-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-left: none;
+}
+
+.valuation-case__tornado-half {
+  display: flex;
+}
+
+.valuation-case__tornado-half--left {
+  justify-content: flex-end;
+  border-right: 1px solid rgba(232, 232, 232, 0.25);
+}
+
+.valuation-case__grids,
+.valuation-case__judgements {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+@media (min-width: 900px) {
+  .valuation-case__judgements {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .valuation-case__bridge-row {
+    grid-template-columns: minmax(0, 1fr) 3.5rem;
+  }
+
+  .valuation-case__bridge-row .valuation-case__bar-track {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .valuation-case__tornado-row {
+    grid-template-columns: 3.5rem minmax(0, 1fr) 3.5rem;
+  }
+
+  .valuation-case__tornado-label {
+    grid-column: 1 / -1;
+  }
+}
+
+.experience-section__case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.experience-section__case-link:hover {
+  text-decoration: underline;
+}

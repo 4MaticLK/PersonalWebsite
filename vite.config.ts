@@ -4,6 +4,7 @@ import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { PROJECTS } from './src/data/projects';
+import { HOTEL_VALUATION_SLUG } from './src/data/hotelValuationCaseStudy';
 import { SITE_ORIGIN } from './src/constants/site';
 import { fetchYahooQuotes, fetchYahooChartHistory } from './packages/server-lib/src/yahooQuotes.ts';
 import {
@@ -193,7 +194,12 @@ export default defineConfig(({ command, mode }) => {
 
           const loc = (path: string) => `${originProduction}${path === '/' ? '/' : path}`;
 
-          const urlEntries = ['/', '/portfolio', ...PROJECTS.map((p) => `/work/${p.slug}`)]
+          const urlEntries = [
+            '/',
+            '/portfolio',
+            `/experience/${HOTEL_VALUATION_SLUG}`,
+            ...PROJECTS.map((p) => `/work/${p.slug}`),
+          ]
             .map((path) => `  <url>\n    <loc>${loc(path)}</loc>\n  </url>`)
             .join('\n');
 
