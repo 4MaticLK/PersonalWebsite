@@ -1,25 +1,25 @@
 ticker,name,shares,cost_basis,current_price,market_value,weight_pct,sector
-VOO,Vanguard S&P 500 ETF,15.41264,712.91,695,10711.78,11.04,US Equity
-BND,Vanguard Total Bond Market ETF,138.14063,72.39,71.08,9819.66,10.12,Fixed Income
-VEA,Vanguard FTSE Developed Markets ETF,121.7862,73.89,69.87,8509.2,8.77,International
-GOVT,iShares U.S. Treasury Bond ETF,289.16906,22.48,22.11,6393.53,6.59,Fixed Income
-USMV,iShares MSCI USA Min Vol Factor ETF,54.38544,101.13,104.49,5682.73,5.86,US Equity
-JPM,JPMorgan Chase,13.7893,362.32,343.39,4735.11,4.88,Financials
-AXP,American Express,14.61028,341.78,322.3,4708.91,4.85,Financials
-C,Citigroup,35.90664,138.52,124.17,4458.53,4.6,Financials
-VWO,Vanguard FTSE Emerging Markets ETF,74.79282,60.16,57.11,4271.42,4.4,International
-NOC,Northrop Grumman,6.8341,585.42,550.96,3765.32,3.88,Industrials
-GLD,SPDR Gold Shares,9.95421,401.84,365.88,3642.05,3.75,Commodities
-UNH,UnitedHealth Group,7.46807,401.78,402.83,3008.36,3.1,Healthcare
-LLY,Eli Lilly,2.01218,1179.73,1447.85,2913.33,3,Healthcare
-PG,Procter & Gamble,17.30431,144.49,168,2907.12,3,Consumer Staples
-VTIP,Vanguard Short-Term TIPS ETF,50.24116,49.76,48.57,2440.21,2.52,Fixed Income
-NVDA,NVIDIA,15.29022,206.38,158.78,2427.78,2.5,Technology
-VOX,Vanguard Communication Services ETF,13.21213,189.22,183.33,2422.18,2.5,Communication Services
-TSM,Taiwan Semiconductor,5.87959,425.26,405.27,2382.83,2.46,International
-PLD,Prologis,17.72672,141.03,130.62,2315.46,2.39,Real Estate
-PHO,Invesco Water Resources ETF,27.78936,71.96,77.12,2143.12,2.21,Thematic
-NEE,NextEra Energy,23.29645,85.86,86.93,2025.16,2.09,Utilities
-CGW,Invesco S&P Global Water ETF,30.58572,65.39,65.46,2002.14,2.06,Thematic
-QQQ,Invesco QQQ Trust,2.73654,730.8,684.02,1871.85,1.93,US Equity
-CEG,Constellation Energy,5.30114,282.84,273,1447.21,1.49,Utilities
+VOO,Vanguard S&P 500 ETF,15.41264,712.91,697.67,10752.89,11.11,US Equity
+BND,Vanguard Total Bond Market ETF,138.14063,72.39,70.74,9772.55,10.1,Fixed Income
+VEA,Vanguard FTSE Developed Markets ETF,121.7862,73.89,69.5,8464.14,8.75,International
+GOVT,iShares U.S. Treasury Bond ETF,289.16906,22.48,22,6360.74,6.57,Fixed Income
+USMV,iShares MSCI USA Min Vol Factor ETF,54.38544,101.13,103.88,5649.61,5.84,US Equity
+JPM,JPMorgan Chase,13.7893,362.32,343.5,4736.62,4.9,Financials
+AXP,American Express,14.61028,341.78,318.5,4653.37,4.81,Financials
+C,Citigroup,35.90664,138.52,124.31,4463.55,4.61,Financials
+VWO,Vanguard FTSE Emerging Markets ETF,74.79282,60.16,56.56,4230.28,4.37,International
+NOC,Northrop Grumman,6.8341,585.42,549.13,3752.81,3.88,Industrials
+GLD,SPDR Gold Shares,9.95421,401.84,355.86,3542.3,3.66,Commodities
+UNH,UnitedHealth Group,7.46807,401.78,404,3017.1,3.12,Healthcare
+PG,Procter & Gamble,17.30431,144.49,167.88,2905.05,3,Consumer Staples
+LLY,Eli Lilly,2.01218,1179.73,1431,2879.43,2.98,Healthcare
+NVDA,NVIDIA,15.29022,206.38,167.84,2566.24,2.65,Technology
+VTIP,Vanguard Short-Term TIPS ETF,50.24116,49.76,48.53,2438.2,2.52,Fixed Income
+TSM,Taiwan Semiconductor,5.87959,425.26,409,2404.75,2.49,International
+VOX,Vanguard Communication Services ETF,13.21213,189.22,181.99,2404.48,2.49,Communication Services
+PLD,Prologis,17.72672,141.03,128.55,2278.77,2.36,Real Estate
+PHO,Invesco Water Resources ETF,27.78936,71.96,76,2111.99,2.18,Thematic
+NEE,NextEra Energy,23.29645,85.86,85.36,1988.55,2.06,Utilities
+CGW,Invesco S&P Global Water ETF,30.58572,65.39,64.89,1984.71,2.05,Thematic
+QQQ,Invesco QQQ Trust,2.73654,730.8,690.93,1890.76,1.95,US Equity
+CEG,Constellation Energy,5.30114,282.84,283.29,1501.76,1.55,Utilities
